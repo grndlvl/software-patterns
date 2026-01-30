@@ -74,6 +74,11 @@ This skill automatically activates when you:
 | [B-Tree](data-structures/trees/b-tree.md) | O(log n) | O(log n) | O(log n) | Disk-based storage |
 | [Trie](data-structures/trees/trie.md) | O(m) | O(m) | O(m) | String/prefix operations |
 | [Heap](data-structures/trees/heap.md) | O(1)/O(n) | O(log n) | O(log n) | Priority queue needed |
+| [Splay Tree](data-structures/trees/splay-tree.md) | O(log n)* | O(log n)* | O(log n)* | Self-adjusting, temporal locality |
+| [Treap](data-structures/trees/treap.md) | O(log n)* | O(log n)* | O(log n)* | Randomized balance, split/merge |
+| [Interval Tree](data-structures/trees/interval-tree.md) | O(log n) | O(log n) | O(log n) | Interval overlap queries |
+| [Order-Statistic Tree](data-structures/trees/order-statistic-tree.md) | O(log n) | O(log n) | O(log n) | Rank/select queries |
+| [K-D Tree](data-structures/trees/kd-tree.md) | O(log n)* | O(log n)* | O(log n)* | Multi-dimensional spatial data |
 
 ### Hash-Based
 | Structure | Search | Insert | Delete | Use When |
@@ -88,6 +93,19 @@ This skill automatically activates when you:
 | [Adjacency List](data-structures/graphs/adjacency-list.md) | O(V+E) | O(1) | O(degree) | Sparse graphs |
 | [Adjacency Matrix](data-structures/graphs/adjacency-matrix.md) | O(V²) | O(1) | O(1) | Dense graphs |
 
+### Graph Algorithms
+| Algorithm | Time | Use When |
+|-----------|------|----------|
+| [Network Flow](data-structures/graphs/network-flow.md) | O(VE²) | Max flow, bipartite matching, min cut |
+| [Strongly Connected Components](data-structures/graphs/strongly-connected-components.md) | O(V+E) | Find SCCs, 2-SAT, dependency analysis |
+
+### Strings
+| Structure | Build | Search | Use When |
+|-----------|-------|--------|----------|
+| [Suffix Array](data-structures/strings/suffix-array.md) | O(n log n) | O(m log n) | Space-efficient string matching |
+| [Suffix Tree](data-structures/strings/suffix-tree.md) | O(n) | O(m) | Fast pattern matching, LCS |
+| [String Algorithms](data-structures/strings/string-algorithms.md) | O(m) | O(n) | KMP, Rabin-Karp, Boyer-Moore, Aho-Corasick |
+
 ### Advanced
 | Structure | Use When |
 |-----------|----------|
@@ -95,6 +113,14 @@ This skill automatically activates when you:
 | [Disjoint Set](data-structures/advanced/disjoint-set.md) | Union-find operations |
 | [Segment Tree](data-structures/advanced/segment-tree.md) | Range queries with updates |
 | [Fenwick Tree](data-structures/advanced/fenwick-tree.md) | Prefix sums with updates |
+| [Fibonacci Heap](data-structures/advanced/fibonacci-heap.md) | Dijkstra, Prim with O(1) decrease-key |
+| [Binomial Heap](data-structures/advanced/binomial-heap.md) | Mergeable priority queue |
+| [van Emde Boas Tree](data-structures/advanced/van-emde-boas-tree.md) | Integer keys with O(log log u) operations |
+
+### Algorithms
+| Algorithm | Use When |
+|-----------|----------|
+| [Sorting Algorithms](data-structures/algorithms/sorting-algorithms.md) | QuickSort, MergeSort, HeapSort, RadixSort, and more |
 
 *\* = amortized or average case*
 
