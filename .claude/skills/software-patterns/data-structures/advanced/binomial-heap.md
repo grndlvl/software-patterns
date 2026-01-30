@@ -391,3 +391,7 @@ function mergePartitionResults(partitions) {
 - **Leftist Heap**: Another mergeable heap variant
 - **Skew Heap**: Self-adjusting mergeable heap
 - **Brodal Queue**: Worst-case optimal heap
+
+---
+
+*Based on concepts from "Introduction to Algorithms" by Cormen, Leiserson, Rivest, and Stein (CLRS), MIT Press.*

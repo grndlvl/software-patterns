@@ -692,3 +692,7 @@ if user.isPremium() {
 ```
 
 The Chain of Responsibility pattern shines when you need flexibility, extensibility, and decoupling. Use it for middleware pipelines, event processing, and scenarios where the handling logic may change at runtime. Avoid it when simplicity and directness are more valuable.
+
+---
+
+*Based on concepts from "Design Patterns: Elements of Reusable Object-Oriented Software" by Gamma, Helm, Johnson, and Vlissides (Gang of Four), 1994.*

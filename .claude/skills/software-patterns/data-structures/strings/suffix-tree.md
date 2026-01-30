@@ -503,3 +503,7 @@ function findRepeatedMotifs(genome, minLength) {
 - **Generalized Suffix Tree**: Multiple strings in one tree
 - **Compressed Suffix Tree**: Reduced space representation
 - **FM-Index**: Compressed full-text index
+
+---
+
+*Based on concepts from "Introduction to Algorithms" by Cormen, Leiserson, Rivest, and Stein (CLRS), MIT Press.*

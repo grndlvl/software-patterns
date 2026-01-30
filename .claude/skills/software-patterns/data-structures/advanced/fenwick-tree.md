@@ -432,3 +432,7 @@ function findKth(bit, k) {
 - **Prefix Sum Array**: O(1) query but O(n) update
 - **2D Fenwick Tree**: For matrix operations
 - **Persistent Fenwick**: Version history support
+
+---
+
+*Based on concepts from "Introduction to Algorithms" by Cormen, Leiserson, Rivest, and Stein (CLRS), MIT Press.*

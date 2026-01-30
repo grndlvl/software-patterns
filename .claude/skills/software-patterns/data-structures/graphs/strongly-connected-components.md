@@ -423,3 +423,7 @@ function resolveInOrder(dependencyGraph) {
 - **Bridge Finding**: Edges whose removal disconnects graph
 - **Articulation Points**: Vertices whose removal disconnects graph
 - **Topological Sort**: Order vertices in DAG
+
+---
+
+*Based on concepts from "Introduction to Algorithms" by Cormen, Leiserson, Rivest, and Stein (CLRS), MIT Press.*

@@ -348,3 +348,7 @@ function infixToPostfix(tokens) {
 - **Min/Max Stack**: Stack that also tracks min/max in O(1)
 - **Two-Stack Queue**: Queue implemented with two stacks
 - **Call Stack**: Runtime stack for function execution
+
+---
+
+*Based on concepts from "Introduction to Algorithms" by Cormen, Leiserson, Rivest, and Stein (CLRS), MIT Press.*

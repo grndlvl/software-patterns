@@ -1018,3 +1018,7 @@ end class
 ## Summary
 
 The Bridge pattern is essential when you have class hierarchies that grow in two orthogonal dimensions. By splitting the monolithic hierarchy into abstraction and implementation hierarchies connected by composition, you gain flexibility, reduce class explosion, and enable runtime variation. The key insight is recognizing when you have two independent axes of change and separating them before the combinatorial growth becomes unmanageable.
+
+---
+
+*Based on concepts from "Design Patterns: Elements of Reusable Object-Oriented Software" by Gamma, Helm, Johnson, and Vlissides (Gang of Four), 1994.*

@@ -214,3 +214,7 @@ class Array {
 - **Multi-dimensional Array**: Arrays of arrays for matrices/tensors
 - **Circular Buffer**: Fixed-size array with wrap-around indices
 - **String**: Often implemented as character arrays
+
+---
+
+*Based on concepts from "Introduction to Algorithms" by Cormen, Leiserson, Rivest, and Stein (CLRS), MIT Press.*

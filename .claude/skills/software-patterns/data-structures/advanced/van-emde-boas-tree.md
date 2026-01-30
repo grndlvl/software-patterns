@@ -443,3 +443,7 @@ function rangeQuery(veb, low, high) {
 - **Fusion Tree**: O(log n / log log n) for predecessor
 - **Stratified Tree**: Practical alternative for smaller universes
 - **Integer BST**: Simpler but O(log n) operations
+
+---
+
+*Based on concepts from "Introduction to Algorithms" by Cormen, Leiserson, Rivest, and Stein (CLRS), MIT Press.*

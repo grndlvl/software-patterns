@@ -493,3 +493,7 @@ function longestConsecutive(nums) {
 - **Bit Set**: Space-efficient for integer ranges
 - **Bloom Filter**: Probabilistic set membership
 - **Concurrent Hash Set**: Thread-safe variant
+
+---
+
+*Based on concepts from "Introduction to Algorithms" by Cormen, Leiserson, Rivest, and Stein (CLRS), MIT Press.*

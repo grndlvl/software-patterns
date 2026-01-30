@@ -428,3 +428,7 @@ function segmentImage(pixels, foregroundSeeds, backgroundSeeds) {
 - **Multi-Commodity Flow**: Multiple source-sink pairs
 - **Circulation Problems**: Flow with demands
 - **Assignment Problem**: Special case of bipartite matching
+
+---
+
+*Based on concepts from "Introduction to Algorithms" by Cormen, Leiserson, Rivest, and Stein (CLRS), MIT Press.*

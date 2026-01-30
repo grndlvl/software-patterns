@@ -492,3 +492,7 @@ class IndexedSet {
 - **Segment Tree**: For range queries and updates
 - **Skip List**: Alternative with similar complexity, simpler rotations
 - **Treap**: Randomized BST that can be augmented similarly
+
+---
+
+*Based on concepts from "Introduction to Algorithms" by Cormen, Leiserson, Rivest, and Stein (CLRS), MIT Press.*

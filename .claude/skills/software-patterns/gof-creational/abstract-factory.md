@@ -970,3 +970,7 @@ function main() {
 - Your factories have only one creation method
 - You're never actually swapping product families at runtime
 - The product classes are trivial and don't benefit from abstraction
+
+---
+
+*Based on concepts from "Design Patterns: Elements of Reusable Object-Oriented Software" by Gamma, Helm, Johnson, and Vlissides (Gang of Four), 1994.*

@@ -13,3 +13,4 @@ Thumbs.db
 build/
 dist/
 *.zip
+.omc/

@@ -454,3 +454,7 @@ class Rope {
 - **AVL/Red-Black Trees**: Deterministic balanced trees
 - **Cartesian Tree**: Special case where keys determine priorities
 - **Zip Tree**: Recent simplification of treaps
+
+---
+
+*Based on concepts from "Introduction to Algorithms" by Cormen, Leiserson, Rivest, and Stein (CLRS), MIT Press.*

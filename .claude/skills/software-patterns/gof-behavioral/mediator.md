@@ -1010,3 +1010,7 @@ class EverythingMediator {
 6. **Stateless request routing**: If you're just routing messages without coordination logic, a simple event bus or message queue may be more appropriate.
 
 The Mediator pattern excels when you have many objects with complex, changing interactions. It's overkill for simple scenarios and becomes a liability if the mediator itself becomes too complex. Use it when the benefit of centralized coordination outweighs the cost of the indirection.
+
+---
+
+*Based on concepts from "Design Patterns: Elements of Reusable Object-Oriented Software" by Gamma, Helm, Johnson, and Vlissides (Gang of Four), 1994.*

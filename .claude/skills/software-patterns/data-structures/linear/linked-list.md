@@ -510,3 +510,7 @@ class CircularLinkedList {
 - **XOR Linked List**: Memory-efficient doubly linked using XOR of addresses
 - **Unrolled Linked List**: Each node contains small array of elements
 - **Self-organizing List**: Moves frequently accessed elements to front
+
+---
+
+*Based on concepts from "Introduction to Algorithms" by Cormen, Leiserson, Rivest, and Stein (CLRS), MIT Press.*

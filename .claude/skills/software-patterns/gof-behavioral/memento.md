@@ -1063,3 +1063,7 @@ class ServerConnection {
 7. **Simple linear undo**: If you only need single-level undo, storing just the previous state is simpler than the full memento pattern infrastructure.
 
 The Memento pattern excels when you need robust undo/redo, checkpointing, or state snapshots while preserving encapsulation. For simpler cases, direct state management may be more appropriate.
+
+---
+
+*Based on concepts from "Design Patterns: Elements of Reusable Object-Oriented Software" by Gamma, Helm, Johnson, and Vlissides (Gang of Four), 1994.*

@@ -934,3 +934,7 @@ router.get("/admin", adminHandler)
 ## Summary
 
 The Decorator pattern provides an elegant way to add responsibilities to objects dynamically. Its key strengths are runtime flexibility and adherence to the Single Responsibility Principle - each decorator handles one concern. The pattern is especially powerful for cross-cutting concerns like logging, caching, and authentication. However, it can lead to many small classes and debugging complexity when overused. Choose Decorator when you need to compose behaviors flexibly; prefer simpler approaches when the set of variations is small and fixed.
+
+---
+
+*Based on concepts from "Design Patterns: Elements of Reusable Object-Oriented Software" by Gamma, Helm, Johnson, and Vlissides (Gang of Four), 1994.*

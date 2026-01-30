@@ -467,3 +467,7 @@ function prim(graph) {
 - **Rank-Pairing Heap**: Recent alternative with similar bounds
 - **Hollow Heap**: Simplified Fibonacci heap variant (2015)
 - **Soft Heap**: Approximate heap allowing controlled errors
+
+---
+
+*Based on concepts from "Introduction to Algorithms" by Cormen, Leiserson, Rivest, and Stein (CLRS), MIT Press.*

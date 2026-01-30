@@ -1148,3 +1148,7 @@ function main() {
 - The "prototypes" in your registry are never modified before use
 - You're cloning simple value objects that could be created directly
 - Your objects don't have any private state that benefits from clone access
+
+---
+
+*Based on concepts from "Design Patterns: Elements of Reusable Object-Oriented Software" by Gamma, Helm, Johnson, and Vlissides (Gang of Four), 1994.*

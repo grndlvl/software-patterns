@@ -464,3 +464,7 @@ class CountingIntervalTree {
 - **R-Tree**: For spatial data and rectangles
 - **KD-Tree**: For multi-dimensional point data
 - **Fenwick Tree**: For prefix sums and ranges
+
+---
+
+*Based on concepts from "Introduction to Algorithms" by Cormen, Leiserson, Rivest, and Stein (CLRS), MIT Press.*

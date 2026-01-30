@@ -1048,3 +1048,7 @@ users = catalog.filter(user =>
 ```
 
 The Interpreter pattern excels at well-defined, stable DSLs with relatively simple grammars that need to be evaluated repeatedly. For anything more complex, consider proper language implementation tools.
+
+---
+
+*Based on concepts from "Design Patterns: Elements of Reusable Object-Oriented Software" by Gamma, Helm, Johnson, and Vlissides (Gang of Four), 1994.*

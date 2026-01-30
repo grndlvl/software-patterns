@@ -472,3 +472,7 @@ function numIslands(grid) {
 - **Weighted Quick Union**: Track size for weighted merging
 - **Link-Cut Trees**: Supports dynamic graph operations
 - **Euler Tour Trees**: Alternative for dynamic connectivity
+
+---
+
+*Based on concepts from "Introduction to Algorithms" by Cormen, Leiserson, Rivest, and Stein (CLRS), MIT Press.*

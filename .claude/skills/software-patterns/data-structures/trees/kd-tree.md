@@ -482,3 +482,7 @@ class SpatialIndex {
 - **VP-Tree**: Vantage-point tree for metric spaces
 - **Cover Tree**: For well-separated point sets
 - **Locality-Sensitive Hashing**: For approximate nearest neighbor in high dimensions
+
+---
+
+*Based on concepts from "Introduction to Algorithms" by Cormen, Leiserson, Rivest, and Stein (CLRS), MIT Press.*

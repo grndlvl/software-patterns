@@ -988,3 +988,7 @@ stateMachine = new StateMachine()
 6. **Performance-critical code**: The delegation overhead of the State pattern may be unacceptable in extremely hot paths.
 
 The State pattern excels when objects have distinct behavioral modes with complex state-specific logic. Use simpler approaches for straightforward state tracking or when the overhead isn't justified.
+
+---
+
+*Based on concepts from "Design Patterns: Elements of Reusable Object-Oriented Software" by Gamma, Helm, Johnson, and Vlissides (Gang of Four), 1994.*

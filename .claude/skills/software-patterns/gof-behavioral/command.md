@@ -999,3 +999,7 @@ command.execute()
 ```
 
 The Command pattern is powerful when you need to treat operations as first-class objects—for undo/redo, queuing, logging, or transactions. If you only need to execute code, simpler approaches will serve you better.
+
+---
+
+*Based on concepts from "Design Patterns: Elements of Reusable Object-Oriented Software" by Gamma, Helm, Johnson, and Vlissides (Gang of Four), 1994.*

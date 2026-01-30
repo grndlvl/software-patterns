@@ -1199,3 +1199,7 @@ userRepository.save(user)
 ## Summary
 
 The Proxy pattern provides a surrogate to control access to another object. Its variations - virtual, protection, remote, caching, logging, and smart reference - address different access control needs. The pattern is particularly valuable for lazy initialization of expensive objects, controlling access based on permissions, hiding network communication complexity, and adding caching without modifying existing code. The key tradeoff is increased complexity versus the benefits of controlled access. Use Proxy when you need to add a layer of control between clients and the real object; avoid it when direct access is simpler and sufficient.
+
+---
+
+*Based on concepts from "Design Patterns: Elements of Reusable Object-Oriented Software" by Gamma, Helm, Johnson, and Vlissides (Gang of Four), 1994.*

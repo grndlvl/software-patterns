@@ -421,3 +421,7 @@ Level 0: Header -> 10 -> 20 -> 30 -> 40 -> 50 -> 60 -> 70 -> 80 -> 90 -> null
 - **Treap**: Randomized BST with similar properties
 - **Concurrent Skip List**: Thread-safe variant
 - **Indexable Skip List**: Supports rank operations
+
+---
+
+*Based on concepts from "Introduction to Algorithms" by Cormen, Leiserson, Rivest, and Stein (CLRS), MIT Press.*

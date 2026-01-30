@@ -1095,3 +1095,7 @@ theater.endRadio()
 ## Summary
 
 The Facade pattern provides a simple entry point to a complex subsystem. Its primary value is in reducing the apparent complexity of a system for clients who need common operations without requiring deep understanding of the subsystem. Key to successful use is keeping the facade focused - it should simplify common scenarios without becoming a god object. Remember that facades are optional conveniences, not gatekeepers; clients can always access the subsystem directly when needed. Use multiple focused facades for large subsystems rather than one monolithic facade.
+
+---
+
+*Based on concepts from "Design Patterns: Elements of Reusable Object-Oriented Software" by Gamma, Helm, Johnson, and Vlissides (Gang of Four), 1994.*

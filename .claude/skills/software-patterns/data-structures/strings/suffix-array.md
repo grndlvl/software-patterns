@@ -454,3 +454,7 @@ function computeBWT(text) {
 - **FM-Index**: Compressed full-text index based on BWT
 - **Suffix Automaton**: Minimal DFA accepting all suffixes
 - **Enhanced Suffix Array**: SA + LCP + additional tables
+
+---
+
+*Based on concepts from "Introduction to Algorithms" by Cormen, Leiserson, Rivest, and Stein (CLRS), MIT Press.*

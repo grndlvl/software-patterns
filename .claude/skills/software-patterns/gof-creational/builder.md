@@ -1019,3 +1019,7 @@ function buildEmailFormat(email: Email, builder: EmailFormatBuilder): String {
 - The product class is simple with no complex construction logic
 - You're building a builder for a data transfer object with only fields
 - The builder is used in only one place in your codebase
+
+---
+
+*Based on concepts from "Design Patterns: Elements of Reusable Object-Oriented Software" by Gamma, Helm, Johnson, and Vlissides (Gang of Four), 1994.*

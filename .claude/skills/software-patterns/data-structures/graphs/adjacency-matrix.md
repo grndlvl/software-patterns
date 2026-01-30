@@ -480,3 +480,7 @@ function transitiveClosure(matrix) {
 - **Incidence Matrix**: V × E matrix for edge-vertex relations
 - **Laplacian Matrix**: Degree matrix - Adjacency matrix
 - **Sparse Matrix**: Compressed storage for sparse graphs
+
+---
+
+*Based on concepts from "Introduction to Algorithms" by Cormen, Leiserson, Rivest, and Stein (CLRS), MIT Press.*

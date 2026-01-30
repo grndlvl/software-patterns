@@ -534,3 +534,7 @@ function buildBST(array, left, right) {
 - **Splay Tree**: Self-adjusting with amortized O(log n)
 - **Treap**: BST + heap properties using random priorities
 - **B-Tree**: Generalized BST for disk-based storage
+
+---
+
+*Based on concepts from "Introduction to Algorithms" by Cormen, Leiserson, Rivest, and Stein (CLRS), MIT Press.*

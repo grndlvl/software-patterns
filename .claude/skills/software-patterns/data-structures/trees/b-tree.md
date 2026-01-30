@@ -445,3 +445,7 @@ class BTree {
 - **2-3-4 Tree**: B-tree with t=2, maps to Red-Black
 - **Bε-tree**: Optimized for write amplification
 - **LSM Tree**: Log-structured, write-optimized
+
+---
+
+*Based on concepts from "Introduction to Algorithms" by Cormen, Leiserson, Rivest, and Stein (CLRS), MIT Press.*

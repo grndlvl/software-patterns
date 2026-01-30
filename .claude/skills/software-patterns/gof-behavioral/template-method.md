@@ -955,3 +955,7 @@ abstract class Processor {
 6. **When composition would be simpler**: Modern design often favors composition over inheritance. Consider injecting strategy objects instead of subclassing.
 
 The Template Method pattern excels when you have a fixed algorithm structure with variable steps. Use it for frameworks, lifecycle management, and standardized processes. Avoid it when flexibility, runtime configuration, or flat hierarchies are more important.
+
+---
+
+*Based on concepts from "Design Patterns: Elements of Reusable Object-Oriented Software" by Gamma, Helm, Johnson, and Vlissides (Gang of Four), 1994.*

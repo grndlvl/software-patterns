@@ -887,3 +887,7 @@ for i = 0 to 10000 {
 7. **Debugging complex notification chains**: When many observers trigger further notifications, the execution flow becomes hard to trace. Consider whether simpler direct calls would be more maintainable.
 
 The Observer pattern excels at decoupling event sources from handlers in dynamic, loosely coupled systems. Avoid it when the complexity isn't justified or when its dynamic nature makes debugging difficult.
+
+---
+
+*Based on concepts from "Design Patterns: Elements of Reusable Object-Oriented Software" by Gamma, Helm, Johnson, and Vlissides (Gang of Four), 1994.*

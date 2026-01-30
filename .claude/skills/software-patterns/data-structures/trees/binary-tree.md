@@ -497,3 +497,7 @@ function isMirror(node1, node2) {
 - **Heap**: Complete binary tree with heap property
 - **Trie**: Tree for string prefix matching
 - **B-Tree**: Balanced tree with multiple keys per node
+
+---
+
+*Based on concepts from "Introduction to Algorithms" by Cormen, Leiserson, Rivest, and Stein (CLRS), MIT Press.*

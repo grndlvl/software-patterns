@@ -476,3 +476,7 @@ class ArrayAdjacencyList {
 - **Edge List**: Simple list of (source, destination) pairs
 - **Incidence Matrix**: Vertex × Edge matrix
 - **Compressed Sparse Row**: Memory-efficient for static graphs
+
+---
+
+*Based on concepts from "Introduction to Algorithms" by Cormen, Leiserson, Rivest, and Stein (CLRS), MIT Press.*

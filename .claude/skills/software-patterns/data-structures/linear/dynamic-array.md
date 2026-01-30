@@ -319,3 +319,7 @@ class DynamicArray {
 - **Gap Buffer**: Optimized for localized insertions (text editors)
 - **Rope**: For very large strings with frequent modifications
 - **Circular Buffer**: Fixed-size with wrap-around behavior
+
+---
+
+*Based on concepts from "Introduction to Algorithms" by Cormen, Leiserson, Rivest, and Stein (CLRS), MIT Press.*

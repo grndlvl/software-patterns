@@ -486,3 +486,7 @@ function findGenePatterns(genome, genes) {
 - **Regular Expressions**: Pattern matching with wildcards and repetition
 - **Approximate Matching**: Edit distance-based matching (Levenshtein)
 - **Bitap Algorithm**: Shift-or for approximate matching
+
+---
+
+*Based on concepts from "Introduction to Algorithms" by Cormen, Leiserson, Rivest, and Stein (CLRS), MIT Press.*

@@ -985,3 +985,7 @@ result = list.filter(item => item.isActive())
 6. **Trivial collections**: For collections you know will always have 0-3 elements, the iterator infrastructure is overkill.
 
 The Iterator pattern is essential for abstracting traversal across diverse collection types and enabling lazy evaluation. It's less necessary when dealing with simple, homogeneous arrays or when the language provides higher-level iteration constructs.
+
+---
+
+*Based on concepts from "Design Patterns: Elements of Reusable Object-Oriented Software" by Gamma, Helm, Johnson, and Vlissides (Gang of Four), 1994.*

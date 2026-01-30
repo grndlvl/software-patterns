@@ -1234,3 +1234,7 @@ function binaryInsertionSort(array) {
 - Sedgewick, Robert. "Algorithms in C"
 - Cormen et al. "Introduction to Algorithms" (CLRS)
 - Python's Timsort description: https://github.com/python/cpython/blob/main/Objects/listsort.txt
+
+---
+
+*Based on concepts from "Introduction to Algorithms" by Cormen, Leiserson, Rivest, and Stein (CLRS), MIT Press.*

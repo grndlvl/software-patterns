@@ -454,3 +454,7 @@ class AdaptiveIndex {
 - **AVL Tree**: Strictly balanced with O(log n) worst-case
 - **Link-Cut Tree**: Splay trees for dynamic tree problems
 - **Tango Tree**: O(log log n) competitive ratio
+
+---
+
+*Based on concepts from "Introduction to Algorithms" by Cormen, Leiserson, Rivest, and Stein (CLRS), MIT Press.*

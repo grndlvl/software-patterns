@@ -435,3 +435,7 @@ class LazySegmentTree {
 - **2D Segment Tree**: For 2D range queries
 - **Persistent Segment Tree**: Version history
 - **Merge Sort Tree**: For order statistics
+
+---
+
+*Based on concepts from "Introduction to Algorithms" by Cormen, Leiserson, Rivest, and Stein (CLRS), MIT Press.*

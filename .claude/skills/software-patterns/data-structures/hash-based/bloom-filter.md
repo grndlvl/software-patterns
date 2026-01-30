@@ -372,3 +372,7 @@ Better alternative with deletion support:
 - **HyperLogLog**: Cardinality estimation
 - **MinHash**: Similarity estimation
 - **Skip Bloom Filter**: Supports range queries
+
+---
+
+*Based on concepts from "Introduction to Algorithms" by Cormen, Leiserson, Rivest, and Stein (CLRS), MIT Press.*

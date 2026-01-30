@@ -1240,3 +1240,7 @@ match element {
 6. **Performance-critical code**: The double dispatch mechanism adds overhead compared to direct method calls.
 
 The Visitor pattern excels when you have a stable set of element types and need to perform many different operations on them. It's particularly valuable in compilers, document processors, and other systems with well-defined object models. Avoid it when element types change frequently or when simpler solutions suffice.
+
+---
+
+*Based on concepts from "Design Patterns: Elements of Reusable Object-Oriented Software" by Gamma, Helm, Johnson, and Vlissides (Gang of Four), 1994.*

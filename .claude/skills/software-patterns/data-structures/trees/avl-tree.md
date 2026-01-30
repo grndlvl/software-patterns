@@ -442,3 +442,7 @@ class AVLTree {
 - **2-3 Tree**: Conceptual basis for Red-Black trees
 - **B-Tree**: Multi-way balanced tree for disk storage
 - **Weight-balanced Tree**: Balance by subtree sizes
+
+---
+
+*Based on concepts from "Introduction to Algorithms" by Cormen, Leiserson, Rivest, and Stein (CLRS), MIT Press.*

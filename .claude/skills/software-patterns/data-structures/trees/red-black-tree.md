@@ -446,3 +446,7 @@ class RedBlackTree {
 - **Left-Leaning Red-Black**: Simplified variant
 - **AA Tree**: Simpler Red-Black variant
 - **B-Tree**: Multi-way balanced tree
+
+---
+
+*Based on concepts from "Introduction to Algorithms" by Cormen, Leiserson, Rivest, and Stein (CLRS), MIT Press.*

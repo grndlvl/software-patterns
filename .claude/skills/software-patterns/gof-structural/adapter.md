@@ -668,3 +668,7 @@ end class
 ## Summary
 
 The Adapter pattern is one of the most practical and widely used structural patterns. It enables integration of disparate systems, reuse of existing code, and flexibility in working with third-party libraries. The key is to use it when you genuinely need to make incompatible interfaces work together, not as a general abstraction layer. When used appropriately, adapters make codebases more modular and easier to maintain; when overused, they add unnecessary complexity.
+
+---
+
+*Based on concepts from "Design Patterns: Elements of Reusable Object-Oriented Software" by Gamma, Helm, Johnson, and Vlissides (Gang of Four), 1994.*

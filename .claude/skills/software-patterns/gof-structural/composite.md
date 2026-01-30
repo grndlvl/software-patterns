@@ -1032,3 +1032,7 @@ end method
 ## Summary
 
 The Composite pattern is fundamental for representing hierarchical structures where clients need uniform access to both individual objects and groups. Its power comes from the recursive nature - a composite's children can themselves be composites, enabling arbitrarily deep structures. The key design decision is whether to prioritize transparency (all operations in Component) or safety (child operations only in Composite). Choose Composite when you have a clear part-whole hierarchy and need clients to work with it uniformly.
+
+---
+
+*Based on concepts from "Design Patterns: Elements of Reusable Object-Oriented Software" by Gamma, Helm, Johnson, and Vlissides (Gang of Four), 1994.*

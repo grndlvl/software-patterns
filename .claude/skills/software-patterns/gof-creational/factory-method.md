@@ -951,3 +951,7 @@ class CheckoutServiceTest {
 - You're never actually switching between different product implementations
 - Your factory method just calls `new ConcreteProduct()` with no additional logic
 - You have more factory infrastructure than actual product logic
+
+---
+
+*Based on concepts from "Design Patterns: Elements of Reusable Object-Oriented Software" by Gamma, Helm, Johnson, and Vlissides (Gang of Four), 1994.*

@@ -483,3 +483,7 @@ Where m = key length, k = result size
 - **Bloom Filter**: Probabilistic membership testing
 - **Cuckoo Hashing**: O(1) worst-case lookup
 - **Robin Hood Hashing**: Variance reduction in probe length
+
+---
+
+*Based on concepts from "Introduction to Algorithms" by Cormen, Leiserson, Rivest, and Stein (CLRS), MIT Press.*

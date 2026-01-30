@@ -437,3 +437,7 @@ function levelOrder(root) {
 - **Priority Queue**: Dequeue by priority (usually heap-based)
 - **Circular Buffer**: Fixed-size queue with wrap-around
 - **Blocking Queue**: Thread-safe with wait semantics
+
+---
+
+*Based on concepts from "Introduction to Algorithms" by Cormen, Leiserson, Rivest, and Stein (CLRS), MIT Press.*

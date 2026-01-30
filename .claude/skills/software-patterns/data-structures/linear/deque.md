@@ -494,3 +494,7 @@ function isPalindrome(str) {
 - **Circular Buffer**: Fixed-size deque
 - **Min-Max Deque**: Tracks min and max efficiently
 - **Steque**: Stack-ended queue (push both, pop front only)
+
+---
+
+*Based on concepts from "Introduction to Algorithms" by Cormen, Leiserson, Rivest, and Stein (CLRS), MIT Press.*

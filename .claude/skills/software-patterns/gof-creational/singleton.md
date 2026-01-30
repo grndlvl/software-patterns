@@ -1034,3 +1034,7 @@ The Singleton pattern is one of the most overused and criticized patterns. Consi
 - Configuration loaded once at startup (read-only after init)
 - Caches that are truly application-wide
 - Thread pools with application-wide scope
+
+---
+
+*Based on concepts from "Design Patterns: Elements of Reusable Object-Oriented Software" by Gamma, Helm, Johnson, and Vlissides (Gang of Four), 1994.*

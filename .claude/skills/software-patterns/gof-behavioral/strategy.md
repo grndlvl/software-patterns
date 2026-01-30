@@ -1038,3 +1038,7 @@ method applyDiscount(price, discountCode) {
 6. **When clients shouldn't choose**: If the algorithm should be determined internally, not by clients, the pattern's explicit strategy selection is wrong.
 
 The Strategy pattern excels when you have multiple interchangeable algorithms and want clean separation between algorithm selection and algorithm implementation. For simpler cases, functions, lambdas, or simple conditionals may be more appropriate.
+
+---
+
+*Based on concepts from "Design Patterns: Elements of Reusable Object-Oriented Software" by Gamma, Helm, Johnson, and Vlissides (Gang of Four), 1994.*

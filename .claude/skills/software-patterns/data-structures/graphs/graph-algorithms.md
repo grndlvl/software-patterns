@@ -614,3 +614,7 @@ function hasCycleDirected(graph) {
 - **Priority queue updates**: Dijkstra may add duplicate entries
 - **Off-by-one in Floyd-Warshall**: Loop bounds matter
 - **Undirected edge handling**: Add both directions or handle properly
+
+---
+
+*Based on concepts from "Introduction to Algorithms" by Cormen, Leiserson, Rivest, and Stein (CLRS), MIT Press.*

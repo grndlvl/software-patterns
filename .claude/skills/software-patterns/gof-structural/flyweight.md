@@ -1102,3 +1102,7 @@ end method
 ## Summary
 
 The Flyweight pattern is a powerful optimization for scenarios with many similar objects. Its effectiveness depends on cleanly separating intrinsic (shared) from extrinsic (context-specific) state. The pattern shines when you have thousands or millions of objects where most of the object's data is identical - characters in a document, particles in a game, or tiles in a map. The key tradeoffs are increased complexity in state management versus significant memory savings. Always profile before applying Flyweight to ensure the optimization is warranted.
+
+---
+
+*Based on concepts from "Design Patterns: Elements of Reusable Object-Oriented Software" by Gamma, Helm, Johnson, and Vlissides (Gang of Four), 1994.*

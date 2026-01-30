@@ -556,3 +556,7 @@ class MedianFinder {
 - **d-ary Heap**: Generalization with d children
 - **Min-Max Heap**: Access both min and max in O(1)
 - **Treap**: BST + heap hybrid using random priorities
+
+---
+
+*Based on concepts from "Introduction to Algorithms" by Cormen, Leiserson, Rivest, and Stein (CLRS), MIT Press.*

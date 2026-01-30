@@ -452,3 +452,7 @@ Where m = key length, n = number of keys, A = alphabet size
 - **Ternary Search Tree**: Memory-efficient trie variant
 - **DAWG (Directed Acyclic Word Graph)**: Minimal trie
 - **Burst Trie**: Hybrid trie with bucket nodes
+
+---
+
+*Based on concepts from "Introduction to Algorithms" by Cormen, Leiserson, Rivest, and Stein (CLRS), MIT Press.*
