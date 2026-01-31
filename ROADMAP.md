@@ -4,25 +4,27 @@
 
 Plan to split the current `software-patterns` skill into focused, single-source skills following the "One Book = One Skill" principle.
 
-## Phase 1: Split Current Skill
+## Phase 1: Split Current Skill ✅ COMPLETE
 
-- [ ] **Create `gof-patterns` skill**
+- [x] **Create `gof-patterns` skill** ✅
   - Move `gof-creational/` (5 patterns)
   - Move `gof-structural/` (7 patterns)
   - Move `gof-behavioral/` (11 patterns)
   - Create SKILL.md with pattern-focused activation triggers
   - Include `decision-guides/pattern-selection.md`
   - Reference: "Design Patterns: Elements of Reusable Object-Oriented Software" (Gang of Four)
+  - **Location:** `.claude/skills/gof-patterns/` (25 files)
 
-- [ ] **Create `clrs-algorithms` skill**
+- [x] **Create `clrs-algorithms` skill** ✅
   - Move `data-structures/` (37 files: linear, trees, hash-based, graphs, strings, advanced, algorithms)
   - Create SKILL.md with algorithm/data structure-focused activation triggers
   - Include `decision-guides/data-structure-selection.md` and `complexity-cheat-sheet.md`
   - Reference: "Introduction to Algorithms" (CLRS)
+  - **Location:** `.claude/skills/clrs-algorithms/` (40 files)
 
-- [ ] **Remove original `software-patterns` skill**
-  - After both new skills are created and verified
-  - Test activation triggers for both skills
+- [x] **Remove original `software-patterns` skill** ✅
+  - Both new skills created and verified
+  - Original directory removed
 
 ## Phase 2: New Biblical Resources
 
