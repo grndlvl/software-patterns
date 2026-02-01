@@ -4,156 +4,167 @@
 [![Claude Code Skill](https://img.shields.io/badge/Claude%20Code-Skill-blueviolet)](https://claude.ai/code)
 [![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
-A comprehensive reference for **Gang of Four design patterns** and **fundamental data structures** for [Claude Code](https://claude.ai/code). Language-agnostic pseudocode examples that translate to any programming language.
+A comprehensive collection of **7 focused Claude Code skills** based on canonical software engineering resources. Each skill follows the "One Book = One Skill" principle with language-agnostic pseudocode examples.
 
-## What's Included
+## Skills Overview
 
-| Category | Count | Description |
-|----------|-------|-------------|
-| **GoF Creational Patterns** | 5 | Abstract Factory, Builder, Factory Method, Prototype, Singleton |
-| **GoF Structural Patterns** | 7 | Adapter, Bridge, Composite, Decorator, Facade, Flyweight, Proxy |
-| **GoF Behavioral Patterns** | 11 | Chain of Responsibility, Command, Interpreter, Iterator, Mediator, Memento, Observer, State, Strategy, Template Method, Visitor |
-| **Data Structures** | 23 | Arrays, Lists, Trees, Graphs, Hash Tables, and more |
-| **Decision Guides** | 3 | Pattern selection, data structure selection, complexity cheat sheet |
+| Skill | Source | Files | Topics |
+|-------|--------|-------|--------|
+| `gof-patterns` | Gang of Four | 25 | 23 design patterns + decision guides |
+| `clrs-algorithms` | CLRS | 40 | Data structures & algorithms |
+| `clean-code` | Robert Martin | 14 | Code quality, SOLID, refactoring |
+| `ddia` | Martin Kleppmann | 21 | Distributed systems architecture |
+| `pragmatic-programmer` | Hunt & Thomas | 19 | Software craftsmanship |
+| `ddd` | Eric Evans | 15 | Domain modeling |
+| `sicp` | Abelson & Sussman | 13 | Programming fundamentals |
 
-**Total: 50 comprehensive documentation files (~35,000 lines)**
+**Total: 147 documentation files**
 
 ## Installation
 
-### As a Claude Code Skill (Recommended)
+### All Skills (Recommended)
 
 ```bash
 npx skills add git@github.com:grndlvl/software-patterns.git -g
 ```
 
-This installs the skill globally so it's available in all your projects.
-
-### Project-Level Installation
+### Individual Skills
 
 ```bash
-npx skills add git@github.com:grndlvl/software-patterns.git
+# Install only the skill you need
+npx skills add git@github.com:grndlvl/software-patterns.git --path .claude/skills/gof-patterns -g
+npx skills add git@github.com:grndlvl/software-patterns.git --path .claude/skills/clrs-algorithms -g
+npx skills add git@github.com:grndlvl/software-patterns.git --path .claude/skills/clean-code -g
+npx skills add git@github.com:grndlvl/software-patterns.git --path .claude/skills/ddia -g
+npx skills add git@github.com:grndlvl/software-patterns.git --path .claude/skills/pragmatic-programmer -g
+npx skills add git@github.com:grndlvl/software-patterns.git --path .claude/skills/ddd -g
+npx skills add git@github.com:grndlvl/software-patterns.git --path .claude/skills/sicp -g
 ```
 
-### Manual Installation
+## Skills Detail
 
-```bash
-git clone git@github.com:grndlvl/software-patterns.git
-cp -r software-patterns/.claude/skills/software-patterns ~/.claude/skills/
-```
+### GoF Patterns (`gof-patterns`)
 
-## Usage
+*Based on "Design Patterns: Elements of Reusable Object-Oriented Software" by Gamma, Helm, Johnson, Vlissides*
 
-Once installed, the skill **auto-activates** when you:
-- Ask about or need to implement a design pattern
-- Need to choose between patterns or data structures
-- Are refactoring code and considering structural improvements
-- Discuss architecture, decoupling, or extensibility
-- Need to understand time/space complexity trade-offs
+**Creational (5):** Abstract Factory, Builder, Factory Method, Prototype, Singleton
 
-### Example Prompts
+**Structural (7):** Adapter, Bridge, Composite, Decorator, Facade, Flyweight, Proxy
 
-```
-"Which design pattern should I use for creating objects without specifying their concrete classes?"
+**Behavioral (11):** Chain of Responsibility, Command, Interpreter, Iterator, Mediator, Memento, Observer, State, Strategy, Template Method, Visitor
 
-"What's the best data structure for fast lookups with frequent insertions?"
+**Auto-activates when:** Discussing design patterns, object creation, code structure, decoupling
 
-"Show me how to implement the Observer pattern"
+---
 
-"Compare the trade-offs between using a hash table vs a balanced tree"
-```
+### CLRS Algorithms (`clrs-algorithms`)
 
-## Contents
+*Based on "Introduction to Algorithms" by Cormen, Leiserson, Rivest, Stein*
 
-### GoF Design Patterns (23)
+**Linear:** Array, Dynamic Array, Linked List, Stack, Queue, Deque
 
-#### Creational Patterns
-| Pattern | Intent |
-|---------|--------|
-| [Abstract Factory](.claude/skills/software-patterns/gof-creational/abstract-factory.md) | Create families of related objects |
-| [Builder](.claude/skills/software-patterns/gof-creational/builder.md) | Construct complex objects step-by-step |
-| [Factory Method](.claude/skills/software-patterns/gof-creational/factory-method.md) | Let subclasses decide which class to instantiate |
-| [Prototype](.claude/skills/software-patterns/gof-creational/prototype.md) | Clone existing objects |
-| [Singleton](.claude/skills/software-patterns/gof-creational/singleton.md) | Ensure single instance |
+**Trees:** Binary Tree, BST, AVL, Red-Black, B-Tree, Trie, Heap, Interval Tree, Order-Statistic Tree, Splay Tree, Treap, vEB Tree
 
-#### Structural Patterns
-| Pattern | Intent |
-|---------|--------|
-| [Adapter](.claude/skills/software-patterns/gof-structural/adapter.md) | Convert interface to expected interface |
-| [Bridge](.claude/skills/software-patterns/gof-structural/bridge.md) | Separate abstraction from implementation |
-| [Composite](.claude/skills/software-patterns/gof-structural/composite.md) | Treat individual and groups uniformly |
-| [Decorator](.claude/skills/software-patterns/gof-structural/decorator.md) | Add responsibilities dynamically |
-| [Facade](.claude/skills/software-patterns/gof-structural/facade.md) | Simplified interface to subsystem |
-| [Flyweight](.claude/skills/software-patterns/gof-structural/flyweight.md) | Share common state efficiently |
-| [Proxy](.claude/skills/software-patterns/gof-structural/proxy.md) | Control access to object |
+**Hash-Based:** Hash Table, Hash Set, Bloom Filter
 
-#### Behavioral Patterns
-| Pattern | Intent |
-|---------|--------|
-| [Chain of Responsibility](.claude/skills/software-patterns/gof-behavioral/chain-of-responsibility.md) | Pass request along handler chain |
-| [Command](.claude/skills/software-patterns/gof-behavioral/command.md) | Encapsulate request as object |
-| [Interpreter](.claude/skills/software-patterns/gof-behavioral/interpreter.md) | Define grammar and interpret sentences |
-| [Iterator](.claude/skills/software-patterns/gof-behavioral/iterator.md) | Sequential access without exposing internals |
-| [Mediator](.claude/skills/software-patterns/gof-behavioral/mediator.md) | Centralize complex communications |
-| [Memento](.claude/skills/software-patterns/gof-behavioral/memento.md) | Capture and restore object state |
-| [Observer](.claude/skills/software-patterns/gof-behavioral/observer.md) | Notify dependents of state changes |
-| [State](.claude/skills/software-patterns/gof-behavioral/state.md) | Alter behavior when state changes |
-| [Strategy](.claude/skills/software-patterns/gof-behavioral/strategy.md) | Encapsulate interchangeable algorithms |
-| [Template Method](.claude/skills/software-patterns/gof-behavioral/template-method.md) | Define skeleton, let subclasses fill in |
-| [Visitor](.claude/skills/software-patterns/gof-behavioral/visitor.md) | Add operations without changing classes |
+**Graphs:** Adjacency List/Matrix, BFS, DFS, Dijkstra, Bellman-Ford, Floyd-Warshall, MST (Prim/Kruskal), Topological Sort, SCC, Network Flow
 
-### Data Structures (23)
+**Advanced:** Skip List, Disjoint Set, Segment Tree, Fenwick Tree, Binomial/Fibonacci Heap
 
-#### Linear
-[Array](.claude/skills/software-patterns/data-structures/linear/array.md) ·
-[Dynamic Array](.claude/skills/software-patterns/data-structures/linear/dynamic-array.md) ·
-[Linked List](.claude/skills/software-patterns/data-structures/linear/linked-list.md) ·
-[Stack](.claude/skills/software-patterns/data-structures/linear/stack.md) ·
-[Queue](.claude/skills/software-patterns/data-structures/linear/queue.md) ·
-[Deque](.claude/skills/software-patterns/data-structures/linear/deque.md)
+**Strings:** KMP, Rabin-Karp, Suffix Array, Suffix Tree
 
-#### Trees
-[Binary Tree](.claude/skills/software-patterns/data-structures/trees/binary-tree.md) ·
-[BST](.claude/skills/software-patterns/data-structures/trees/bst.md) ·
-[AVL Tree](.claude/skills/software-patterns/data-structures/trees/avl-tree.md) ·
-[Red-Black Tree](.claude/skills/software-patterns/data-structures/trees/red-black-tree.md) ·
-[B-Tree](.claude/skills/software-patterns/data-structures/trees/b-tree.md) ·
-[Trie](.claude/skills/software-patterns/data-structures/trees/trie.md) ·
-[Heap](.claude/skills/software-patterns/data-structures/trees/heap.md)
+**Auto-activates when:** Choosing data structures, analyzing complexity, implementing algorithms
 
-#### Hash-Based
-[Hash Table](.claude/skills/software-patterns/data-structures/hash-based/hash-table.md) ·
-[Hash Set](.claude/skills/software-patterns/data-structures/hash-based/hash-set.md) ·
-[Bloom Filter](.claude/skills/software-patterns/data-structures/hash-based/bloom-filter.md)
+---
 
-#### Graphs
-[Adjacency List](.claude/skills/software-patterns/data-structures/graphs/adjacency-list.md) ·
-[Adjacency Matrix](.claude/skills/software-patterns/data-structures/graphs/adjacency-matrix.md) ·
-[Graph Algorithms](.claude/skills/software-patterns/data-structures/graphs/graph-algorithms.md)
+### Clean Code (`clean-code`)
 
-#### Advanced
-[Skip List](.claude/skills/software-patterns/data-structures/advanced/skip-list.md) ·
-[Disjoint Set](.claude/skills/software-patterns/data-structures/advanced/disjoint-set.md) ·
-[Segment Tree](.claude/skills/software-patterns/data-structures/advanced/segment-tree.md) ·
-[Fenwick Tree](.claude/skills/software-patterns/data-structures/advanced/fenwick-tree.md)
+*Based on "Clean Code" by Robert C. Martin*
 
-### Decision Guides
+**SOLID Principles:** Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, Dependency Inversion
 
-- [Pattern Selection Guide](.claude/skills/software-patterns/decision-guides/pattern-selection.md) - Flowcharts and decision trees for choosing patterns
-- [Data Structure Selection Guide](.claude/skills/software-patterns/decision-guides/data-structure-selection.md) - Choose the right structure by use case
-- [Complexity Cheat Sheet](.claude/skills/software-patterns/decision-guides/complexity-cheat-sheet.md) - Big-O quick reference
+**Practices:** Meaningful names, small functions, comments, formatting, error handling, unit testing (F.I.R.S.T.), code smells, Boy Scout Rule
+
+**Auto-activates when:** Reviewing code quality, refactoring, discussing best practices
+
+---
+
+### DDIA (`ddia`)
+
+*Based on "Designing Data-Intensive Applications" by Martin Kleppmann*
+
+**Data Models:** Relational, Document, Graph
+
+**Storage:** B-Trees, LSM-Trees, Column Storage
+
+**Replication:** Leader-Follower, Multi-Leader, Leaderless
+
+**Partitioning:** Strategies, Rebalancing
+
+**Transactions:** ACID, Isolation Levels, Distributed Transactions
+
+**Consistency:** Models, Linearizability, Consensus Algorithms
+
+**Processing:** Batch, Stream, Event Sourcing/CQRS
+
+**Auto-activates when:** Designing distributed systems, choosing databases, discussing consistency/availability
+
+---
+
+### Pragmatic Programmer (`pragmatic-programmer`)
+
+*Based on "The Pragmatic Programmer" by Hunt and Thomas*
+
+**Principles:** DRY, Orthogonality, Reversibility, Tracer Bullets, Prototypes, Estimating, Domain Languages
+
+**Practices:** Plain Text, Shell Games, Debugging, Text Manipulation, Code Generators, Design by Contract, Assertive Programming, Decoupling, Refactoring, Testing, Automation
+
+**Auto-activates when:** Discussing software craftsmanship, pragmatic approaches, developer productivity
+
+---
+
+### DDD (`ddd`)
+
+*Based on "Domain-Driven Design" by Eric Evans*
+
+**Strategic:** Ubiquitous Language, Bounded Contexts, Context Mapping, Anti-Corruption Layer
+
+**Tactical:** Entities, Value Objects, Aggregates, Domain Services, Domain Events
+
+**Patterns:** Repositories, Factories, Specifications
+
+**Practices:** Event Storming, Model Exploration
+
+**Auto-activates when:** Modeling domains, discussing bounded contexts, designing aggregates
+
+---
+
+### SICP (`sicp`)
+
+*Based on "Structure and Interpretation of Computer Programs" by Abelson and Sussman*
+
+**Procedures:** Abstraction, Higher-Order Functions, Recursion Patterns (linear, tail, tree, mutual)
+
+**Data:** Data Abstraction, Hierarchical Data, Symbolic Data
+
+**Modularity:** Assignment and State, Environment Model, Streams
+
+**Metalinguistic:** Interpreters, Lazy Evaluation, Register Machines
+
+**Auto-activates when:** Discussing abstraction, functional programming, interpreters, compilation
+
+---
 
 ## Documentation Format
 
-Each pattern/structure includes:
+Each topic includes:
 
-- **Intent** - Core purpose in one paragraph
-- **Motivation** - Real-world scenario explaining why it's needed
-- **Structure** - ASCII diagrams showing relationships
-- **Participants** - Roles and responsibilities
+- **Definition/Intent** - Core concept in one paragraph
+- **When to Use** - Practical guidance with decision trees
 - **Implementation** - Language-agnostic pseudocode
-- **Example** - Complete working example
-- **When to Use / When NOT to Use** - Practical guidance
-- **Related Patterns** - Connections to other patterns
+- **Examples** - Complete working examples
+- **Trade-offs** - Comparison tables and alternatives
+- **Summary** - Quick reference tables
 
 ## Language Support
 
@@ -167,14 +178,13 @@ All examples use language-agnostic pseudocode designed to translate easily to:
 
 ## Contributing
 
-Contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+Contributions welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
-Ideas for contributions:
-- Additional patterns (SOLID, GRASP, enterprise patterns)
-- Language-specific examples
-- More data structures (persistent, probabilistic)
+Ideas:
+- Additional patterns or algorithms
+- Language-specific example translations
 - Improvements to existing documentation
-- Translations
+- New skills from other canonical resources
 
 ## License
 
@@ -182,9 +192,13 @@ MIT License - see [LICENSE](LICENSE) for details.
 
 ## Acknowledgments
 
-- Gang of Four: Erich Gamma, Richard Helm, Ralph Johnson, John Vlissides
-- *Design Patterns: Elements of Reusable Object-Oriented Software* (1994)
-- The software engineering community
+- **Gang of Four:** Gamma, Helm, Johnson, Vlissides
+- **CLRS:** Cormen, Leiserson, Rivest, Stein
+- **Robert C. Martin** (Uncle Bob)
+- **Martin Kleppmann**
+- **Eric Evans**
+- **Andrew Hunt & David Thomas**
+- **Harold Abelson & Gerald Jay Sussman**
 
 ---
 
