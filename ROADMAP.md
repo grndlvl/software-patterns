@@ -66,7 +66,7 @@ Plan to split the current `software-patterns` skill into focused, single-source 
   - Event Storming basics
   - Reference: "Domain-Driven Design" by Eric Evans
 
-- [ ] **Create `pragmatic-programmer` skill**
+- [x] **Create `pragmatic-programmer` skill** ✅
   - DRY (Don't Repeat Yourself) principle
   - Orthogonality and decoupling
   - Tracer bullets and prototyping
@@ -80,6 +80,7 @@ Plan to split the current `software-patterns` skill into focused, single-source 
   - Testing strategies
   - Automation principles
   - Reference: "The Pragmatic Programmer" by Hunt and Thomas
+  - **Location:** `.claude/skills/pragmatic-programmer/` (19 files)
 
 - [ ] **Create `sicp` skill**
   - Abstraction with procedures
