@@ -53,7 +53,7 @@ Plan to split the current `software-patterns` skill into focused, single-source 
   - Reference: "Designing Data-Intensive Applications" by Martin Kleppmann
   - **Location:** `.claude/skills/ddia/` (21 files)
 
-- [ ] **Create `ddd` skill**
+- [x] **Create `ddd` skill** ✅
   - Ubiquitous Language
   - Bounded Contexts and Context Maps
   - Entities vs Value Objects
@@ -66,6 +66,7 @@ Plan to split the current `software-patterns` skill into focused, single-source 
   - Strategic vs Tactical DDD
   - Event Storming basics
   - Reference: "Domain-Driven Design" by Eric Evans
+  - **Location:** `.claude/skills/ddd/` (15 files)
 
 - [x] **Create `pragmatic-programmer` skill** ✅
   - DRY (Don't Repeat Yourself) principle
@@ -83,7 +84,7 @@ Plan to split the current `software-patterns` skill into focused, single-source 
   - Reference: "The Pragmatic Programmer" by Hunt and Thomas
   - **Location:** `.claude/skills/pragmatic-programmer/` (19 files)
 
-- [ ] **Create `sicp` skill**
+- [x] **Create `sicp` skill** ✅
   - Abstraction with procedures
   - Higher-order functions
   - Data abstraction and representation
@@ -93,6 +94,7 @@ Plan to split the current `software-patterns` skill into focused, single-source 
   - Register machines and compilation
   - Recursion patterns (tree, tail, mutual)
   - Reference: "Structure and Interpretation of Computer Programs" by Abelson and Sussman
+  - **Location:** `.claude/skills/sicp/` (13 files)
 
 ## Final State
 
