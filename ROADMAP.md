@@ -41,16 +41,17 @@ Plan to split the current `software-patterns` skill into focused, single-source 
   - Reference: "Clean Code" by Robert Martin
   - **Location:** `.claude/skills/clean-code/` (14 files)
 
-- [ ] **Create `ddia` skill**
+- [x] **Create `ddia` skill** ✅
   - Data models (relational, document, graph)
-  - Storage engines (LSM trees, B-trees)
+  - Storage engines (LSM trees, B-trees, column storage)
   - Replication strategies (leader-follower, multi-leader, leaderless)
   - Partitioning/sharding patterns
-  - Transactions and consistency models (ACID, BASE, linearizability)
-  - Consensus algorithms (Paxos, Raft)
+  - Transactions and consistency models (ACID, isolation levels, distributed)
+  - Consensus algorithms (Paxos, Raft, Zab)
   - Stream processing vs batch processing
   - Event sourcing and CQRS
   - Reference: "Designing Data-Intensive Applications" by Martin Kleppmann
+  - **Location:** `.claude/skills/ddia/` (21 files)
 
 - [ ] **Create `ddd` skill**
   - Ubiquitous Language
