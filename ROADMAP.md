@@ -29,8 +29,9 @@ Plan to split the current `software-patterns` skill into focused, single-source 
 ## Phase 2: New Biblical Resources
 
 - [ ] **Create `clean-code` skill**
+  - SOLID Principles (SRP, OCP, LSP, ISP, DIP)
   - Meaningful names (classes, methods, variables)
-  - Functions (small, single responsibility, command-query separation)
+  - Functions (small, single purpose, command-query separation)
   - Comments (when to use, when to avoid)
   - Formatting and code organization
   - Error handling patterns
