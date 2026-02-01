@@ -45,6 +45,30 @@ Transform the 147-file software patterns knowledge base from a passive reference
 | Data format | **YAML** | More readable, easier to maintain for knowledge base content |
 | Existing ASCII guides | **Keep both** | ASCII for human reading, YAML for machine navigation |
 | Proactive suggestions | **Moderate** | Suggest during planning phases when clear indicators present |
+| Coverage | **100%** | Every file in all 7 skills indexed - nothing orphaned |
+
+## Coverage Requirements
+
+**All 147 files must be indexed in problem-taxonomy.yaml:**
+
+| Skill | Files | Items to Index |
+|-------|-------|----------------|
+| gof-patterns | 25 | 23 patterns (creational, structural, behavioral) |
+| clrs-algorithms | 40 | ~35 data structures + sorting/graph/string algorithms |
+| clean-code | 14 | 5 SOLID principles + 8 practices |
+| ddia | 21 | 3 data models + 3 storage + 3 replication + partitioning + transactions + consistency + processing |
+| pragmatic-programmer | 19 | 7 principles + 11 practices |
+| ddd | 15 | 4 strategic + 5 tactical + 3 patterns + 2 practices |
+| sicp | 13 | 3 procedures + 3 data + 3 modularity + 3 metalinguistic |
+| **Total** | **147** | **~150 taxonomy entries** |
+
+Each entry includes:
+- Unique ID
+- Keywords for semantic matching
+- Question formulation ("Need to X?")
+- Skill + file reference
+- Related entries (cross-links)
+- Constraints/considerations
 
 ## Implementation Phases
 
@@ -234,13 +258,27 @@ Agent:
 
 | Phase | Files | Effort | Priority |
 |-------|-------|--------|----------|
-| 1 | SKILL.md, problem-taxonomy.yaml, composite-solutions.yaml | High | **Critical** |
-| 2 | 3 decision tree YAMLs | Medium | High |
+| 1 | SKILL.md, problem-taxonomy.yaml (~150 entries), composite-solutions.yaml | **High** | **Critical** |
+| 2 | 3 decision tree YAMLs (full coverage of decision paths) | Medium | High |
 | 3 | triggers.yaml | Low | Medium |
 | 4 | templates + quick-ref (4 files) | Medium | Medium |
 | 5 | examples (2 files) | Low | Low |
 
-**Total: ~14 new files**
+**Total: ~14 new files, ~150 taxonomy entries for 100% coverage**
+
+### Phase 1 Breakdown (100% Coverage)
+
+| Skill | Entries | Complexity |
+|-------|---------|------------|
+| gof-patterns | 23 | Medium (well-defined patterns) |
+| clrs-algorithms | 35 | High (many cross-references) |
+| clean-code | 13 | Low (clear principles) |
+| ddia | 18 | High (interconnected topics) |
+| pragmatic-programmer | 18 | Low (distinct practices) |
+| ddd | 14 | Medium (strategic/tactical split) |
+| sicp | 12 | Medium (conceptual) |
+| **Composite solutions** | ~15 | High (multi-skill orchestration) |
+| **Total** | **~148** | |
 
 ## Verification
 
