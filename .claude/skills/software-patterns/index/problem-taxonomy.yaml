@@ -1,0 +1,2303 @@
+# Problem Taxonomy for Software Patterns Skills
+# Indexes all 147 files across 7 skills for semantic problem matching
+#
+# Structure:
+#   id: unique-kebab-case-id
+#   keywords: [terms for semantic matching]
+#   question: "Problem formulation"
+#   skills: [{skill, file, relevance: primary|secondary}]
+#   constraints: [considerations for choosing this solution]
+#   related: [cross-references to related entries]
+#
+# Coverage: 147 files across 7 skills
+#   - gof-patterns: 25 files (23 patterns + SKILL.md + pattern-selection.md)
+#   - clrs-algorithms: 40 files (37 data structures + 3 guides)
+#   - clean-code: 14 files (5 SOLID + 8 practices + SKILL.md)
+#   - pragmatic-programmer: 19 files (7 principles + 11 practices + SKILL.md)
+#   - ddia: 21 files (20 topics + SKILL.md)
+#   - ddd: 15 files (14 concepts + SKILL.md)
+#   - sicp: 13 files (12 topics + SKILL.md)
+
+problems:
+  # ===========================================================================
+  # OBJECT CREATION PROBLEMS (GoF Creational)
+  # ===========================================================================
+
+  - id: create-families-of-objects
+    keywords: ["factory", "family", "related objects", "product family", "platform", "theme", "toolkit", "widget set", "cross-platform", "ui kit"]
+    question: "Need to create families of related objects without specifying concrete classes?"
+    skills:
+      - skill: gof-patterns
+        file: gof-creational/abstract-factory.md
+        relevance: primary
+      - skill: ddd
+        file: patterns/factories.md
+        relevance: secondary
+    constraints:
+      - "Products must be used together consistently"
+      - "System should be independent of how products are created"
+      - "Good for cross-platform UI toolkits"
+    related: [create-single-product, configure-complex-object, create-domain-objects]
+
+  - id: create-single-product
+    keywords: ["factory", "instantiation", "product", "create object", "virtual constructor", "polymorphic creation", "subclass decides"]
+    question: "Need to let subclasses decide which class to instantiate?"
+    skills:
+      - skill: gof-patterns
+        file: gof-creational/factory-method.md
+        relevance: primary
+      - skill: ddd
+        file: patterns/factories.md
+        relevance: secondary
+    constraints:
+      - "Class cannot anticipate the class of objects it must create"
+      - "Subclasses should specify objects to create"
+      - "Simpler than Abstract Factory for single products"
+    related: [create-families-of-objects, template-algorithm, create-domain-objects]
+
+  - id: configure-complex-object
+    keywords: ["builder", "construction", "step by step", "fluent", "complex object", "telescoping constructor", "immutable", "configuration"]
+    question: "Need to construct complex objects step by step with different representations?"
+    skills:
+      - skill: gof-patterns
+        file: gof-creational/builder.md
+        relevance: primary
+      - skill: clean-code
+        file: practices/functions.md
+        relevance: secondary
+    constraints:
+      - "Construction process must allow different representations"
+      - "Object has many optional parameters"
+      - "Avoid telescoping constructors"
+    related: [create-families-of-objects, function-design]
+
+  - id: clone-existing-object
+    keywords: ["prototype", "clone", "copy", "duplicate", "deep copy", "shallow copy", "registry", "template instance"]
+    question: "Need to create objects by copying an existing instance?"
+    skills:
+      - skill: gof-patterns
+        file: gof-creational/prototype.md
+        relevance: primary
+    constraints:
+      - "Classes to instantiate are specified at runtime"
+      - "Avoiding parallel hierarchy of factories"
+      - "Need to handle deep vs shallow copy semantics"
+    related: [create-single-product, object-caching]
+
+  - id: ensure-single-instance
+    keywords: ["singleton", "global", "one instance", "shared state", "registry", "configuration", "global access"]
+    question: "Need to ensure a class has only one instance with global access?"
+    skills:
+      - skill: gof-patterns
+        file: gof-creational/singleton.md
+        relevance: primary
+      - skill: sicp
+        file: modularity/assignment-and-state.md
+        relevance: secondary
+    constraints:
+      - "Consider thread safety implications"
+      - "Often considered an anti-pattern; evaluate alternatives first"
+      - "Makes testing harder due to global state"
+      - "Consider dependency injection as alternative"
+    related: [manage-shared-state, dependency-injection]
+
+  # ===========================================================================
+  # INTERFACE ADAPTATION PROBLEMS (GoF Structural)
+  # ===========================================================================
+
+  - id: incompatible-interface
+    keywords: ["adapter", "wrapper", "compatibility", "legacy", "interface mismatch", "convert", "translate", "integration"]
+    question: "Need to make incompatible interfaces work together?"
+    skills:
+      - skill: gof-patterns
+        file: gof-structural/adapter.md
+        relevance: primary
+      - skill: ddd
+        file: strategic/anti-corruption-layer.md
+        relevance: secondary
+    constraints:
+      - "Cannot modify the existing interface"
+      - "Need to reuse existing class with different interface"
+      - "Choose class vs object adapter based on needs"
+    related: [protect-from-external-systems, simplify-complex-interface]
+
+  - id: separate-abstraction-implementation
+    keywords: ["bridge", "abstraction", "implementation", "decouple", "vary independently", "platform", "driver", "renderer"]
+    question: "Need abstraction and implementation to vary independently?"
+    skills:
+      - skill: gof-patterns
+        file: gof-structural/bridge.md
+        relevance: primary
+      - skill: clean-code
+        file: solid/dependency-inversion.md
+        relevance: secondary
+    constraints:
+      - "Avoid permanent binding between abstraction and implementation"
+      - "Both should be extensible by subclassing"
+      - "Useful for platform-independent code"
+    related: [dependency-injection, plugin-architecture]
+
+  - id: tree-structure
+    keywords: ["composite", "tree", "hierarchy", "part-whole", "recursive", "nested", "container", "component", "file system"]
+    question: "Need to treat individual objects and compositions uniformly?"
+    skills:
+      - skill: gof-patterns
+        file: gof-structural/composite.md
+        relevance: primary
+      - skill: clrs-algorithms
+        file: data-structures/trees/binary-tree.md
+        relevance: secondary
+      - skill: sicp
+        file: data/hierarchical-data.md
+        relevance: secondary
+    constraints:
+      - "Want clients to ignore difference between compositions and individuals"
+      - "Structure is recursive"
+      - "Common for file systems, UI components, organization charts"
+    related: [traverse-structure, hierarchical-data-structures, hierarchical-data-design]
+
+  - id: add-responsibilities-dynamically
+    keywords: ["decorator", "wrapper", "extend", "dynamic", "responsibilities", "flexible alternative", "stacking", "layering"]
+    question: "Need to add responsibilities to objects dynamically?"
+    skills:
+      - skill: gof-patterns
+        file: gof-structural/decorator.md
+        relevance: primary
+      - skill: sicp
+        file: procedures/higher-order-functions.md
+        relevance: secondary
+    constraints:
+      - "Extension by subclassing is impractical"
+      - "Responsibilities can be withdrawn"
+      - "Can stack multiple decorators"
+    related: [control-object-access, compose-behaviors, higher-order-functions]
+
+  - id: simplify-complex-interface
+    keywords: ["facade", "simplify", "subsystem", "unified interface", "api", "gateway", "wrapper", "simplification"]
+    question: "Need to provide a simplified interface to a complex subsystem?"
+    skills:
+      - skill: gof-patterns
+        file: gof-structural/facade.md
+        relevance: primary
+      - skill: ddia
+        file: data-models/relational.md
+        relevance: secondary
+    constraints:
+      - "Clients don't need full subsystem functionality"
+      - "Want to layer the subsystem"
+      - "Doesn't prevent direct subsystem access if needed"
+    related: [incompatible-interface, reduce-coupling]
+
+  - id: share-fine-grained-objects
+    keywords: ["flyweight", "sharing", "memory", "intrinsic", "extrinsic", "pooling", "caching", "memory optimization"]
+    question: "Need to support large numbers of fine-grained objects efficiently?"
+    skills:
+      - skill: gof-patterns
+        file: gof-structural/flyweight.md
+        relevance: primary
+      - skill: clrs-algorithms
+        file: data-structures/hash-based/hash-table.md
+        relevance: secondary
+    constraints:
+      - "Application uses large number of objects"
+      - "Storage costs are high"
+      - "Most object state can be made extrinsic"
+      - "Objects can be shared once extrinsic state is removed"
+    related: [object-caching, memory-optimization, fast-key-lookup]
+
+  - id: control-object-access
+    keywords: ["proxy", "surrogate", "placeholder", "lazy", "remote", "protection", "caching", "virtual", "smart reference"]
+    question: "Need to control access to an object?"
+    skills:
+      - skill: gof-patterns
+        file: gof-structural/proxy.md
+        relevance: primary
+    constraints:
+      - "Need lazy initialization, access control, or remote access"
+      - "Want to add functionality without changing original"
+      - "Types: virtual, remote, protection, smart reference"
+    related: [add-responsibilities-dynamically, object-caching, lazy-evaluation]
+
+  # ===========================================================================
+  # BEHAVIORAL PROBLEMS - ALGORITHMS (GoF Behavioral)
+  # ===========================================================================
+
+  - id: vary-algorithm
+    keywords: ["strategy", "algorithm", "policy", "interchangeable", "family of algorithms", "encapsulate", "runtime selection"]
+    question: "Need to define a family of interchangeable algorithms?"
+    skills:
+      - skill: gof-patterns
+        file: gof-behavioral/strategy.md
+        relevance: primary
+      - skill: sicp
+        file: procedures/higher-order-functions.md
+        relevance: secondary
+      - skill: clean-code
+        file: solid/open-closed.md
+        relevance: secondary
+    constraints:
+      - "Many related classes differ only in behavior"
+      - "Need different variants of an algorithm"
+      - "Algorithm selection at runtime"
+    related: [vary-state-behavior, template-algorithm, higher-order-functions, extend-without-modifying]
+
+  - id: template-algorithm
+    keywords: ["template method", "skeleton", "hook", "algorithm steps", "invariant", "variant", "hollywood principle"]
+    question: "Need to define algorithm skeleton with customizable steps?"
+    skills:
+      - skill: gof-patterns
+        file: gof-behavioral/template-method.md
+        relevance: primary
+      - skill: sicp
+        file: procedures/abstraction.md
+        relevance: secondary
+    constraints:
+      - "Want to implement invariant parts once"
+      - "Subclasses should only redefine certain steps"
+      - "Hollywood Principle: don't call us, we'll call you"
+    related: [vary-algorithm, create-single-product, procedural-abstraction]
+
+  - id: traverse-structure
+    keywords: ["iterator", "traversal", "cursor", "aggregate", "sequential access", "collection", "enumeration"]
+    question: "Need to access elements sequentially without exposing structure?"
+    skills:
+      - skill: gof-patterns
+        file: gof-behavioral/iterator.md
+        relevance: primary
+      - skill: clrs-algorithms
+        file: data-structures/linear/linked-list.md
+        relevance: secondary
+      - skill: sicp
+        file: modularity/streams.md
+        relevance: secondary
+    constraints:
+      - "Want to support multiple traversals"
+      - "Provide uniform interface for different structures"
+      - "External vs internal iterators"
+    related: [tree-structure, process-collection, stream-processing-sicp]
+
+  - id: interpret-language
+    keywords: ["interpreter", "grammar", "language", "parse", "dsl", "expression", "syntax", "ast"]
+    question: "Need to interpret sentences in a language?"
+    skills:
+      - skill: gof-patterns
+        file: gof-behavioral/interpreter.md
+        relevance: primary
+      - skill: sicp
+        file: metalinguistic/interpreters.md
+        relevance: secondary
+      - skill: pragmatic-programmer
+        file: principles/domain-languages.md
+        relevance: secondary
+    constraints:
+      - "Grammar is simple"
+      - "Efficiency is not critical"
+      - "Consider parser generators for complex grammars"
+    related: [domain-specific-language, symbolic-computation, build-interpreter]
+
+  - id: add-operations-without-changing
+    keywords: ["visitor", "operations", "element", "double dispatch", "traverse", "heterogeneous", "extensible operations"]
+    question: "Need to add operations to objects without changing their classes?"
+    skills:
+      - skill: gof-patterns
+        file: gof-behavioral/visitor.md
+        relevance: primary
+    constraints:
+      - "Object structure classes rarely change"
+      - "Need to define many distinct operations"
+      - "Breaks encapsulation by requiring element interface"
+    related: [traverse-structure, tree-structure]
+
+  # ===========================================================================
+  # BEHAVIORAL PROBLEMS - STATE AND COMMUNICATION (GoF Behavioral)
+  # ===========================================================================
+
+  - id: vary-state-behavior
+    keywords: ["state", "state machine", "behavior", "context", "transition", "finite state", "fsm", "workflow"]
+    question: "Need object behavior to change based on internal state?"
+    skills:
+      - skill: gof-patterns
+        file: gof-behavioral/state.md
+        relevance: primary
+      - skill: sicp
+        file: modularity/assignment-and-state.md
+        relevance: secondary
+    constraints:
+      - "Object behavior depends on state"
+      - "Operations have large multipart conditionals"
+      - "State transitions are explicit"
+    related: [vary-algorithm, manage-shared-state]
+
+  - id: decouple-sender-receiver
+    keywords: ["mediator", "colleague", "hub", "central", "communication", "loose coupling", "coordinator"]
+    question: "Need to reduce chaotic dependencies between objects?"
+    skills:
+      - skill: gof-patterns
+        file: gof-behavioral/mediator.md
+        relevance: primary
+      - skill: pragmatic-programmer
+        file: practices/decoupling.md
+        relevance: secondary
+    constraints:
+      - "Objects communicate in well-defined but complex ways"
+      - "Want to customize behavior distributed between classes"
+      - "Centralizes control logic"
+    related: [reduce-coupling, event-notification, decoupling-practice]
+
+  - id: event-notification
+    keywords: ["observer", "publish", "subscribe", "event", "notification", "dependency", "listener", "reactive"]
+    question: "Need to notify multiple objects about state changes?"
+    skills:
+      - skill: gof-patterns
+        file: gof-behavioral/observer.md
+        relevance: primary
+      - skill: ddd
+        file: tactical/domain-events.md
+        relevance: secondary
+      - skill: ddia
+        file: processing/event-sourcing.md
+        relevance: secondary
+    constraints:
+      - "Change to one object requires changing others"
+      - "Don't know how many objects need to change"
+      - "Push vs pull models"
+    related: [decouple-sender-receiver, domain-events, event-sourcing]
+
+  - id: pass-request-along-chain
+    keywords: ["chain of responsibility", "handler", "successor", "request", "pipeline", "middleware", "filter chain"]
+    question: "Need to pass requests along a chain of handlers?"
+    skills:
+      - skill: gof-patterns
+        file: gof-behavioral/chain-of-responsibility.md
+        relevance: primary
+    constraints:
+      - "More than one object may handle a request"
+      - "Handler isn't known a priori"
+      - "Request may go unhandled"
+    related: [decouple-sender-receiver, pipeline-processing]
+
+  - id: encapsulate-request
+    keywords: ["command", "action", "transaction", "undo", "redo", "queue", "callback", "operation", "invoker"]
+    question: "Need to parameterize objects with operations?"
+    skills:
+      - skill: gof-patterns
+        file: gof-behavioral/command.md
+        relevance: primary
+      - skill: sicp
+        file: procedures/higher-order-functions.md
+        relevance: secondary
+    constraints:
+      - "Need to queue, log, or support undoable operations"
+      - "Want to parameterize objects with actions"
+      - "Supports macro commands"
+    related: [undo-redo, transaction-support, higher-order-functions]
+
+  - id: undo-redo
+    keywords: ["memento", "snapshot", "undo", "redo", "checkpoint", "restore", "history", "state capture"]
+    question: "Need to capture and restore an object's internal state?"
+    skills:
+      - skill: gof-patterns
+        file: gof-behavioral/memento.md
+        relevance: primary
+      - skill: ddia
+        file: processing/event-sourcing.md
+        relevance: secondary
+    constraints:
+      - "Need to restore object to previous state"
+      - "Must not violate encapsulation"
+      - "Caretaker manages memento lifecycle"
+    related: [encapsulate-request, event-sourcing]
+
+  # ===========================================================================
+  # PATTERN SELECTION AND OVERVIEW (GoF)
+  # ===========================================================================
+
+  - id: pattern-selection
+    keywords: ["pattern selection", "choose pattern", "design pattern", "which pattern", "gof", "catalog"]
+    question: "How to choose the right design pattern?"
+    skills:
+      - skill: gof-patterns
+        file: pattern-selection.md
+        relevance: primary
+    constraints:
+      - "Understand the problem first"
+      - "Patterns solve specific problems"
+      - "Consider intent, applicability, consequences"
+    related: [gof-overview, choose-data-structure]
+
+  - id: gof-overview
+    keywords: ["gof", "gang of four", "design patterns", "creational", "structural", "behavioral", "catalog"]
+    question: "What are the Gang of Four design patterns?"
+    skills:
+      - skill: gof-patterns
+        file: SKILL.md
+        relevance: primary
+    constraints:
+      - "23 classic patterns in three categories"
+      - "Creational: object creation mechanisms"
+      - "Structural: composition of classes/objects"
+      - "Behavioral: communication between objects"
+    related: [pattern-selection, clean-code-overview]
+
+  # ===========================================================================
+  # DATA STRUCTURE SELECTION (CLRS)
+  # ===========================================================================
+
+  - id: choose-data-structure
+    keywords: ["data structure", "selection", "performance", "tradeoff", "complexity", "big-o", "choose"]
+    question: "Need help choosing the right data structure?"
+    skills:
+      - skill: clrs-algorithms
+        file: data-structure-selection.md
+        relevance: primary
+      - skill: clrs-algorithms
+        file: complexity-cheat-sheet.md
+        relevance: secondary
+    constraints:
+      - "Consider access patterns (read vs write heavy)"
+      - "Consider memory constraints"
+      - "Consider ordering requirements"
+    related: [understand-complexity, optimize-performance]
+
+  - id: understand-complexity
+    keywords: ["complexity", "big-o", "time", "space", "asymptotic", "performance", "analysis", "theta", "omega"]
+    question: "Need to understand algorithmic complexity?"
+    skills:
+      - skill: clrs-algorithms
+        file: complexity-cheat-sheet.md
+        relevance: primary
+      - skill: clrs-algorithms
+        file: data-structure-selection.md
+        relevance: secondary
+    constraints:
+      - "Amortized vs worst case matters for your use case"
+      - "Space complexity may be as important as time"
+      - "Consider average case for randomized algorithms"
+    related: [choose-data-structure, optimize-performance]
+
+  - id: clrs-overview
+    keywords: ["clrs", "algorithms", "data structures", "introduction to algorithms", "cormen"]
+    question: "What data structures and algorithms should I know?"
+    skills:
+      - skill: clrs-algorithms
+        file: SKILL.md
+        relevance: primary
+    constraints:
+      - "Foundational computer science"
+      - "Understand complexity analysis"
+      - "Know when to use each structure"
+    related: [choose-data-structure, understand-complexity]
+
+  # ===========================================================================
+  # LINEAR DATA STRUCTURES (CLRS)
+  # ===========================================================================
+
+  - id: fixed-size-collection
+    keywords: ["array", "contiguous", "index", "random access", "fixed size", "cache friendly", "static"]
+    question: "Need fast random access with fixed size?"
+    skills:
+      - skill: clrs-algorithms
+        file: data-structures/linear/array.md
+        relevance: primary
+    constraints:
+      - "Size known at compile/creation time"
+      - "Need O(1) random access"
+      - "Cache-friendly due to contiguous memory"
+    related: [growable-collection, choose-data-structure]
+
+  - id: growable-collection
+    keywords: ["dynamic array", "vector", "arraylist", "growable", "resizable", "amortized", "list"]
+    question: "Need an array that can grow dynamically?"
+    skills:
+      - skill: clrs-algorithms
+        file: data-structures/linear/dynamic-array.md
+        relevance: primary
+    constraints:
+      - "Size not known ahead of time"
+      - "Amortized O(1) append is acceptable"
+      - "Doubling strategy for growth"
+    related: [fixed-size-collection, efficient-insertions]
+
+  - id: efficient-insertions
+    keywords: ["linked list", "insertion", "deletion", "node", "pointer", "sequential", "singly", "doubly"]
+    question: "Need efficient insertions/deletions at arbitrary positions?"
+    skills:
+      - skill: clrs-algorithms
+        file: data-structures/linear/linked-list.md
+        relevance: primary
+    constraints:
+      - "Frequent insertions/deletions in middle"
+      - "Don't need random access"
+      - "Extra memory for pointers"
+    related: [growable-collection, fifo-processing]
+
+  - id: lifo-processing
+    keywords: ["stack", "lifo", "push", "pop", "last in first out", "recursion", "backtracking", "call stack"]
+    question: "Need last-in-first-out (LIFO) access?"
+    skills:
+      - skill: clrs-algorithms
+        file: data-structures/linear/stack.md
+        relevance: primary
+      - skill: sicp
+        file: procedures/recursion-patterns.md
+        relevance: secondary
+    constraints:
+      - "Only need access to most recent element"
+      - "Useful for recursion simulation, undo, parsing"
+      - "O(1) push and pop"
+    related: [fifo-processing, recursion-patterns]
+
+  - id: fifo-processing
+    keywords: ["queue", "fifo", "enqueue", "dequeue", "first in first out", "bfs", "scheduling", "buffer"]
+    question: "Need first-in-first-out (FIFO) access?"
+    skills:
+      - skill: clrs-algorithms
+        file: data-structures/linear/queue.md
+        relevance: primary
+    constraints:
+      - "Process in order of arrival"
+      - "Useful for BFS, scheduling, buffering"
+      - "O(1) enqueue and dequeue"
+    related: [lifo-processing, double-ended-access]
+
+  - id: double-ended-access
+    keywords: ["deque", "double ended", "front", "back", "sliding window", "both ends"]
+    question: "Need efficient access at both ends?"
+    skills:
+      - skill: clrs-algorithms
+        file: data-structures/linear/deque.md
+        relevance: primary
+    constraints:
+      - "Need to add/remove from both ends"
+      - "Useful for sliding window problems"
+      - "O(1) operations at both ends"
+    related: [fifo-processing, lifo-processing]
+
+  # ===========================================================================
+  # TREE DATA STRUCTURES (CLRS)
+  # ===========================================================================
+
+  - id: hierarchical-data-structures
+    keywords: ["binary tree", "tree", "hierarchy", "parent", "child", "traversal", "recursive", "node"]
+    question: "Need to represent hierarchical relationships?"
+    skills:
+      - skill: clrs-algorithms
+        file: data-structures/trees/binary-tree.md
+        relevance: primary
+      - skill: sicp
+        file: data/hierarchical-data.md
+        relevance: secondary
+    constraints:
+      - "Data has parent-child relationships"
+      - "Need various traversal orders (pre, in, post, level)"
+      - "Foundation for many other tree types"
+    related: [tree-structure, ordered-data, hierarchical-data-design]
+
+  - id: ordered-data
+    keywords: ["bst", "binary search tree", "ordered", "sorted", "search", "inorder", "lookup"]
+    question: "Need to maintain ordered data with search?"
+    skills:
+      - skill: clrs-algorithms
+        file: data-structures/trees/bst.md
+        relevance: primary
+    constraints:
+      - "Need ordered traversal"
+      - "Search, insert, delete operations needed"
+      - "May degenerate to O(n) without balancing"
+    related: [balanced-tree, hierarchical-data-structures]
+
+  - id: balanced-tree
+    keywords: ["avl", "balanced", "height balanced", "rotation", "logarithmic", "strict balance"]
+    question: "Need guaranteed O(log n) operations with strict balance?"
+    skills:
+      - skill: clrs-algorithms
+        file: data-structures/trees/avl-tree.md
+        relevance: primary
+      - skill: clrs-algorithms
+        file: data-structures/trees/red-black-tree.md
+        relevance: secondary
+    constraints:
+      - "Need guaranteed worst-case O(log n)"
+      - "More rotations than red-black but stricter balance"
+      - "Better for lookup-heavy workloads"
+    related: [ordered-data, red-black-operations]
+
+  - id: red-black-operations
+    keywords: ["red black", "balanced", "color", "insertion heavy", "rotation", "rb tree"]
+    question: "Need balanced tree optimized for insertions?"
+    skills:
+      - skill: clrs-algorithms
+        file: data-structures/trees/red-black-tree.md
+        relevance: primary
+      - skill: clrs-algorithms
+        file: data-structures/trees/avl-tree.md
+        relevance: secondary
+    constraints:
+      - "More insertions than lookups"
+      - "Fewer rotations than AVL"
+      - "Used in many standard libraries"
+    related: [balanced-tree, ordered-data]
+
+  - id: disk-based-storage
+    keywords: ["b-tree", "btree", "disk", "database", "index", "block", "external", "page"]
+    question: "Need tree structure optimized for disk access?"
+    skills:
+      - skill: clrs-algorithms
+        file: data-structures/trees/b-tree.md
+        relevance: primary
+      - skill: ddia
+        file: storage/b-trees.md
+        relevance: primary
+    constraints:
+      - "Data doesn't fit in memory"
+      - "Minimize disk I/O operations"
+      - "High branching factor"
+    related: [database-indexing, lsm-tree-storage]
+
+  - id: priority-queue
+    keywords: ["heap", "priority queue", "min heap", "max heap", "extract min", "heapsort", "priority"]
+    question: "Need to efficiently access min/max element?"
+    skills:
+      - skill: clrs-algorithms
+        file: data-structures/trees/heap.md
+        relevance: primary
+      - skill: clrs-algorithms
+        file: data-structures/advanced/binomial-heap.md
+        relevance: secondary
+      - skill: clrs-algorithms
+        file: data-structures/advanced/fibonacci-heap.md
+        relevance: secondary
+    constraints:
+      - "Only need access to min or max"
+      - "Need efficient insert and extract"
+      - "O(log n) insert and extract-min"
+    related: [sorting-data, graph-algorithms, mergeable-heaps]
+
+  - id: interval-queries
+    keywords: ["interval tree", "range", "overlap", "intersection", "scheduling", "calendar", "time range"]
+    question: "Need to find overlapping intervals efficiently?"
+    skills:
+      - skill: clrs-algorithms
+        file: data-structures/trees/interval-tree.md
+        relevance: primary
+    constraints:
+      - "Intervals may overlap"
+      - "Need to query for intersections"
+      - "Based on augmented BST"
+    related: [range-queries, multidimensional-search]
+
+  - id: multidimensional-search
+    keywords: ["kd-tree", "k-dimensional", "spatial", "nearest neighbor", "range search", "geometric", "point cloud"]
+    question: "Need to search in multidimensional space?"
+    skills:
+      - skill: clrs-algorithms
+        file: data-structures/trees/kd-tree.md
+        relevance: primary
+    constraints:
+      - "Points in k-dimensional space"
+      - "Nearest neighbor or range queries"
+      - "Performance degrades with high dimensions"
+    related: [interval-queries, graph-algorithms]
+
+  - id: rank-statistics
+    keywords: ["order statistic", "rank", "kth smallest", "select", "median", "percentile"]
+    question: "Need to find kth smallest element efficiently?"
+    skills:
+      - skill: clrs-algorithms
+        file: data-structures/trees/order-statistic-tree.md
+        relevance: primary
+    constraints:
+      - "Need both order statistics and dynamic updates"
+      - "Rank queries are frequent"
+      - "Augmented red-black tree"
+    related: [ordered-data, balanced-tree]
+
+  - id: self-adjusting-tree
+    keywords: ["splay tree", "self adjusting", "amortized", "locality", "cache", "working set", "move to front"]
+    question: "Need tree that adapts to access patterns?"
+    skills:
+      - skill: clrs-algorithms
+        file: data-structures/trees/splay-tree.md
+        relevance: primary
+    constraints:
+      - "Access patterns have locality"
+      - "Amortized bounds are acceptable"
+      - "No extra storage for balance info"
+    related: [balanced-tree, object-caching]
+
+  - id: randomized-balance
+    keywords: ["treap", "randomized", "heap property", "probabilistic", "simple implementation", "random priority"]
+    question: "Need simple balanced tree with probabilistic guarantees?"
+    skills:
+      - skill: clrs-algorithms
+        file: data-structures/trees/treap.md
+        relevance: primary
+    constraints:
+      - "Simpler implementation preferred"
+      - "Expected O(log n) is acceptable"
+      - "Combines BST and heap properties"
+    related: [balanced-tree, probabilistic-membership]
+
+  - id: prefix-search
+    keywords: ["trie", "prefix tree", "autocomplete", "dictionary", "prefix matching", "string search", "radix"]
+    question: "Need efficient prefix-based string search?"
+    skills:
+      - skill: clrs-algorithms
+        file: data-structures/trees/trie.md
+        relevance: primary
+      - skill: clrs-algorithms
+        file: data-structures/strings/string-algorithms.md
+        relevance: secondary
+    constraints:
+      - "Need prefix matching or autocomplete"
+      - "String keys"
+      - "O(m) lookup where m is key length"
+    related: [string-pattern-matching, suffix-structures]
+
+  # ===========================================================================
+  # HASH-BASED STRUCTURES (CLRS)
+  # ===========================================================================
+
+  - id: fast-key-lookup
+    keywords: ["hash table", "hash map", "dictionary", "key value", "O(1) lookup", "associative", "map"]
+    question: "Need O(1) average key-value lookup?"
+    skills:
+      - skill: clrs-algorithms
+        file: data-structures/hash-based/hash-table.md
+        relevance: primary
+    constraints:
+      - "Keys are hashable"
+      - "Don't need ordering"
+      - "Handle collisions (chaining vs open addressing)"
+    related: [unique-collection, probabilistic-membership]
+
+  - id: unique-collection
+    keywords: ["hash set", "set", "unique", "membership", "deduplication", "distinct", "contains"]
+    question: "Need to track unique elements efficiently?"
+    skills:
+      - skill: clrs-algorithms
+        file: data-structures/hash-based/hash-set.md
+        relevance: primary
+    constraints:
+      - "Only need membership testing"
+      - "Elements are hashable"
+      - "No key-value pairs needed"
+    related: [fast-key-lookup, probabilistic-membership]
+
+  - id: probabilistic-membership
+    keywords: ["bloom filter", "probabilistic", "membership", "false positive", "space efficient", "approximate"]
+    question: "Need space-efficient approximate membership testing?"
+    skills:
+      - skill: clrs-algorithms
+        file: data-structures/hash-based/bloom-filter.md
+        relevance: primary
+    constraints:
+      - "False positives acceptable"
+      - "No false negatives"
+      - "Memory constrained"
+      - "Cannot delete elements (standard version)"
+    related: [unique-collection, fast-key-lookup]
+
+  # ===========================================================================
+  # GRAPH STRUCTURES AND ALGORITHMS (CLRS)
+  # ===========================================================================
+
+  - id: sparse-graph
+    keywords: ["adjacency list", "sparse", "graph representation", "edges", "neighbors", "linked"]
+    question: "Need to represent a sparse graph?"
+    skills:
+      - skill: clrs-algorithms
+        file: data-structures/graphs/adjacency-list.md
+        relevance: primary
+    constraints:
+      - "E << V^2 (sparse)"
+      - "Need to iterate neighbors"
+      - "Space efficient for sparse graphs"
+    related: [dense-graph, graph-algorithms]
+
+  - id: dense-graph
+    keywords: ["adjacency matrix", "dense", "graph representation", "edge existence", "weighted", "matrix"]
+    question: "Need to represent a dense graph or check edge existence?"
+    skills:
+      - skill: clrs-algorithms
+        file: data-structures/graphs/adjacency-matrix.md
+        relevance: primary
+    constraints:
+      - "E approaches V^2 (dense)"
+      - "Need O(1) edge existence check"
+      - "Fixed space regardless of edge count"
+    related: [sparse-graph, graph-algorithms]
+
+  - id: graph-algorithms
+    keywords: ["graph algorithm", "bfs", "dfs", "shortest path", "dijkstra", "bellman ford", "mst", "traversal"]
+    question: "Need to solve graph traversal or path problems?"
+    skills:
+      - skill: clrs-algorithms
+        file: data-structures/graphs/graph-algorithms.md
+        relevance: primary
+    constraints:
+      - "Choose algorithm based on graph properties"
+      - "Consider negative weights for shortest path"
+      - "BFS for unweighted, Dijkstra for non-negative, Bellman-Ford for negative"
+    related: [sparse-graph, connected-components]
+
+  - id: flow-optimization
+    keywords: ["network flow", "max flow", "min cut", "ford fulkerson", "bipartite matching", "capacity", "augmenting path"]
+    question: "Need to find maximum flow or minimum cut?"
+    skills:
+      - skill: clrs-algorithms
+        file: data-structures/graphs/network-flow.md
+        relevance: primary
+    constraints:
+      - "Network has capacities"
+      - "Need to maximize throughput"
+      - "Max-flow min-cut theorem"
+    related: [graph-algorithms, optimization]
+
+  - id: connected-components
+    keywords: ["scc", "strongly connected", "kosaraju", "tarjan", "component", "reachability", "cycle"]
+    question: "Need to find strongly connected components?"
+    skills:
+      - skill: clrs-algorithms
+        file: data-structures/graphs/strongly-connected-components.md
+        relevance: primary
+      - skill: clrs-algorithms
+        file: data-structures/advanced/disjoint-set.md
+        relevance: secondary
+    constraints:
+      - "Directed graph"
+      - "Need to identify cyclic components"
+      - "Kosaraju or Tarjan's algorithm"
+    related: [graph-algorithms, disjoint-set-operations]
+
+  # ===========================================================================
+  # ADVANCED DATA STRUCTURES (CLRS)
+  # ===========================================================================
+
+  - id: mergeable-heaps
+    keywords: ["binomial heap", "merge", "union", "priority queue", "decrease key", "consolidate"]
+    question: "Need priority queue with efficient merge?"
+    skills:
+      - skill: clrs-algorithms
+        file: data-structures/advanced/binomial-heap.md
+        relevance: primary
+      - skill: clrs-algorithms
+        file: data-structures/advanced/fibonacci-heap.md
+        relevance: secondary
+    constraints:
+      - "Need to merge heaps"
+      - "Decrease-key operations important"
+      - "O(log n) merge"
+    related: [priority-queue, optimal-decrease-key]
+
+  - id: optimal-decrease-key
+    keywords: ["fibonacci heap", "amortized", "decrease key", "dijkstra", "prim", "optimal", "lazy"]
+    question: "Need optimal amortized decrease-key for graph algorithms?"
+    skills:
+      - skill: clrs-algorithms
+        file: data-structures/advanced/fibonacci-heap.md
+        relevance: primary
+    constraints:
+      - "Many decrease-key operations"
+      - "Dijkstra or Prim's algorithm"
+      - "O(1) amortized decrease-key"
+    related: [mergeable-heaps, graph-algorithms]
+
+  - id: disjoint-set-operations
+    keywords: ["disjoint set", "union find", "connected components", "kruskal", "equivalence", "partition"]
+    question: "Need to track connected components dynamically?"
+    skills:
+      - skill: clrs-algorithms
+        file: data-structures/advanced/disjoint-set.md
+        relevance: primary
+    constraints:
+      - "Union and find operations"
+      - "Kruskal's MST or component tracking"
+      - "Near O(1) amortized with path compression"
+    related: [connected-components, graph-algorithms]
+
+  - id: range-queries
+    keywords: ["segment tree", "range query", "range update", "lazy propagation", "sum", "min", "max", "rmq"]
+    question: "Need efficient range queries with updates?"
+    skills:
+      - skill: clrs-algorithms
+        file: data-structures/advanced/segment-tree.md
+        relevance: primary
+      - skill: clrs-algorithms
+        file: data-structures/advanced/fenwick-tree.md
+        relevance: secondary
+    constraints:
+      - "Range queries and point/range updates"
+      - "Associative operation (sum, min, max, gcd)"
+      - "O(log n) query and update"
+    related: [prefix-sums, interval-queries]
+
+  - id: prefix-sums
+    keywords: ["fenwick tree", "binary indexed tree", "bit", "prefix sum", "cumulative", "point update"]
+    question: "Need prefix sums with point updates?"
+    skills:
+      - skill: clrs-algorithms
+        file: data-structures/advanced/fenwick-tree.md
+        relevance: primary
+    constraints:
+      - "Simpler than segment tree"
+      - "Only point updates needed"
+      - "Lower constant factor than segment tree"
+    related: [range-queries, ordered-data]
+
+  - id: skip-list-operations
+    keywords: ["skip list", "probabilistic", "sorted", "concurrent", "lock-free", "simple", "linked list"]
+    question: "Need sorted structure with simpler implementation?"
+    skills:
+      - skill: clrs-algorithms
+        file: data-structures/advanced/skip-list.md
+        relevance: primary
+    constraints:
+      - "Simpler than balanced trees"
+      - "Good for concurrent access"
+      - "Probabilistic balance"
+    related: [balanced-tree, probabilistic-membership]
+
+  - id: integer-keys
+    keywords: ["van emde boas", "integer", "predecessor", "successor", "universe", "veb"]
+    question: "Need fast operations on bounded integer keys?"
+    skills:
+      - skill: clrs-algorithms
+        file: data-structures/advanced/van-emde-boas-tree.md
+        relevance: primary
+    constraints:
+      - "Keys are integers in bounded range"
+      - "Need predecessor/successor queries"
+      - "O(log log u) operations"
+    related: [ordered-data, fast-key-lookup]
+
+  # ===========================================================================
+  # STRING ALGORITHMS (CLRS)
+  # ===========================================================================
+
+  - id: string-pattern-matching
+    keywords: ["string algorithm", "pattern matching", "kmp", "rabin karp", "substring", "search", "text search"]
+    question: "Need to find patterns in strings efficiently?"
+    skills:
+      - skill: clrs-algorithms
+        file: data-structures/strings/string-algorithms.md
+        relevance: primary
+    constraints:
+      - "Single or multiple pattern search"
+      - "Consider preprocessing tradeoffs"
+      - "KMP for single pattern, Aho-Corasick for multiple"
+    related: [prefix-search, suffix-structures]
+
+  - id: suffix-structures
+    keywords: ["suffix array", "suffix tree", "substring", "longest common", "lexicographic", "lcp"]
+    question: "Need to answer substring queries efficiently?"
+    skills:
+      - skill: clrs-algorithms
+        file: data-structures/strings/suffix-array.md
+        relevance: primary
+      - skill: clrs-algorithms
+        file: data-structures/strings/suffix-tree.md
+        relevance: secondary
+    constraints:
+      - "Many substring queries on same text"
+      - "Suffix array uses less space than suffix tree"
+      - "O(n log n) construction for suffix array"
+    related: [string-pattern-matching, prefix-search]
+
+  # ===========================================================================
+  # SORTING ALGORITHMS (CLRS)
+  # ===========================================================================
+
+  - id: sorting-data
+    keywords: ["sorting", "quicksort", "mergesort", "heapsort", "comparison", "stable", "in-place", "sort"]
+    question: "Need to sort data efficiently?"
+    skills:
+      - skill: clrs-algorithms
+        file: data-structures/algorithms/sorting-algorithms.md
+        relevance: primary
+    constraints:
+      - "Consider stability requirements"
+      - "Consider space constraints (in-place)"
+      - "Consider data distribution"
+      - "Quicksort: fast average, Mergesort: stable, Heapsort: in-place guaranteed"
+    related: [priority-queue, ordered-data]
+
+  # ===========================================================================
+  # CLEAN CODE - SOLID PRINCIPLES
+  # ===========================================================================
+
+  - id: class-too-many-responsibilities
+    keywords: ["srp", "single responsibility", "cohesion", "class size", "god class", "focused", "one reason to change"]
+    question: "Is this class doing too many things?"
+    skills:
+      - skill: clean-code
+        file: solid/single-responsibility.md
+        relevance: primary
+      - skill: clean-code
+        file: practices/code-smells.md
+        relevance: secondary
+    constraints:
+      - "Class should have one reason to change"
+      - "Extract separate concerns into new classes"
+      - "High cohesion within class"
+    related: [code-smell-detection, reduce-coupling]
+
+  - id: extend-without-modifying
+    keywords: ["ocp", "open closed", "extension", "modification", "polymorphism", "plugin", "extensible"]
+    question: "Need to add behavior without changing existing code?"
+    skills:
+      - skill: clean-code
+        file: solid/open-closed.md
+        relevance: primary
+      - skill: gof-patterns
+        file: gof-behavioral/strategy.md
+        relevance: secondary
+    constraints:
+      - "Open for extension, closed for modification"
+      - "Use abstraction and polymorphism"
+      - "New behavior via new classes, not edits"
+    related: [vary-algorithm, plugin-architecture]
+
+  - id: subtype-substitution
+    keywords: ["lsp", "liskov substitution", "inheritance", "subtype", "contract", "precondition", "postcondition"]
+    question: "Can subtypes replace base types safely?"
+    skills:
+      - skill: clean-code
+        file: solid/liskov-substitution.md
+        relevance: primary
+      - skill: pragmatic-programmer
+        file: practices/design-by-contract.md
+        relevance: secondary
+    constraints:
+      - "Subtypes must honor base type contracts"
+      - "No strengthening preconditions"
+      - "No weakening postconditions"
+    related: [design-by-contract, proper-inheritance]
+
+  - id: interface-bloat
+    keywords: ["isp", "interface segregation", "fat interface", "role interface", "client specific", "narrow interface"]
+    question: "Is interface forcing clients to depend on unused methods?"
+    skills:
+      - skill: clean-code
+        file: solid/interface-segregation.md
+        relevance: primary
+    constraints:
+      - "Many clients use different subsets of interface"
+      - "Split into smaller, focused interfaces"
+      - "Clients shouldn't depend on methods they don't use"
+    related: [class-too-many-responsibilities, reduce-coupling]
+
+  - id: dependency-injection
+    keywords: ["dip", "dependency inversion", "injection", "ioc", "abstract", "decouple", "testable", "inversion of control"]
+    question: "Need to make high-level modules independent of low-level details?"
+    skills:
+      - skill: clean-code
+        file: solid/dependency-inversion.md
+        relevance: primary
+      - skill: pragmatic-programmer
+        file: practices/decoupling.md
+        relevance: secondary
+    constraints:
+      - "Depend on abstractions, not concretions"
+      - "Improves testability"
+      - "High-level policy doesn't depend on low-level details"
+    related: [reduce-coupling, separate-abstraction-implementation, decoupling-practice]
+
+  # ===========================================================================
+  # CLEAN CODE - PRACTICES
+  # ===========================================================================
+
+  - id: naming-things
+    keywords: ["naming", "names", "variables", "functions", "classes", "intention", "clarity", "readable"]
+    question: "How to choose good names for code elements?"
+    skills:
+      - skill: clean-code
+        file: practices/meaningful-names.md
+        relevance: primary
+    constraints:
+      - "Names should reveal intention"
+      - "Avoid encodings and mental mappings"
+      - "Use pronounceable, searchable names"
+    related: [function-design, code-readability]
+
+  - id: function-design
+    keywords: ["function", "method", "small", "single purpose", "arguments", "side effects", "clean function"]
+    question: "How to write clean, focused functions?"
+    skills:
+      - skill: clean-code
+        file: practices/functions.md
+        relevance: primary
+      - skill: sicp
+        file: procedures/abstraction.md
+        relevance: secondary
+    constraints:
+      - "Functions should do one thing"
+      - "Minimize arguments (ideally 0-2)"
+      - "Avoid side effects"
+      - "Command-query separation"
+    related: [naming-things, class-too-many-responsibilities, procedural-abstraction]
+
+  - id: when-to-comment
+    keywords: ["comments", "documentation", "why", "explain", "self-documenting", "outdated", "doc comment"]
+    question: "When are comments appropriate?"
+    skills:
+      - skill: clean-code
+        file: practices/comments.md
+        relevance: primary
+    constraints:
+      - "Explain why, not what"
+      - "Comments can become outdated"
+      - "Prefer self-documenting code"
+      - "Good comments: legal, informative, intent, warning"
+    related: [naming-things, function-design]
+
+  - id: code-readability
+    keywords: ["formatting", "indentation", "whitespace", "organization", "consistency", "style", "layout"]
+    question: "How to format code for readability?"
+    skills:
+      - skill: clean-code
+        file: practices/formatting.md
+        relevance: primary
+    constraints:
+      - "Consistency is key"
+      - "Use team standards"
+      - "Vertical and horizontal formatting"
+    related: [naming-things, function-design]
+
+  - id: error-handling-strategy
+    keywords: ["error handling", "exceptions", "null", "error codes", "recovery", "graceful", "try catch"]
+    question: "How to handle errors cleanly?"
+    skills:
+      - skill: clean-code
+        file: practices/error-handling.md
+        relevance: primary
+      - skill: pragmatic-programmer
+        file: practices/assertive-programming.md
+        relevance: secondary
+    constraints:
+      - "Prefer exceptions to error codes"
+      - "Don't return null"
+      - "Fail fast"
+      - "Write try-catch first"
+    related: [assertive-programming, design-by-contract]
+
+  - id: writing-tests
+    keywords: ["unit test", "testing", "tdd", "test driven", "coverage", "assertion", "fast", "first"]
+    question: "How to write effective unit tests?"
+    skills:
+      - skill: clean-code
+        file: practices/unit-testing.md
+        relevance: primary
+      - skill: pragmatic-programmer
+        file: practices/testing.md
+        relevance: secondary
+    constraints:
+      - "Tests should be fast, independent, repeatable"
+      - "One assertion concept per test"
+      - "FIRST: Fast, Independent, Repeatable, Self-validating, Timely"
+    related: [test-strategy, refactoring-safely]
+
+  - id: code-smell-detection
+    keywords: ["code smell", "anti-pattern", "technical debt", "refactoring", "warning sign", "bad code"]
+    question: "How to identify problematic code patterns?"
+    skills:
+      - skill: clean-code
+        file: practices/code-smells.md
+        relevance: primary
+    constraints:
+      - "Smells indicate potential problems"
+      - "Not all smells require immediate action"
+      - "Common: long method, large class, feature envy"
+    related: [refactoring-safely, class-too-many-responsibilities]
+
+  - id: continuous-improvement
+    keywords: ["boy scout rule", "leave better", "incremental", "cleanup", "improvement", "opportunistic refactoring"]
+    question: "How to maintain code quality over time?"
+    skills:
+      - skill: clean-code
+        file: practices/boy-scout-rule.md
+        relevance: primary
+      - skill: pragmatic-programmer
+        file: practices/refactoring.md
+        relevance: secondary
+    constraints:
+      - "Leave code better than you found it"
+      - "Small improvements add up"
+      - "Don't postpone all cleanup"
+    related: [refactoring-safely, code-smell-detection]
+
+  - id: clean-code-overview
+    keywords: ["clean code", "principles", "practices", "quality", "maintainable", "readable", "robert martin"]
+    question: "What are the key principles of clean code?"
+    skills:
+      - skill: clean-code
+        file: SKILL.md
+        relevance: primary
+    constraints:
+      - "Clean code is readable, simple, and tested"
+      - "Requires continuous attention"
+      - "Code is read more than written"
+    related: [function-design, naming-things, code-smell-detection]
+
+  # ===========================================================================
+  # DDIA - DATA MODELS
+  # ===========================================================================
+
+  - id: relational-data-model
+    keywords: ["relational", "sql", "tables", "joins", "normalized", "schema", "acid", "rdbms"]
+    question: "When to use relational/SQL databases?"
+    skills:
+      - skill: ddia
+        file: data-models/relational.md
+        relevance: primary
+    constraints:
+      - "Data has clear relationships"
+      - "Need ACID transactions"
+      - "Schema is relatively stable"
+      - "Many-to-many relationships"
+    related: [document-data-model, graph-data-model, transaction-support]
+
+  - id: document-data-model
+    keywords: ["document", "nosql", "mongodb", "json", "schema-less", "denormalized", "embedded", "flexible schema"]
+    question: "When to use document databases?"
+    skills:
+      - skill: ddia
+        file: data-models/document.md
+        relevance: primary
+    constraints:
+      - "Data is naturally hierarchical"
+      - "Schema evolves frequently"
+      - "One-to-many relationships dominant"
+      - "Self-contained documents"
+    related: [relational-data-model, graph-data-model]
+
+  - id: graph-data-model
+    keywords: ["graph", "neo4j", "relationships", "traversal", "connected", "social", "network", "vertices", "edges"]
+    question: "When to use graph databases?"
+    skills:
+      - skill: ddia
+        file: data-models/graph.md
+        relevance: primary
+    constraints:
+      - "Many-to-many relationships"
+      - "Need to traverse relationships"
+      - "Connections are primary concern"
+      - "Social networks, recommendations"
+    related: [relational-data-model, document-data-model, graph-algorithms]
+
+  # ===========================================================================
+  # DDIA - STORAGE
+  # ===========================================================================
+
+  - id: database-indexing
+    keywords: ["b-tree", "index", "database", "lookup", "range", "sorted", "read optimized"]
+    question: "How do database indexes work?"
+    skills:
+      - skill: ddia
+        file: storage/b-trees.md
+        relevance: primary
+      - skill: clrs-algorithms
+        file: data-structures/trees/b-tree.md
+        relevance: secondary
+    constraints:
+      - "Standard for most databases"
+      - "Good for read-heavy workloads"
+      - "Update in place"
+    related: [lsm-tree-storage, disk-based-storage]
+
+  - id: lsm-tree-storage
+    keywords: ["lsm tree", "log structured", "write optimized", "compaction", "sstable", "leveldb", "rocksdb"]
+    question: "When to use LSM-tree based storage?"
+    skills:
+      - skill: ddia
+        file: storage/lsm-trees.md
+        relevance: primary
+    constraints:
+      - "Write-heavy workloads"
+      - "Append-only writes"
+      - "Compaction overhead acceptable"
+      - "Better write amplification than B-trees"
+    related: [database-indexing, column-oriented-storage]
+
+  - id: column-oriented-storage
+    keywords: ["column storage", "columnar", "analytics", "olap", "compression", "aggregation", "data warehouse"]
+    question: "When to use column-oriented storage?"
+    skills:
+      - skill: ddia
+        file: storage/column-storage.md
+        relevance: primary
+    constraints:
+      - "Analytical queries on large datasets"
+      - "Aggregate many rows, few columns"
+      - "High compression ratios"
+    related: [database-indexing, batch-processing]
+
+  # ===========================================================================
+  # DDIA - REPLICATION
+  # ===========================================================================
+
+  - id: leader-follower-replication
+    keywords: ["replication", "leader follower", "master slave", "primary secondary", "read replicas", "standby"]
+    question: "How to set up leader-follower replication?"
+    skills:
+      - skill: ddia
+        file: replication/leader-follower.md
+        relevance: primary
+    constraints:
+      - "Writes go to leader only"
+      - "Read scaling via followers"
+      - "Simpler consistency model"
+      - "Failover complexity"
+    related: [multi-leader-replication, leaderless-replication]
+
+  - id: multi-leader-replication
+    keywords: ["multi leader", "multi master", "conflict", "geo-distributed", "datacenter", "active-active"]
+    question: "When to use multi-leader replication?"
+    skills:
+      - skill: ddia
+        file: replication/multi-leader.md
+        relevance: primary
+    constraints:
+      - "Multiple datacenters"
+      - "Must handle write conflicts"
+      - "Lower latency for writes"
+      - "Conflict resolution strategies needed"
+    related: [leader-follower-replication, conflict-resolution]
+
+  - id: leaderless-replication
+    keywords: ["leaderless", "dynamo", "quorum", "sloppy quorum", "hinted handoff", "cassandra", "riak"]
+    question: "When to use leaderless replication?"
+    skills:
+      - skill: ddia
+        file: replication/leaderless.md
+        relevance: primary
+    constraints:
+      - "High availability priority"
+      - "Tolerate temporary inconsistency"
+      - "Quorum reads and writes"
+      - "Read repair and anti-entropy"
+    related: [leader-follower-replication, eventual-consistency]
+
+  # ===========================================================================
+  # DDIA - PARTITIONING
+  # ===========================================================================
+
+  - id: partition-strategies
+    keywords: ["partitioning", "sharding", "hash", "range", "hot spot", "skew", "distribution"]
+    question: "How to partition data across nodes?"
+    skills:
+      - skill: ddia
+        file: partitioning/strategies.md
+        relevance: primary
+    constraints:
+      - "Avoid hot spots"
+      - "Balance load evenly"
+      - "Consider access patterns"
+      - "Range vs hash partitioning tradeoffs"
+    related: [partition-rebalancing, distributed-queries]
+
+  - id: partition-rebalancing
+    keywords: ["rebalancing", "partition", "migration", "consistent hashing", "virtual nodes", "resharding"]
+    question: "How to rebalance partitions when nodes change?"
+    skills:
+      - skill: ddia
+        file: partitioning/rebalancing.md
+        relevance: primary
+    constraints:
+      - "Minimize data movement"
+      - "Keep system available during rebalance"
+      - "Automated vs manual rebalancing"
+    related: [partition-strategies, consistent-hashing]
+
+  # ===========================================================================
+  # DDIA - TRANSACTIONS
+  # ===========================================================================
+
+  - id: transaction-support
+    keywords: ["acid", "transaction", "atomicity", "consistency", "isolation", "durability", "commit", "rollback"]
+    question: "When do you need ACID transactions?"
+    skills:
+      - skill: ddia
+        file: transactions/acid.md
+        relevance: primary
+    constraints:
+      - "All-or-nothing operations"
+      - "Concurrent access to same data"
+      - "Durability requirements"
+      - "Consider BASE as alternative"
+    related: [isolation-levels, distributed-transactions]
+
+  - id: isolation-levels
+    keywords: ["isolation", "read committed", "repeatable read", "serializable", "phantom", "dirty read", "snapshot"]
+    question: "What isolation level do you need?"
+    skills:
+      - skill: ddia
+        file: transactions/isolation-levels.md
+        relevance: primary
+    constraints:
+      - "Trade-off between consistency and performance"
+      - "Understand anomalies at each level"
+      - "Serializable is strongest but slowest"
+    related: [transaction-support, concurrency-control]
+
+  - id: distributed-transactions
+    keywords: ["distributed transaction", "2pc", "two phase commit", "saga", "coordinator", "xa"]
+    question: "How to handle transactions across services?"
+    skills:
+      - skill: ddia
+        file: transactions/distributed-transactions.md
+        relevance: primary
+    constraints:
+      - "Coordinator is single point of failure"
+      - "Consider saga pattern as alternative"
+      - "Performance impact of 2PC"
+    related: [transaction-support, consensus-algorithms]
+
+  # ===========================================================================
+  # DDIA - CONSISTENCY
+  # ===========================================================================
+
+  - id: linearizability-requirement
+    keywords: ["linearizability", "strong consistency", "recency", "atomic", "single copy", "real-time order"]
+    question: "Do you need linearizable consistency?"
+    skills:
+      - skill: ddia
+        file: consistency/linearizability.md
+        relevance: primary
+    constraints:
+      - "Strongest consistency guarantee"
+      - "Performance and availability cost"
+      - "Behaves like single copy"
+    related: [consistency-models, cap-theorem]
+
+  - id: consistency-models
+    keywords: ["consistency model", "eventual", "causal", "sequential", "strong", "weak", "cap theorem"]
+    question: "What consistency model fits your needs?"
+    skills:
+      - skill: ddia
+        file: consistency/models.md
+        relevance: primary
+    constraints:
+      - "Understand trade-offs"
+      - "Match model to requirements"
+      - "CAP theorem implications"
+    related: [linearizability-requirement, eventual-consistency]
+
+  # ===========================================================================
+  # DDIA - CONSENSUS
+  # ===========================================================================
+
+  - id: consensus-algorithms
+    keywords: ["consensus", "paxos", "raft", "zab", "leader election", "distributed agreement", "total order"]
+    question: "How to achieve consensus in distributed systems?"
+    skills:
+      - skill: ddia
+        file: consensus/algorithms.md
+        relevance: primary
+    constraints:
+      - "Requires majority of nodes"
+      - "Handles node failures"
+      - "FLP impossibility considerations"
+    related: [distributed-transactions, leader-follower-replication]
+
+  # ===========================================================================
+  # DDIA - PROCESSING
+  # ===========================================================================
+
+  - id: batch-processing
+    keywords: ["batch", "mapreduce", "offline", "etl", "hadoop", "spark", "data pipeline"]
+    question: "When to use batch processing?"
+    skills:
+      - skill: ddia
+        file: processing/batch.md
+        relevance: primary
+    constraints:
+      - "Process all data at once"
+      - "High throughput priority"
+      - "Latency not critical"
+      - "Bounded input"
+    related: [stream-processing, column-oriented-storage]
+
+  - id: stream-processing
+    keywords: ["stream", "real-time", "kafka", "flink", "event", "continuous", "unbounded"]
+    question: "When to use stream processing?"
+    skills:
+      - skill: ddia
+        file: processing/stream.md
+        relevance: primary
+      - skill: sicp
+        file: modularity/streams.md
+        relevance: secondary
+    constraints:
+      - "Low latency requirements"
+      - "Process data as it arrives"
+      - "Unbounded input"
+      - "Event time vs processing time"
+    related: [batch-processing, event-sourcing, stream-processing-sicp]
+
+  - id: event-sourcing
+    keywords: ["event sourcing", "event log", "append only", "replay", "audit", "cqrs", "event store"]
+    question: "Should you use event sourcing?"
+    skills:
+      - skill: ddia
+        file: processing/event-sourcing.md
+        relevance: primary
+      - skill: ddd
+        file: tactical/domain-events.md
+        relevance: secondary
+    constraints:
+      - "Need complete audit trail"
+      - "Want to replay history"
+      - "Increased complexity"
+      - "Often paired with CQRS"
+    related: [stream-processing, domain-events]
+
+  - id: ddia-overview
+    keywords: ["distributed systems", "data intensive", "scalability", "reliability", "maintainability", "kleppmann"]
+    question: "What are the fundamentals of data-intensive applications?"
+    skills:
+      - skill: ddia
+        file: SKILL.md
+        relevance: primary
+    constraints:
+      - "Understand trade-offs between consistency, availability, partition tolerance"
+      - "Design for failure"
+      - "Reliability, scalability, maintainability"
+    related: [consistency-models, partition-strategies, leader-follower-replication]
+
+  # ===========================================================================
+  # PRAGMATIC PROGRAMMER - PRINCIPLES
+  # ===========================================================================
+
+  - id: avoid-duplication
+    keywords: ["dry", "don't repeat", "duplication", "single source", "knowledge", "every piece of knowledge"]
+    question: "How to avoid code and knowledge duplication?"
+    skills:
+      - skill: pragmatic-programmer
+        file: principles/dry.md
+        relevance: primary
+      - skill: clean-code
+        file: practices/code-smells.md
+        relevance: secondary
+    constraints:
+      - "Every piece of knowledge must have single representation"
+      - "Not just about code - applies to documentation, schemas"
+      - "DRY vs WET (Write Everything Twice)"
+    related: [code-smell-detection, refactoring-safely]
+
+  - id: reduce-coupling
+    keywords: ["orthogonality", "coupling", "independence", "modular", "isolated", "side effects", "self-contained"]
+    question: "How to design independent, modular components?"
+    skills:
+      - skill: pragmatic-programmer
+        file: principles/orthogonality.md
+        relevance: primary
+      - skill: pragmatic-programmer
+        file: practices/decoupling.md
+        relevance: secondary
+      - skill: clean-code
+        file: solid/single-responsibility.md
+        relevance: secondary
+    constraints:
+      - "Changes should be localized"
+      - "Components should be testable in isolation"
+      - "No ripple effects"
+    related: [dependency-injection, class-too-many-responsibilities, decoupling-practice]
+
+  - id: validate-assumptions-early
+    keywords: ["tracer bullet", "prototype", "spike", "proof of concept", "end to end", "skeleton", "walking skeleton"]
+    question: "How to validate architecture early?"
+    skills:
+      - skill: pragmatic-programmer
+        file: principles/tracer-bullets.md
+        relevance: primary
+      - skill: pragmatic-programmer
+        file: principles/prototypes.md
+        relevance: secondary
+    constraints:
+      - "Build end-to-end skeleton first"
+      - "Get feedback early"
+      - "Tracer bullets are kept, prototypes are thrown away"
+    related: [build-prototypes, estimate-accurately]
+
+  - id: build-prototypes
+    keywords: ["prototype", "throwaway", "experiment", "learning", "risk reduction", "disposable"]
+    question: "When and how to build prototypes?"
+    skills:
+      - skill: pragmatic-programmer
+        file: principles/prototypes.md
+        relevance: primary
+    constraints:
+      - "Prototypes are disposable"
+      - "Used to answer specific questions"
+      - "Don't ship prototypes"
+      - "Make clear it's a prototype"
+    related: [validate-assumptions-early, estimate-accurately]
+
+  - id: design-for-change
+    keywords: ["reversibility", "flexible", "adaptable", "change", "future proof", "decisions", "options"]
+    question: "How to design systems that can adapt to change?"
+    skills:
+      - skill: pragmatic-programmer
+        file: principles/reversibility.md
+        relevance: primary
+      - skill: clean-code
+        file: solid/open-closed.md
+        relevance: secondary
+    constraints:
+      - "Keep options open"
+      - "Minimize irreversible decisions"
+      - "No critical decisions are final"
+    related: [extend-without-modifying, reduce-coupling]
+
+  - id: estimate-accurately
+    keywords: ["estimating", "estimation", "time", "effort", "project", "planning", "schedule"]
+    question: "How to provide accurate estimates?"
+    skills:
+      - skill: pragmatic-programmer
+        file: principles/estimating.md
+        relevance: primary
+    constraints:
+      - "Understand what's being asked"
+      - "Break down into smaller pieces"
+      - "Track accuracy over time"
+      - "Use ranges, not single numbers"
+    related: [build-prototypes, validate-assumptions-early]
+
+  - id: domain-specific-language
+    keywords: ["dsl", "domain language", "mini language", "fluent", "internal", "external", "custom language"]
+    question: "Should you create a domain-specific language?"
+    skills:
+      - skill: pragmatic-programmer
+        file: principles/domain-languages.md
+        relevance: primary
+      - skill: gof-patterns
+        file: gof-behavioral/interpreter.md
+        relevance: secondary
+      - skill: sicp
+        file: metalinguistic/interpreters.md
+        relevance: secondary
+    constraints:
+      - "Problem domain is well-defined"
+      - "Non-programmers need to express requirements"
+      - "Internal (embedded) vs external DSLs"
+    related: [interpret-language, ubiquitous-language, build-interpreter]
+
+  # ===========================================================================
+  # PRAGMATIC PROGRAMMER - PRACTICES
+  # ===========================================================================
+
+  - id: command-line-mastery
+    keywords: ["shell", "command line", "bash", "terminal", "scripting", "automation", "cli"]
+    question: "How to leverage command-line tools effectively?"
+    skills:
+      - skill: pragmatic-programmer
+        file: practices/shell-games.md
+        relevance: primary
+    constraints:
+      - "Learn shell well"
+      - "Combine tools with pipes"
+      - "Automate repetitive tasks"
+    related: [automate-everything, text-processing]
+
+  - id: plain-text-formats
+    keywords: ["plain text", "text format", "human readable", "version control", "diff", "grep"]
+    question: "When to use plain text formats?"
+    skills:
+      - skill: pragmatic-programmer
+        file: practices/plain-text.md
+        relevance: primary
+    constraints:
+      - "Human readable"
+      - "Version control friendly"
+      - "Tool compatible"
+      - "Self-describing"
+    related: [text-processing, command-line-mastery]
+
+  - id: debugging-effectively
+    keywords: ["debugging", "bug", "troubleshooting", "root cause", "reproduce", "binary search", "rubber duck"]
+    question: "How to debug effectively?"
+    skills:
+      - skill: pragmatic-programmer
+        file: practices/debugging.md
+        relevance: primary
+    constraints:
+      - "Reproduce first"
+      - "Don't assume - prove"
+      - "Binary search to isolate"
+      - "Rubber duck debugging"
+    related: [assertive-programming, error-handling-strategy]
+
+  - id: decoupling-practice
+    keywords: ["decoupling", "loose coupling", "law of demeter", "tell don't ask", "message", "shy code"]
+    question: "How to achieve loose coupling in practice?"
+    skills:
+      - skill: pragmatic-programmer
+        file: practices/decoupling.md
+        relevance: primary
+      - skill: clean-code
+        file: solid/dependency-inversion.md
+        relevance: secondary
+    constraints:
+      - "Minimize knowledge between components"
+      - "Tell, don't ask"
+      - "Law of Demeter"
+    related: [reduce-coupling, dependency-injection]
+
+  - id: design-by-contract
+    keywords: ["contract", "precondition", "postcondition", "invariant", "assertion", "specification", "dbc"]
+    question: "How to specify component behavior precisely?"
+    skills:
+      - skill: pragmatic-programmer
+        file: practices/design-by-contract.md
+        relevance: primary
+      - skill: clean-code
+        file: solid/liskov-substitution.md
+        relevance: secondary
+    constraints:
+      - "Define clear preconditions and postconditions"
+      - "Enforce invariants"
+      - "Be lazy: accept broad, promise little"
+    related: [subtype-substitution, assertive-programming]
+
+  - id: test-strategy
+    keywords: ["testing", "test", "quality", "verification", "validation", "coverage", "test pyramid"]
+    question: "How to approach testing strategically?"
+    skills:
+      - skill: pragmatic-programmer
+        file: practices/testing.md
+        relevance: primary
+      - skill: clean-code
+        file: practices/unit-testing.md
+        relevance: secondary
+    constraints:
+      - "Test early, test often"
+      - "Test at multiple levels"
+      - "Test pyramid: unit > integration > e2e"
+    related: [writing-tests, assertive-programming]
+
+  - id: automate-everything
+    keywords: ["automation", "script", "build", "deploy", "ci", "cd", "pipeline", "don't repeat"]
+    question: "What should be automated?"
+    skills:
+      - skill: pragmatic-programmer
+        file: practices/automation.md
+        relevance: primary
+    constraints:
+      - "Automate repetitive tasks"
+      - "Ensure consistency"
+      - "Documentation through automation"
+    related: [command-line-mastery, code-generation]
+
+  - id: text-processing
+    keywords: ["text manipulation", "regex", "sed", "awk", "transformation", "parsing", "text tools"]
+    question: "How to manipulate text efficiently?"
+    skills:
+      - skill: pragmatic-programmer
+        file: practices/text-manipulation.md
+        relevance: primary
+    constraints:
+      - "Learn regex"
+      - "Combine Unix tools"
+      - "Text as universal interface"
+    related: [command-line-mastery, plain-text-formats]
+
+  - id: code-generation
+    keywords: ["code generator", "scaffolding", "template", "generate", "boilerplate", "metaprogramming"]
+    question: "When to use code generation?"
+    skills:
+      - skill: pragmatic-programmer
+        file: practices/code-generators.md
+        relevance: primary
+    constraints:
+      - "Passive generators run once"
+      - "Active generators keep in sync"
+      - "Don't repeat knowledge"
+    related: [avoid-duplication, automate-everything]
+
+  - id: assertive-programming
+    keywords: ["assertion", "assert", "crash early", "fail fast", "invariant", "defensive", "dead programs"]
+    question: "How to use assertions effectively?"
+    skills:
+      - skill: pragmatic-programmer
+        file: practices/assertive-programming.md
+        relevance: primary
+      - skill: clean-code
+        file: practices/error-handling.md
+        relevance: secondary
+    constraints:
+      - "Crash early if something is wrong"
+      - "Don't hide bugs"
+      - "Dead programs don't lie"
+    related: [error-handling-strategy, design-by-contract]
+
+  - id: refactoring-safely
+    keywords: ["refactoring", "restructure", "improve", "technical debt", "safe changes", "incremental"]
+    question: "How to refactor code safely?"
+    skills:
+      - skill: pragmatic-programmer
+        file: practices/refactoring.md
+        relevance: primary
+      - skill: clean-code
+        file: practices/boy-scout-rule.md
+        relevance: secondary
+    constraints:
+      - "Have tests first"
+      - "Small, incremental changes"
+      - "Don't refactor and add features simultaneously"
+    related: [continuous-improvement, code-smell-detection]
+
+  - id: pragmatic-overview
+    keywords: ["pragmatic", "software craftsmanship", "professional", "practical", "effective", "hunt thomas"]
+    question: "What are the core pragmatic programming principles?"
+    skills:
+      - skill: pragmatic-programmer
+        file: SKILL.md
+        relevance: primary
+    constraints:
+      - "Be pragmatic, not dogmatic"
+      - "Think about your work"
+      - "Care about your craft"
+    related: [clean-code-overview, avoid-duplication, reduce-coupling]
+
+  # ===========================================================================
+  # DDD - STRATEGIC
+  # ===========================================================================
+
+  - id: ubiquitous-language
+    keywords: ["ubiquitous language", "domain language", "shared vocabulary", "terms", "communication", "common language"]
+    question: "How to establish shared domain vocabulary?"
+    skills:
+      - skill: ddd
+        file: strategic/ubiquitous-language.md
+        relevance: primary
+    constraints:
+      - "Use consistently in code and conversation"
+      - "Refine as understanding grows"
+      - "One language per bounded context"
+    related: [define-bounded-context, domain-modeling]
+
+  - id: define-bounded-context
+    keywords: ["bounded context", "boundary", "model", "context", "subdomain", "microservice", "autonomous"]
+    question: "How to define boundaries for domain models?"
+    skills:
+      - skill: ddd
+        file: strategic/bounded-contexts.md
+        relevance: primary
+    constraints:
+      - "Each context has its own ubiquitous language"
+      - "Models may differ across contexts"
+      - "Explicit boundaries"
+    related: [ubiquitous-language, context-mapping]
+
+  - id: context-mapping
+    keywords: ["context map", "integration", "relationship", "upstream", "downstream", "partnership", "conformist"]
+    question: "How to map relationships between bounded contexts?"
+    skills:
+      - skill: ddd
+        file: strategic/context-mapping.md
+        relevance: primary
+    constraints:
+      - "Understand power dynamics between teams"
+      - "Choose appropriate integration patterns"
+      - "Patterns: shared kernel, customer/supplier, conformist, ACL"
+    related: [define-bounded-context, protect-from-external-systems]
+
+  - id: protect-from-external-systems
+    keywords: ["anti-corruption", "acl", "translation", "isolation", "legacy", "external system", "integration", "adapter"]
+    question: "Need to protect domain model from external system influences?"
+    skills:
+      - skill: ddd
+        file: strategic/anti-corruption-layer.md
+        relevance: primary
+      - skill: gof-patterns
+        file: gof-structural/adapter.md
+        relevance: secondary
+      - skill: gof-patterns
+        file: gof-structural/facade.md
+        relevance: secondary
+    constraints:
+      - "External model differs significantly from domain model"
+      - "Need bidirectional translation"
+      - "Protects domain model integrity"
+    related: [incompatible-interface, define-bounded-context, context-mapping]
+
+  # ===========================================================================
+  # DDD - TACTICAL
+  # ===========================================================================
+
+  - id: model-immutable-values
+    keywords: ["value object", "immutable", "equality", "side-effect free", "conceptual whole", "no identity"]
+    question: "How to model domain concepts without identity?"
+    skills:
+      - skill: ddd
+        file: tactical/value-objects.md
+        relevance: primary
+    constraints:
+      - "Immutable"
+      - "Equality by value, not identity"
+      - "Side-effect free operations"
+      - "Examples: Money, Address, DateRange"
+    related: [model-identity, create-domain-objects]
+
+  - id: model-identity
+    keywords: ["entity", "identity", "lifecycle", "continuity", "unique", "mutable", "id"]
+    question: "How to model domain concepts with identity?"
+    skills:
+      - skill: ddd
+        file: tactical/entities.md
+        relevance: primary
+    constraints:
+      - "Identity remains stable"
+      - "State can change"
+      - "Track through lifecycle"
+      - "Examples: Customer, Order, Account"
+    related: [model-immutable-values, aggregate-design]
+
+  - id: domain-events
+    keywords: ["domain event", "event", "happened", "past tense", "publish", "notify", "something occurred"]
+    question: "How to model significant domain occurrences?"
+    skills:
+      - skill: ddd
+        file: tactical/domain-events.md
+        relevance: primary
+      - skill: gof-patterns
+        file: gof-behavioral/observer.md
+        relevance: secondary
+      - skill: ddia
+        file: processing/event-sourcing.md
+        relevance: secondary
+    constraints:
+      - "Named in past tense"
+      - "Immutable"
+      - "Part of ubiquitous language"
+      - "Examples: OrderPlaced, PaymentReceived"
+    related: [event-notification, event-sourcing]
+
+  - id: aggregate-design
+    keywords: ["aggregate", "consistency boundary", "root", "invariant", "transaction", "cluster", "aggregate root"]
+    question: "How to design consistency boundaries?"
+    skills:
+      - skill: ddd
+        file: tactical/aggregates.md
+        relevance: primary
+    constraints:
+      - "One aggregate per transaction"
+      - "Reference by ID, not object"
+      - "Keep aggregates small"
+      - "Protect invariants"
+    related: [model-identity, repository-pattern]
+
+  - id: domain-service-design
+    keywords: ["domain service", "stateless", "operation", "multiple entities", "verb", "not entity"]
+    question: "When to use domain services?"
+    skills:
+      - skill: ddd
+        file: tactical/domain-services.md
+        relevance: primary
+    constraints:
+      - "Operation doesn't belong to entity or value object"
+      - "Stateless"
+      - "Named as verb"
+      - "Examples: TransferMoney, CalculateTax"
+    related: [aggregate-design, model-identity]
+
+  # ===========================================================================
+  # DDD - PATTERNS
+  # ===========================================================================
+
+  - id: create-domain-objects
+    keywords: ["factory", "aggregate", "entity", "domain", "invariants", "creation logic", "complex construction"]
+    question: "Need to encapsulate complex domain object creation logic?"
+    skills:
+      - skill: ddd
+        file: patterns/factories.md
+        relevance: primary
+      - skill: gof-patterns
+        file: gof-creational/factory-method.md
+        relevance: secondary
+      - skill: gof-patterns
+        file: gof-creational/abstract-factory.md
+        relevance: secondary
+    constraints:
+      - "Creation logic doesn't belong in entity or value object"
+      - "Need to enforce invariants during creation"
+      - "Encapsulate complex assembly"
+    related: [model-identity, model-immutable-values, create-single-product]
+
+  - id: repository-pattern
+    keywords: ["repository", "persistence", "collection", "query", "storage", "data access", "aggregate storage"]
+    question: "How to abstract persistence for aggregates?"
+    skills:
+      - skill: ddd
+        file: patterns/repositories.md
+        relevance: primary
+    constraints:
+      - "One repository per aggregate root"
+      - "Encapsulate storage details"
+      - "Looks like in-memory collection"
+    related: [aggregate-design, create-domain-objects]
+
+  - id: specification-pattern
+    keywords: ["specification", "criteria", "predicate", "filter", "rule", "business rule", "combinable"]
+    question: "How to encapsulate business rules for selection?"
+    skills:
+      - skill: ddd
+        file: patterns/specifications.md
+        relevance: primary
+    constraints:
+      - "Combinable (and, or, not)"
+      - "Reusable selection criteria"
+      - "Can be used for validation or querying"
+    related: [repository-pattern, vary-algorithm]
+
+  # ===========================================================================
+  # DDD - PRACTICES
+  # ===========================================================================
+
+  - id: event-storming-practice
+    keywords: ["event storming", "workshop", "discovery", "collaborative", "sticky notes", "big picture"]
+    question: "How to discover domain models collaboratively?"
+    skills:
+      - skill: ddd
+        file: practices/event-storming.md
+        relevance: primary
+    constraints:
+      - "Include domain experts"
+      - "Focus on events first"
+      - "Orange stickies for events"
+    related: [domain-modeling, ubiquitous-language]
+
+  - id: domain-modeling
+    keywords: ["model exploration", "whirlpool", "discovery", "knowledge crunching", "modeling", "domain understanding"]
+    question: "How to explore and refine domain models?"
+    skills:
+      - skill: ddd
+        file: practices/model-exploration.md
+        relevance: primary
+    constraints:
+      - "Iterative refinement"
+      - "Collaborate with domain experts"
+      - "Model is never final"
+    related: [event-storming-practice, ubiquitous-language]
+
+  - id: ddd-overview
+    keywords: ["domain driven design", "ddd", "strategic", "tactical", "domain model", "eric evans"]
+    question: "What are the key concepts of Domain-Driven Design?"
+    skills:
+      - skill: ddd
+        file: SKILL.md
+        relevance: primary
+    constraints:
+      - "Focus on core domain"
+      - "Model reflects business"
+      - "Strategic and tactical patterns"
+    related: [ubiquitous-language, define-bounded-context, aggregate-design]
+
+  # ===========================================================================
+  # SICP - PROCEDURES
+  # ===========================================================================
+
+  - id: procedural-abstraction
+    keywords: ["abstraction", "procedure", "black box", "interface", "implementation hiding", "abstraction barrier"]
+    question: "How to create effective procedural abstractions?"
+    skills:
+      - skill: sicp
+        file: procedures/abstraction.md
+        relevance: primary
+      - skill: clean-code
+        file: practices/functions.md
+        relevance: secondary
+    constraints:
+      - "Hide implementation details"
+      - "Clear interface"
+      - "Abstraction barriers"
+    related: [function-design, higher-order-functions]
+
+  - id: higher-order-functions
+    keywords: ["higher order", "function", "callback", "closure", "lambda", "first class", "function as argument"]
+    question: "How to use functions as first-class values?"
+    skills:
+      - skill: sicp
+        file: procedures/higher-order-functions.md
+        relevance: primary
+      - skill: gof-patterns
+        file: gof-behavioral/strategy.md
+        relevance: secondary
+    constraints:
+      - "Functions can take and return functions"
+      - "Enables powerful abstractions"
+      - "Map, filter, reduce patterns"
+    related: [procedural-abstraction, vary-algorithm, add-responsibilities-dynamically]
+
+  - id: recursion-patterns
+    keywords: ["recursion", "recursive", "base case", "induction", "tail recursion", "iteration", "tree recursion"]
+    question: "How to design recursive solutions?"
+    skills:
+      - skill: sicp
+        file: procedures/recursion-patterns.md
+        relevance: primary
+    constraints:
+      - "Identify base case"
+      - "Ensure progress toward base"
+      - "Consider tail recursion for optimization"
+      - "Linear vs tree recursion"
+    related: [lifo-processing, hierarchical-data-structures]
+
+  # ===========================================================================
+  # SICP - DATA
+  # ===========================================================================
+
+  - id: data-abstraction-design
+    keywords: ["data abstraction", "constructor", "selector", "barrier", "representation", "data hiding"]
+    question: "How to design data abstractions?"
+    skills:
+      - skill: sicp
+        file: data/data-abstraction.md
+        relevance: primary
+    constraints:
+      - "Separate use from representation"
+      - "Constructors and selectors form interface"
+      - "Abstraction barriers"
+    related: [procedural-abstraction, model-immutable-values]
+
+  - id: hierarchical-data-design
+    keywords: ["hierarchical", "nested", "tree", "recursive data", "cons", "list", "pairs"]
+    question: "How to work with hierarchical data?"
+    skills:
+      - skill: sicp
+        file: data/hierarchical-data.md
+        relevance: primary
+      - skill: gof-patterns
+        file: gof-structural/composite.md
+        relevance: secondary
+    constraints:
+      - "Recursive processing"
+      - "Natural for tree structures"
+      - "Box-and-pointer notation"
+    related: [tree-structure, hierarchical-data-structures]
+
+  - id: symbolic-computation
+    keywords: ["symbolic", "symbol", "expression", "algebra", "manipulation", "quote", "quasiquote"]
+    question: "How to manipulate symbolic expressions?"
+    skills:
+      - skill: sicp
+        file: data/symbolic-data.md
+        relevance: primary
+      - skill: gof-patterns
+        file: gof-behavioral/interpreter.md
+        relevance: secondary
+    constraints:
+      - "Treat code as data"
+      - "Pattern matching on structure"
+      - "Quote to prevent evaluation"
+    related: [interpret-language, domain-specific-language]
+
+  # ===========================================================================
+  # SICP - MODULARITY
+  # ===========================================================================
+
+  - id: manage-shared-state
+    keywords: ["state", "assignment", "mutation", "side effect", "mutable", "identity", "set!"]
+    question: "How to manage mutable state effectively?"
+    skills:
+      - skill: sicp
+        file: modularity/assignment-and-state.md
+        relevance: primary
+      - skill: gof-patterns
+        file: gof-behavioral/state.md
+        relevance: secondary
+    constraints:
+      - "Introduces time into programs"
+      - "Complicates reasoning"
+      - "Use when modeling real-world objects"
+      - "Consider functional alternatives"
+    related: [vary-state-behavior, environment-model, ensure-single-instance]
+
+  - id: environment-model
+    keywords: ["environment", "scope", "binding", "closure", "frame", "evaluation", "lexical scope"]
+    question: "How do environments and closures work?"
+    skills:
+      - skill: sicp
+        file: modularity/environment-model.md
+        relevance: primary
+    constraints:
+      - "Variables bound in environments"
+      - "Closures capture environment"
+      - "Frames chain together"
+    related: [manage-shared-state, higher-order-functions]
+
+  - id: stream-processing-sicp
+    keywords: ["stream", "lazy", "infinite", "delayed", "sequence", "on-demand", "cons-stream"]
+    question: "How to process potentially infinite sequences?"
+    skills:
+      - skill: sicp
+        file: modularity/streams.md
+        relevance: primary
+      - skill: ddia
+        file: processing/stream.md
+        relevance: secondary
+    constraints:
+      - "Lazy evaluation"
+      - "Can represent infinite sequences"
+      - "Delay and force"
+    related: [stream-processing, lazy-evaluation, traverse-structure]
+
+  # ===========================================================================
+  # SICP - METALINGUISTIC
+  # ===========================================================================
+
+  - id: build-interpreter
+    keywords: ["interpreter", "evaluator", "eval", "apply", "metacircular", "language", "self-interpreter"]
+    question: "How to build a language interpreter?"
+    skills:
+      - skill: sicp
+        file: metalinguistic/interpreters.md
+        relevance: primary
+      - skill: gof-patterns
+        file: gof-behavioral/interpreter.md
+        relevance: secondary
+    constraints:
+      - "Eval/apply mutual recursion"
+      - "Environment for bindings"
+      - "Metacircular evaluator"
+    related: [interpret-language, domain-specific-language]
+
+  - id: lazy-evaluation
+    keywords: ["lazy", "delayed", "thunk", "memoization", "call by need", "normal order", "non-strict"]
+    question: "When and how to use lazy evaluation?"
+    skills:
+      - skill: sicp
+        file: metalinguistic/lazy-evaluation.md
+        relevance: primary
+    constraints:
+      - "Delays computation until needed"
+      - "Enables infinite structures"
+      - "Call by name vs call by need"
+    related: [stream-processing-sicp, control-object-access]
+
+  - id: low-level-execution
+    keywords: ["register machine", "assembly", "compilation", "instruction", "low level", "machine model"]
+    question: "How do programs execute at the machine level?"
+    skills:
+      - skill: sicp
+        file: metalinguistic/register-machines.md
+        relevance: primary
+    constraints:
+      - "Understand compilation target"
+      - "Bridge to hardware"
+      - "Data paths and controllers"
+    related: [build-interpreter, recursion-patterns]
+
+  - id: sicp-overview
+    keywords: ["sicp", "structure", "interpretation", "computer programs", "abstraction", "abelson sussman"]
+    question: "What are the fundamental concepts from SICP?"
+    skills:
+      - skill: sicp
+        file: SKILL.md
+        relevance: primary
+    constraints:
+      - "Build complexity through abstraction"
+      - "Programs are data"
+      - "Metalinguistic abstraction"
+    related: [procedural-abstraction, data-abstraction-design, build-interpreter]

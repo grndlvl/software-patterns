@@ -1,0 +1,516 @@
+decision_tree:
+  name: "Storage Engine Selection"
+  description: "Navigate to find the right storage engine and data model for your use case"
+  root: workload_type
+
+  nodes:
+    workload_type:
+      question: "What is your primary workload pattern?"
+      branches:
+        - answer: "Write-heavy (many inserts/updates)"
+          next: write_heavy_storage
+        - answer: "Read-heavy (mostly queries)"
+          next: read_heavy_storage
+        - answer: "Analytics / OLAP (large scans, aggregations)"
+          next: analytics_storage
+        - answer: "Mixed / Balanced"
+          next: data_model_choice
+        - answer: "Time-series data"
+          next: timeseries_storage
+
+    write_heavy_storage:
+      question: "What kind of writes dominate?"
+      branches:
+        - answer: "Sequential appends (logs, events)"
+          recommendation:
+            storage_engine: "LSM-Tree (Log-Structured Merge-Tree)"
+            file: "ddia/storage/lsm-trees.md"
+            characteristics:
+              - "Sequential writes to memtable then SSTables"
+              - "Background compaction"
+              - "Write amplification during compaction"
+            performance:
+              - "Excellent write throughput"
+              - "Good compression"
+              - "Higher read latency without bloom filters"
+            use_cases:
+              - "Event logging"
+              - "Time-series data"
+              - "Message queues"
+              - "Cassandra, RocksDB, LevelDB"
+            trade_offs:
+              - "Fast writes"
+              - "Slower reads (multiple levels)"
+              - "Background compaction I/O"
+        - answer: "Random updates across dataset"
+          recommendation:
+            storage_engine: "B-Tree with Write-Ahead Log"
+            file: "ddia/storage/b-trees.md"
+            characteristics:
+              - "In-place updates with WAL"
+              - "Fixed-size pages"
+              - "Lower write amplification than LSM"
+            performance:
+              - "Good write throughput"
+              - "Fast point lookups"
+              - "Consistent latency"
+            use_cases:
+              - "Transactional databases"
+              - "File systems"
+              - "PostgreSQL, MySQL InnoDB"
+            trade_offs:
+              - "Faster reads than LSM"
+              - "Higher write cost than LSM for append-heavy"
+        - answer: "High concurrency writes"
+          next: concurrency_needs
+
+    read_heavy_storage:
+      question: "What kind of reads dominate?"
+      branches:
+        - answer: "Point lookups by key"
+          recommendation:
+            storage_engine: "B-Tree or Hash Index"
+            file: "ddia/storage/b-trees.md"
+            characteristics:
+              - "B-Tree: sorted keys, range queries"
+              - "Hash: faster point lookups, no range"
+            performance:
+              - "O(log n) for B-Tree"
+              - "O(1) for hash index"
+            use_cases:
+              - "Key-value stores"
+              - "Caching layers"
+              - "PostgreSQL, MySQL"
+            trade_offs:
+              - "Fast reads"
+              - "Range queries need B-Tree"
+        - answer: "Range scans and sorted access"
+          recommendation:
+            storage_engine: "B-Tree"
+            file: "ddia/storage/b-trees.md"
+            characteristics:
+              - "Sorted keys within pages"
+              - "Efficient range traversal"
+            performance:
+              - "O(log n) lookup + O(k) scan"
+            use_cases:
+              - "Time-range queries"
+              - "Pagination"
+              - "Leaderboards"
+            trade_offs:
+              - "Efficient ranges"
+              - "Write overhead for updates"
+        - answer: "Secondary index queries"
+          next: index_strategy
+
+    analytics_storage:
+      question: "What are your analytics access patterns?"
+      branches:
+        - answer: "Aggregate across many rows (COUNT, SUM, AVG)"
+          recommendation:
+            storage_engine: "Column-Oriented Storage"
+            file: "ddia/storage/column-storage.md"
+            characteristics:
+              - "Store columns separately"
+              - "Compression per column"
+              - "Vectorized processing"
+            performance:
+              - "Excellent for aggregations"
+              - "Reduces I/O for columnar queries"
+              - "Poor for single-row lookups"
+            use_cases:
+              - "Data warehouses"
+              - "Analytics databases"
+              - "ClickHouse, Redshift, BigQuery"
+            trade_offs:
+              - "Fast analytical queries"
+              - "Slow transactional operations"
+              - "Excellent compression"
+        - answer: "Full table scans with filtering"
+          recommendation:
+            storage_engine: "Column-Oriented Storage with Bitmap Indexes"
+            file: "ddia/storage/column-storage.md"
+            characteristics:
+              - "Bitmap indexes for filtering"
+              - "Column storage for scanning"
+            performance:
+              - "Fast filtering on indexed columns"
+              - "Efficient scans"
+            use_cases:
+              - "OLAP queries"
+              - "Business intelligence"
+              - "Vertica, Druid"
+        - answer: "Both transactional and analytical (HTAP)"
+          recommendation:
+            storage_engine: "Hybrid Row/Column Storage"
+            file: "ddia/storage/column-storage.md"
+            characteristics:
+              - "Row storage for transactions"
+              - "Column storage for analytics"
+              - "Background conversion"
+            use_cases:
+              - "Real-time analytics"
+              - "SAP HANA, MemSQL"
+            trade_offs:
+              - "Supports both workloads"
+              - "More complex implementation"
+
+    timeseries_storage:
+      question: "What are your time-series requirements?"
+      branches:
+        - answer: "High ingestion rate, recent data queries"
+          recommendation:
+            storage_engine: "LSM-Tree with Time-Based Compaction"
+            file: "ddia/storage/lsm-trees.md"
+            characteristics:
+              - "Time-based SSTables"
+              - "TTL-based expiration"
+              - "Optimized for recent data"
+            use_cases:
+              - "Metrics monitoring"
+              - "IoT sensor data"
+              - "InfluxDB, TimescaleDB"
+            trade_offs:
+              - "Fast writes"
+              - "Automatic data expiration"
+        - answer: "Long-term storage with compression"
+          recommendation:
+            storage_engine: "Column-Oriented with Time Partitioning"
+            file: "ddia/storage/column-storage.md"
+            characteristics:
+              - "Time-based partitions"
+              - "High compression"
+              - "Cold storage tiering"
+            use_cases:
+              - "Historical analytics"
+              - "Long-term archival"
+              - "Prometheus, Druid"
+
+    data_model_choice:
+      question: "What data model best fits your domain?"
+      branches:
+        - answer: "Structured with relations (foreign keys, joins)"
+          next: relational_workload
+        - answer: "Flexible schema / documents"
+          next: document_storage
+        - answer: "Highly connected data (many relationships)"
+          next: graph_storage
+        - answer: "Simple key-value pairs"
+          recommendation:
+            storage_engine: "Hash Index or LSM-Tree"
+            data_model: "Key-Value"
+            file: "ddia/data-models/key-value.md"
+            characteristics:
+              - "Simple get/put interface"
+              - "No schema"
+            use_cases:
+              - "Caching"
+              - "Session storage"
+              - "Redis, Memcached, Riak"
+            trade_offs:
+              - "Simple and fast"
+              - "No complex queries"
+        - answer: "Wide column families"
+          recommendation:
+            storage_engine: "LSM-Tree with Column Families"
+            data_model: "Wide Column"
+            file: "ddia/data-models/wide-column.md"
+            characteristics:
+              - "Row key + column families"
+              - "Sparse columns"
+            use_cases:
+              - "Large-scale distributed data"
+              - "Cassandra, HBase, Bigtable"
+            trade_offs:
+              - "Scalable"
+              - "Limited query capabilities"
+
+    relational_workload:
+      question: "What are your relational database requirements?"
+      branches:
+        - answer: "ACID transactions critical"
+          recommendation:
+            storage_engine: "B-Tree with MVCC"
+            data_model: "Relational"
+            file: "ddia/transactions/acid.md"
+            characteristics:
+              - "Multi-Version Concurrency Control"
+              - "Write-Ahead Log"
+              - "Full ACID guarantees"
+            use_cases:
+              - "Financial systems"
+              - "E-commerce"
+              - "PostgreSQL, MySQL InnoDB"
+            trade_offs:
+              - "Strong consistency"
+              - "Lower throughput than NoSQL"
+        - answer: "High throughput more important than strict consistency"
+          recommendation:
+            storage_engine: "B-Tree with Relaxed Consistency"
+            data_model: "Relational"
+            file: "ddia/transactions/isolation-levels.md"
+            characteristics:
+              - "Read committed or snapshot isolation"
+              - "Higher concurrency"
+            use_cases:
+              - "Analytics"
+              - "Reporting databases"
+            trade_offs:
+              - "Better performance"
+              - "Weaker consistency guarantees"
+
+    document_storage:
+      question: "What are your document storage priorities?"
+      branches:
+        - answer: "Flexible schema, nested data"
+          recommendation:
+            storage_engine: "B-Tree or LSM-Tree with JSON/BSON"
+            data_model: "Document"
+            file: "ddia/data-models/document.md"
+            characteristics:
+              - "Schema-less or schema-on-read"
+              - "Nested documents"
+              - "Secondary indexes"
+            use_cases:
+              - "Content management"
+              - "User profiles"
+              - "MongoDB, CouchDB, RavenDB"
+            trade_offs:
+              - "Flexible schema"
+              - "Joins are harder"
+        - answer: "Full-text search on documents"
+          recommendation:
+            storage_engine: "Inverted Index"
+            data_model: "Document with Search"
+            file: "ddia/indexes/full-text-search.md"
+            characteristics:
+              - "Inverted index for text"
+              - "Tokenization and ranking"
+            use_cases:
+              - "Search engines"
+              - "Log analysis"
+              - "Elasticsearch, Solr"
+            trade_offs:
+              - "Excellent text search"
+              - "Eventual consistency for updates"
+
+    graph_storage:
+      question: "What kind of graph queries do you need?"
+      branches:
+        - answer: "Traverse relationships (friends, paths)"
+          recommendation:
+            storage_engine: "Adjacency List with Index-Free Adjacency"
+            data_model: "Property Graph"
+            file: "ddia/data-models/graph.md"
+            characteristics:
+              - "Nodes and edges as first-class"
+              - "Properties on both"
+              - "Efficient traversals"
+            use_cases:
+              - "Social networks"
+              - "Recommendation engines"
+              - "Neo4j, ArangoDB"
+            trade_offs:
+              - "Fast traversals"
+              - "Complex to scale horizontally"
+        - answer: "Pattern matching and inference"
+          recommendation:
+            storage_engine: "Triple Store"
+            data_model: "RDF / SPARQL"
+            file: "ddia/data-models/graph.md"
+            characteristics:
+              - "Subject-Predicate-Object triples"
+              - "Semantic queries"
+            use_cases:
+              - "Knowledge graphs"
+              - "Linked data"
+              - "Blazegraph, Stardog"
+
+    concurrency_needs:
+      question: "What are your concurrency requirements?"
+      branches:
+        - answer: "Single writer, multiple readers"
+          recommendation:
+            storage_engine: "B-Tree with Read-Write Locks"
+            file: "ddia/transactions/concurrency-control.md"
+            characteristics:
+              - "Writers block readers briefly"
+              - "Simple locking"
+            use_cases:
+              - "Configuration stores"
+              - "Leader-based replication"
+        - answer: "Multiple concurrent writers"
+          recommendation:
+            storage_engine: "MVCC (Multi-Version Concurrency Control)"
+            file: "ddia/transactions/mvcc.md"
+            characteristics:
+              - "Readers never block writers"
+              - "Snapshot isolation"
+            use_cases:
+              - "High-concurrency OLTP"
+              - "PostgreSQL, MySQL InnoDB"
+            trade_offs:
+              - "Better concurrency"
+              - "More complex implementation"
+        - answer: "Distributed writers (multi-datacenter)"
+          next: replication_strategy
+
+    index_strategy:
+      question: "What kind of secondary indexes do you need?"
+      branches:
+        - answer: "Unique secondary keys"
+          recommendation:
+            storage_engine: "B-Tree with Unique Indexes"
+            file: "ddia/indexes/secondary-indexes.md"
+            characteristics:
+              - "Enforce uniqueness"
+              - "Fast lookups"
+        - answer: "Non-unique secondary keys (many-to-one)"
+          recommendation:
+            storage_engine: "B-Tree with Non-Unique Indexes"
+            file: "ddia/indexes/secondary-indexes.md"
+            characteristics:
+              - "Multiple rows per key"
+              - "Posting lists"
+        - answer: "Full-text search"
+          recommendation:
+            storage_engine: "Inverted Index"
+            file: "ddia/indexes/full-text-search.md"
+
+    replication_strategy:
+      question: "What replication model fits your needs?"
+      branches:
+        - answer: "Single leader for consistency"
+          recommendation:
+            replication: "Leader-Follower (Master-Slave)"
+            file: "ddia/replication/leader-follower.md"
+            characteristics:
+              - "Single write path"
+              - "Read replicas"
+              - "Asynchronous or synchronous"
+            use_cases:
+              - "Most RDBMS"
+              - "PostgreSQL, MySQL"
+            trade_offs:
+              - "Simpler consistency"
+              - "Leader is bottleneck"
+              - "Failover complexity"
+        - answer: "Multiple regions with local writes"
+          recommendation:
+            replication: "Multi-Leader (Multi-Master)"
+            file: "ddia/replication/multi-leader.md"
+            characteristics:
+              - "Multiple write paths"
+              - "Conflict resolution needed"
+            use_cases:
+              - "Multi-datacenter"
+              - "Collaborative editing"
+              - "CouchDB, Riak"
+            trade_offs:
+              - "Better availability"
+              - "Conflict complexity"
+        - answer: "Highest availability, eventual consistency OK"
+          recommendation:
+            replication: "Leaderless (Dynamo-style)"
+            file: "ddia/replication/leaderless.md"
+            characteristics:
+              - "Quorum reads/writes"
+              - "No leader election"
+              - "Anti-entropy repairs"
+            use_cases:
+              - "High availability systems"
+              - "Cassandra, Riak, DynamoDB"
+            trade_offs:
+              - "No single point of failure"
+              - "Eventual consistency"
+              - "Read repair needed"
+
+    partitioning_strategy:
+      question: "How should data be partitioned across nodes?"
+      branches:
+        - answer: "Evenly distribute load"
+          recommendation:
+            partitioning: "Hash Partitioning"
+            file: "ddia/partitioning/hash-partitioning.md"
+            characteristics:
+              - "Hash of key determines partition"
+              - "Even distribution"
+              - "Cannot do range queries efficiently"
+            use_cases:
+              - "User IDs"
+              - "Session keys"
+              - "Cassandra, Riak"
+            trade_offs:
+              - "Good load balancing"
+              - "No range scans"
+        - answer: "Support range queries"
+          recommendation:
+            partitioning: "Range Partitioning"
+            file: "ddia/partitioning/range-partitioning.md"
+            characteristics:
+              - "Sorted key ranges"
+              - "Efficient range scans"
+              - "Risk of hotspots"
+            use_cases:
+              - "Timestamps"
+              - "Alphabetical keys"
+              - "Bigtable, HBase"
+            trade_offs:
+              - "Efficient ranges"
+              - "Can have hot partitions"
+        - answer: "Related data together (multi-tenancy)"
+          recommendation:
+            partitioning: "Composite Key Partitioning"
+            file: "ddia/partitioning/composite-partitioning.md"
+            characteristics:
+              - "Partition by tenant/user ID"
+              - "Range within partition"
+            use_cases:
+              - "Multi-tenant SaaS"
+              - "Social media (user + timestamp)"
+
+    consistency_requirements:
+      question: "What consistency guarantees do you need?"
+      branches:
+        - answer: "Strict serializability / Linearizability"
+          recommendation:
+            consistency: "Linearizable / Serializable"
+            file: "ddia/consistency/linearizability.md"
+            characteristics:
+              - "Operations appear in single sequential order"
+              - "No time paradoxes"
+            use_cases:
+              - "Financial transactions"
+              - "Distributed locking"
+              - "Spanner, Calvin"
+            trade_offs:
+              - "Strongest guarantees"
+              - "Performance cost"
+              - "Requires coordination"
+        - answer: "Eventual consistency is acceptable"
+          recommendation:
+            consistency: "Eventual Consistency"
+            file: "ddia/consistency/eventual-consistency.md"
+            characteristics:
+              - "Replicas converge eventually"
+              - "Temporary inconsistencies"
+            use_cases:
+              - "Social media feeds"
+              - "Shopping carts"
+              - "Cassandra, DynamoDB"
+            trade_offs:
+              - "Better performance and availability"
+              - "Application must handle conflicts"
+        - answer: "Causal consistency (events in order)"
+          recommendation:
+            consistency: "Causal Consistency"
+            file: "ddia/consistency/causal-consistency.md"
+            characteristics:
+              - "Causally related events in order"
+              - "Weaker than linearizability"
+            use_cases:
+              - "Comment threads"
+              - "Collaborative editing"
+            trade_offs:
+              - "Reasonable guarantees"
+              - "Better performance than linearizable"

@@ -1,0 +1,534 @@
+# Proactive Pattern Suggestion Triggers
+# These rules enable agents to suggest relevant patterns during conversations
+# Version: 1.0
+
+# Trigger Behavior Configuration
+config:
+  enabled: true
+  cooldown_seconds: 300  # Don't repeat same trigger within 5 minutes
+  max_suggestions_per_conversation: 5
+  confidence_threshold: 0.7  # 0.0-1.0, how strong the signal must be
+  suggestion_style: "inline"  # "inline" or "summary"
+
+# Pattern Detection Triggers
+proactive_triggers:
+  # ============================================================================
+  # CODE STRUCTURE TRIGGERS
+  # ============================================================================
+
+  - id: conditional_explosion
+    indicators:
+      code_patterns:
+        - "if.*else.*if.*else.*if"
+        - "switch.*case.*case.*case.*case.*case"
+        - "typeof.*===|instanceof"
+      keywords:
+        - "many if statements"
+        - "complex conditionals"
+        - "type checking"
+        - "switch statement"
+        - "too many branches"
+      context: ["refactoring", "code review", "simplifying", "reducing complexity"]
+      conversation_signals:
+        - "hard to maintain"
+        - "lots of conditions"
+        - "checking types"
+    suggestion:
+      message: "This branching complexity suggests Strategy or State pattern. Strategy for algorithm variation, State for behavior that changes with state."
+      relevant_skills:
+        - skill: gof-patterns
+          items: ["strategy", "state", "polymorphism"]
+        - skill: clean-code
+          items: ["replace-conditional-with-polymorphism"]
+      follow_up: "Would you like me to show how to refactor this using polymorphism?"
+      priority: high
+    conditions:
+      fire_when:
+        - "5+ branches in single conditional"
+        - "Type-based switching (typeof/instanceof)"
+        - "Repeated similar conditionals across codebase"
+      do_not_fire:
+        - "Simple 2-3 branch conditionals"
+        - "Guard clauses or validation logic"
+
+  - id: object_creation_complexity
+    indicators:
+      code_patterns:
+        - "new.*\\(.*,.*,.*,.*,.*\\)"  # Constructor with 5+ params
+        - "setX.*setY.*setZ"  # Chained setters
+      keywords:
+        - "complex constructor"
+        - "many parameters"
+        - "building object"
+        - "creating instance"
+        - "optional parameters"
+        - "configuration object"
+      context: ["initialization", "setup", "configuration"]
+    suggestion:
+      message: "Complex object construction suggests Builder pattern for step-by-step creation with fluent interface."
+      relevant_skills:
+        - skill: gof-patterns
+          items: ["builder", "factory-method"]
+        - skill: clean-code
+          items: ["parameter-objects", "fluent-interfaces"]
+      priority: medium
+    conditions:
+      fire_when:
+        - "Constructor with 5+ parameters"
+        - "Multiple optional parameters"
+        - "Complex validation during construction"
+      do_not_fire:
+        - "Simple data objects (DTOs)"
+        - "Already using Builder"
+
+  - id: algorithm_variation
+    indicators:
+      keywords:
+        - "different algorithm"
+        - "swap implementation"
+        - "multiple ways to"
+        - "sorting"
+        - "searching"
+        - "compress"
+        - "encrypt"
+        - "serialize"
+        - "choose algorithm"
+      context: ["performance", "optimization", "runtime selection"]
+      conversation_signals:
+        - "need to change"
+        - "different strategies"
+        - "runtime decision"
+    suggestion:
+      message: "Algorithm variation at runtime suggests Strategy pattern. Also check CLRS for optimal algorithm choices."
+      relevant_skills:
+        - skill: gof-patterns
+          items: ["strategy"]
+        - skill: clrs-algorithms
+          items: ["algorithm-selection", "complexity-analysis"]
+      follow_up: "What's the input size and performance requirement? I can suggest the optimal algorithm."
+      priority: high
+    conditions:
+      fire_when:
+        - "Need to swap algorithms at runtime"
+        - "Performance-critical operations"
+        - "Multiple valid approaches"
+      do_not_fire:
+        - "Single algorithm implementation"
+
+  - id: notification_system
+    indicators:
+      keywords:
+        - "notify"
+        - "subscribers"
+        - "listeners"
+        - "event"
+        - "broadcast"
+        - "publish"
+        - "when something changes"
+        - "dependencies between"
+      code_patterns:
+        - "addEventListener"
+        - "on\\("
+        - "subscribe"
+      context: ["events", "reactive", "loosely coupled"]
+    suggestion:
+      message: "Event-driven notifications suggest Observer pattern (GoF) or Domain Events (DDD) for decoupled communication."
+      relevant_skills:
+        - skill: gof-patterns
+          items: ["observer", "mediator"]
+        - skill: ddd
+          items: ["domain-events", "aggregate-design"]
+      priority: high
+    conditions:
+      fire_when:
+        - "One-to-many dependencies"
+        - "Need to notify multiple components"
+        - "Loose coupling required"
+      do_not_fire:
+        - "Direct method calls sufficient"
+
+  - id: undo_redo_needed
+    indicators:
+      keywords:
+        - "undo"
+        - "redo"
+        - "rollback"
+        - "revert"
+        - "history"
+        - "audit trail"
+        - "command history"
+      context: ["editor", "transactional", "history tracking"]
+    suggestion:
+      message: "Undo/redo functionality suggests Command pattern for encapsulating operations and Memento for state snapshots."
+      relevant_skills:
+        - skill: gof-patterns
+          items: ["command", "memento"]
+        - skill: ddd
+          items: ["event-sourcing"]
+      priority: medium
+    conditions:
+      fire_when:
+        - "Reversible operations needed"
+        - "Transaction history"
+      do_not_fire:
+        - "Simple state management"
+
+  # ============================================================================
+  # DATA STRUCTURE & ALGORITHM TRIGGERS
+  # ============================================================================
+
+  - id: caching_needed
+    indicators:
+      keywords:
+        - "cache"
+        - "expensive operation"
+        - "memoize"
+        - "repeated calls"
+        - "slow query"
+        - "performance issue"
+        - "too many requests"
+      context: ["performance", "optimization"]
+      conversation_signals:
+        - "called multiple times"
+        - "same result"
+        - "waste of resources"
+    suggestion:
+      message: "Caching suggests composite solution: Decorator (GoF) for transparent caching + appropriate data structure (CLRS hash tables) + eviction policy (DDIA)."
+      relevant_skills:
+        - skill: gof-patterns
+          items: ["decorator", "proxy"]
+        - skill: clrs-algorithms
+          items: ["hash-tables", "amortized-analysis"]
+        - skill: ddia
+          items: ["caching-strategies", "consistency"]
+      priority: high
+    conditions:
+      fire_when:
+        - "Expensive computation repeated"
+        - "Performance bottleneck identified"
+      do_not_fire:
+        - "Cache already implemented"
+
+  - id: tree_structure
+    indicators:
+      keywords:
+        - "hierarchy"
+        - "nested"
+        - "parent child"
+        - "tree"
+        - "composite"
+        - "recursive structure"
+        - "file system"
+        - "organization chart"
+      code_patterns:
+        - "children\\[\\]"
+        - "parent"
+        - "node"
+      context: ["data modeling", "recursion"]
+    suggestion:
+      message: "Hierarchical structure suggests Composite pattern (GoF) for uniform treatment + tree algorithms (CLRS) for traversal/search."
+      relevant_skills:
+        - skill: gof-patterns
+          items: ["composite", "visitor"]
+        - skill: clrs-algorithms
+          items: ["tree-algorithms", "graph-algorithms"]
+      priority: medium
+    conditions:
+      fire_when:
+        - "Part-whole hierarchies"
+        - "Recursive structures"
+      do_not_fire:
+        - "Simple nested objects"
+
+  - id: interface_mismatch
+    indicators:
+      keywords:
+        - "incompatible interface"
+        - "legacy system"
+        - "third party"
+        - "external API"
+        - "different format"
+        - "adapt"
+        - "wrap"
+      context: ["integration", "legacy", "external systems"]
+    suggestion:
+      message: "Interface incompatibility suggests Adapter pattern (GoF) + Anti-Corruption Layer (DDD) to protect your domain model."
+      relevant_skills:
+        - skill: gof-patterns
+          items: ["adapter", "facade"]
+        - skill: ddd
+          items: ["anti-corruption-layer", "bounded-context"]
+      priority: high
+    conditions:
+      fire_when:
+        - "External system integration"
+        - "Legacy code interface"
+        - "Protecting domain model"
+      do_not_fire:
+        - "Interfaces already compatible"
+
+  - id: data_structure_choice
+    indicators:
+      keywords:
+        - "which data structure"
+        - "best way to store"
+        - "fast lookup"
+        - "maintain order"
+        - "unique items"
+        - "priority"
+        - "frequent insertions"
+        - "access pattern"
+      context: ["data modeling", "performance"]
+      conversation_signals:
+        - "choose between"
+        - "what should I use"
+    suggestion:
+      message: "Data structure selection is critical. Let me guide you through the decision tree based on operations and constraints."
+      relevant_skills:
+        - skill: software-patterns
+          items: ["decision-trees/data-structures"]
+        - skill: clrs-algorithms
+          items: ["data-structures"]
+      follow_up: "What operations are most frequent? (lookup, insert, delete, range query)"
+      priority: high
+    conditions:
+      fire_when:
+        - "Explicit data structure question"
+        - "Performance concerns mentioned"
+      do_not_fire:
+        - "Data structure already chosen"
+
+  # ============================================================================
+  # DISTRIBUTED SYSTEMS & SCALABILITY
+  # ============================================================================
+
+  - id: distributed_coordination
+    indicators:
+      keywords:
+        - "distributed"
+        - "consistency"
+        - "replication"
+        - "partitioning"
+        - "microservices"
+        - "eventual consistency"
+        - "split brain"
+        - "consensus"
+      context: ["distributed systems", "scalability", "architecture"]
+    suggestion:
+      message: "Distributed system challenges require DDIA patterns: replication strategies, partitioning schemes, consistency models."
+      relevant_skills:
+        - skill: ddia
+          items: ["replication", "partitioning", "consistency-models"]
+        - skill: ddd
+          items: ["bounded-context", "event-driven-architecture"]
+      priority: high
+    conditions:
+      fire_when:
+        - "Multiple nodes/services"
+        - "Data consistency questions"
+        - "Scalability discussion"
+      do_not_fire:
+        - "Single-node system"
+
+  # ============================================================================
+  # WORKFLOW & PLANNING TRIGGERS
+  # ============================================================================
+
+  - id: planning_new_feature
+    indicators:
+      keywords:
+        - "new feature"
+        - "implement"
+        - "add functionality"
+        - "build"
+        - "design"
+      context: ["planning", "architecture"]
+      conversation_signals:
+        - "how should I"
+        - "where to start"
+        - "best approach"
+    suggestion:
+      message: "Before implementing, let me analyze: domain model (DDD), design patterns (GoF), data structures (CLRS), and system design (DDIA)."
+      relevant_skills:
+        - skill: software-patterns
+          items: ["decision-trees/pattern-selection"]
+        - skill: ddd
+          items: ["strategic-design"]
+      follow_up: "Should I do a comprehensive analysis first?"
+      priority: medium
+    conditions:
+      fire_when:
+        - "Beginning new feature"
+        - "No clear implementation plan"
+      do_not_fire:
+        - "Already has clear plan"
+        - "Simple change"
+
+  - id: code_smell_detection
+    indicators:
+      keywords:
+        - "code smell"
+        - "refactor"
+        - "messy"
+        - "hard to understand"
+        - "duplicate"
+        - "long method"
+        - "god class"
+        - "tight coupling"
+      context: ["refactoring", "code review", "quality"]
+    suggestion:
+      message: "Code smells detected. Clean Code provides systematic refactoring patterns to address these issues."
+      relevant_skills:
+        - skill: clean-code
+          items: ["refactoring-patterns", "smells"]
+        - skill: gof-patterns
+          items: ["relevant-patterns"]
+      priority: high
+    conditions:
+      fire_when:
+        - "Explicit code quality concerns"
+        - "Refactoring discussion"
+      do_not_fire:
+        - "Code is already clean"
+
+  - id: domain_modeling
+    indicators:
+      keywords:
+        - "domain model"
+        - "business logic"
+        - "entity"
+        - "value object"
+        - "aggregate"
+        - "bounded context"
+        - "ubiquitous language"
+      context: ["domain modeling", "architecture", "business rules"]
+    suggestion:
+      message: "Domain modeling requires DDD tactical patterns: Entities, Value Objects, Aggregates, Domain Services, and Repository pattern."
+      relevant_skills:
+        - skill: ddd
+          items: ["tactical-design", "building-blocks"]
+        - skill: gof-patterns
+          items: ["repository", "specification"]
+      priority: high
+    conditions:
+      fire_when:
+        - "Business logic discussion"
+        - "Domain modeling"
+      do_not_fire:
+        - "Infrastructure concerns only"
+
+  - id: performance_concern
+    indicators:
+      keywords:
+        - "too slow"
+        - "performance"
+        - "optimization"
+        - "bottleneck"
+        - "takes too long"
+        - "big O"
+        - "complexity"
+      context: ["performance", "optimization"]
+      conversation_signals:
+        - "how to speed up"
+        - "more efficient"
+    suggestion:
+      message: "Performance issues require algorithmic analysis. Let me check: time complexity (CLRS), appropriate data structures, and caching strategies (DDIA)."
+      relevant_skills:
+        - skill: clrs-algorithms
+          items: ["algorithm-selection", "complexity-analysis"]
+        - skill: ddia
+          items: ["indexing", "caching"]
+      follow_up: "What's the current operation and data size?"
+      priority: high
+    conditions:
+      fire_when:
+        - "Performance bottleneck identified"
+        - "Complexity concerns"
+      do_not_fire:
+        - "Already optimal"
+
+  - id: abstraction_needed
+    indicators:
+      keywords:
+        - "abstraction"
+        - "generic"
+        - "reusable"
+        - "DRY"
+        - "extract"
+        - "common behavior"
+        - "similar code"
+      context: ["refactoring", "design"]
+    suggestion:
+      message: "Abstraction opportunities: check SICP for proper abstraction techniques + GoF patterns for structural solutions."
+      relevant_skills:
+        - skill: sicp
+          items: ["abstraction", "higher-order-procedures"]
+        - skill: gof-patterns
+          items: ["template-method", "strategy"]
+        - skill: clean-code
+          items: ["extract-method", "extract-class"]
+      priority: medium
+    conditions:
+      fire_when:
+        - "Code duplication"
+        - "Similar patterns repeated"
+      do_not_fire:
+        - "Already well abstracted"
+
+  - id: testing_strategy
+    indicators:
+      keywords:
+        - "hard to test"
+        - "mock"
+        - "dependency injection"
+        - "testable"
+        - "unit test"
+        - "tightly coupled"
+      context: ["testing", "design"]
+    suggestion:
+      message: "Testability issues suggest: Dependency Injection pattern + test doubles + Clean Code testing practices."
+      relevant_skills:
+        - skill: gof-patterns
+          items: ["dependency-injection", "abstract-factory"]
+        - skill: clean-code
+          items: ["testing-patterns"]
+        - skill: pragmatic-programmer
+          items: ["design-for-testing"]
+      priority: medium
+    conditions:
+      fire_when:
+        - "Testing difficulties"
+        - "Tight coupling"
+      do_not_fire:
+        - "Already testable"
+
+  - id: state_management
+    indicators:
+      keywords:
+        - "state management"
+        - "shared state"
+        - "global state"
+        - "state synchronization"
+        - "state machine"
+      context: ["state", "architecture"]
+    suggestion:
+      message: "State management complexity suggests: State pattern (GoF) for behavior + Event Sourcing (DDD) for history + proper data structures (CLRS)."
+      relevant_skills:
+        - skill: gof-patterns
+          items: ["state", "memento", "observer"]
+        - skill: ddd
+          items: ["event-sourcing", "cqrs"]
+      priority: high
+    conditions:
+      fire_when:
+        - "Complex state transitions"
+        - "State synchronization needed"
+      do_not_fire:
+        - "Simple state management"
+
+# Usage Notes:
+# - Triggers evaluate in order until first match
+# - "priority: high" triggers can interrupt flow with suggestions
+# - "priority: medium" triggers wait for natural pause
+# - Cooldown prevents spam from repeated signals
+# - confidence_threshold gates noisy triggers

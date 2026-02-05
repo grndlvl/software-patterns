@@ -1,0 +1,457 @@
+decision_tree:
+  name: "Data Structure Selection"
+  description: "Navigate to find the right data structure for your use case"
+  root: primary_operation
+
+  nodes:
+    primary_operation:
+      question: "What is your primary operation?"
+      branches:
+        - answer: "Fast lookup by key"
+          next: key_lookup_ordering
+        - answer: "Fast random access by index"
+          next: index_access_size
+        - answer: "Fast insert/delete"
+          next: insert_delete_location
+        - answer: "Maintain sorted order"
+          next: sorted_operations
+        - answer: "Priority access (min/max)"
+          next: priority_operations
+        - answer: "FIFO/LIFO access"
+          next: access_pattern
+        - answer: "Hierarchical structure"
+          next: hierarchical_type
+        - answer: "String operations"
+          next: string_operations
+        - answer: "Range queries"
+          next: range_query_type
+        - answer: "Set membership testing"
+          next: membership_type
+
+    key_lookup_ordering:
+      question: "Do you need sorted iteration?"
+      branches:
+        - answer: "No - just fast lookup"
+          recommendation:
+            structure: "Hash Table"
+            file: "clrs-algorithms/data-structures/hash-based/hash-table.md"
+            complexity: "O(1) average lookup"
+            trade_offs:
+              - "No ordering guarantee"
+              - "Memory overhead for hash storage"
+              - "Resize cost on growth"
+            use_cases:
+              - "Caching"
+              - "Deduplication"
+              - "Fast key-value storage"
+        - answer: "Yes - need sorted order"
+          recommendation:
+            structure: "Red-Black Tree / Tree Map"
+            file: "clrs-algorithms/data-structures/trees/red-black-tree.md"
+            complexity: "O(log n) lookup, insert, delete"
+            trade_offs:
+              - "Slower than hash table"
+              - "Guaranteed ordering"
+              - "Supports range queries"
+            use_cases:
+              - "Sorted leaderboards"
+              - "Range queries"
+              - "Floor/ceiling operations"
+
+    index_access_size:
+      question: "Is the size fixed or dynamic?"
+      branches:
+        - answer: "Fixed size"
+          recommendation:
+            structure: "Array"
+            file: "clrs-algorithms/data-structures/arrays/array.md"
+            complexity: "O(1) access, O(n) search/insert/delete"
+            trade_offs:
+              - "Fastest access"
+              - "Cache-friendly"
+              - "Cannot grow"
+            use_cases:
+              - "Fixed collections"
+              - "Lookup tables"
+              - "Sequential processing"
+        - answer: "Grows/shrinks dynamically"
+          next: dynamic_array_operations
+        - answer: "Access at both ends"
+          recommendation:
+            structure: "Deque"
+            file: "clrs-algorithms/data-structures/queues/deque.md"
+            complexity: "O(1) access/insert/delete at ends"
+            trade_offs:
+              - "More memory than array"
+              - "Fast at both ends"
+            use_cases:
+              - "Sliding window"
+              - "Recent items buffer"
+              - "Undo/redo history"
+
+    dynamic_array_operations:
+      question: "Where do you mostly insert/delete?"
+      branches:
+        - answer: "At the end only"
+          recommendation:
+            structure: "Dynamic Array / List"
+            file: "clrs-algorithms/data-structures/arrays/dynamic-array.md"
+            complexity: "O(1) amortized append, O(n) insert middle"
+            trade_offs:
+              - "Fast append"
+              - "Slow middle insertion"
+              - "Resize cost occasionally"
+            use_cases:
+              - "General collections"
+              - "Stack-like behavior"
+              - "Sequential processing"
+        - answer: "Anywhere in the collection"
+          recommendation:
+            structure: "Linked List"
+            file: "clrs-algorithms/data-structures/linked-structures/linked-list.md"
+            complexity: "O(1) insert/delete after finding position"
+            trade_offs:
+              - "O(n) access by index"
+              - "Extra memory for pointers"
+              - "Cache-unfriendly"
+            use_cases:
+              - "Frequent middle insertions"
+              - "Unknown size"
+              - "Memory-steady collections"
+
+    insert_delete_location:
+      question: "Where do you need to insert/delete?"
+      branches:
+        - answer: "At ends only (FIFO/LIFO)"
+          next: access_pattern
+        - answer: "In the middle frequently"
+          recommendation:
+            structure: "Linked List"
+            file: "clrs-algorithms/data-structures/linked-structures/linked-list.md"
+            complexity: "O(1) insert/delete at known position"
+            trade_offs:
+              - "O(n) search"
+              - "Pointer overhead"
+            use_cases:
+              - "Frequent mid-list operations"
+              - "LRU cache"
+        - answer: "By key/value with ordering"
+          recommendation:
+            structure: "Tree Set"
+            file: "clrs-algorithms/data-structures/trees/red-black-tree.md"
+            complexity: "O(log n) insert/delete/search"
+            trade_offs:
+              - "Balanced performance"
+              - "Maintains order"
+            use_cases:
+              - "Sorted unique items"
+              - "Event scheduling"
+        - answer: "By key/value without ordering"
+          recommendation:
+            structure: "Hash Set"
+            file: "clrs-algorithms/data-structures/hash-based/hash-set.md"
+            complexity: "O(1) average insert/delete/search"
+            trade_offs:
+              - "Fastest operations"
+              - "No ordering"
+            use_cases:
+              - "Unique items"
+              - "Fast membership tests"
+        - answer: "By priority"
+          next: priority_operations
+
+    sorted_operations:
+      question: "What sorted operations do you need?"
+      branches:
+        - answer: "Just maintain sorted order"
+          recommendation:
+            structure: "Tree Set"
+            file: "clrs-algorithms/data-structures/trees/red-black-tree.md"
+            complexity: "O(log n) insert/delete, O(n) traversal"
+            trade_offs:
+              - "Auto-sorted"
+              - "No duplicates"
+            use_cases:
+              - "Sorted unique items"
+              - "Ordered collections"
+        - answer: "Find min/max quickly"
+          next: priority_operations
+        - answer: "Range queries"
+          recommendation:
+            structure: "Tree Map / Skip List"
+            file: "clrs-algorithms/data-structures/trees/red-black-tree.md"
+            complexity: "O(log n + k) range query"
+            trade_offs:
+              - "Efficient ranges"
+              - "Sorted iteration"
+            use_cases:
+              - "Date ranges"
+              - "Score ranges"
+              - "Floor/ceiling lookups"
+
+    priority_operations:
+      question: "Do you need to modify priorities or just extract min/max?"
+      branches:
+        - answer: "Just extract min/max"
+          recommendation:
+            structure: "Binary Heap / Priority Queue"
+            file: "clrs-algorithms/data-structures/heaps/binary-heap.md"
+            complexity: "O(1) peek, O(log n) extract"
+            trade_offs:
+              - "Fast min/max access"
+              - "Cannot efficiently search"
+            use_cases:
+              - "Task scheduling"
+              - "Event queues"
+              - "Top-K problems"
+        - answer: "Need to change priorities"
+          recommendation:
+            structure: "Indexed Priority Queue / Fibonacci Heap"
+            file: "clrs-algorithms/data-structures/heaps/fibonacci-heap.md"
+            complexity: "O(log n) extract, O(1) amortized decrease-key"
+            trade_offs:
+              - "Complex implementation"
+              - "Better for some algorithms (Dijkstra)"
+            use_cases:
+              - "Graph algorithms"
+              - "Dynamic scheduling"
+
+    access_pattern:
+      question: "What access pattern do you need?"
+      branches:
+        - answer: "LIFO (Last-In-First-Out)"
+          recommendation:
+            structure: "Stack"
+            file: "clrs-algorithms/data-structures/stacks/stack.md"
+            complexity: "O(1) push/pop"
+            trade_offs:
+              - "Simple implementation"
+              - "Only top access"
+            use_cases:
+              - "Function call stack"
+              - "Undo operations"
+              - "DFS traversal"
+        - answer: "FIFO (First-In-First-Out)"
+          recommendation:
+            structure: "Queue"
+            file: "clrs-algorithms/data-structures/queues/queue.md"
+            complexity: "O(1) enqueue/dequeue"
+            trade_offs:
+              - "Simple implementation"
+              - "Only front/back access"
+            use_cases:
+              - "Task queue"
+              - "BFS traversal"
+              - "Request buffering"
+        - answer: "Both ends (double-ended)"
+          recommendation:
+            structure: "Deque"
+            file: "clrs-algorithms/data-structures/queues/deque.md"
+            complexity: "O(1) operations at both ends"
+            trade_offs:
+              - "More complex than queue/stack"
+              - "More flexible"
+            use_cases:
+              - "Sliding window"
+              - "Work stealing queues"
+              - "Undo/redo"
+
+    hierarchical_type:
+      question: "What type of hierarchical structure?"
+      branches:
+        - answer: "Parent-child relationships (tree)"
+          next: tree_operations
+        - answer: "Network relationships (graph)"
+          next: graph_representation
+        - answer: "Nested categories"
+          recommendation:
+            structure: "Tree (General/N-ary)"
+            file: "clrs-algorithms/data-structures/trees/tree-basics.md"
+            complexity: "O(h) operations, h=height"
+            trade_offs:
+              - "Flexible structure"
+              - "Variable node degree"
+            use_cases:
+              - "File systems"
+              - "Organization charts"
+              - "Category hierarchies"
+
+    tree_operations:
+      question: "What tree operations are most important?"
+      branches:
+        - answer: "Fast search/insert/delete"
+          recommendation:
+            structure: "Red-Black Tree / AVL Tree"
+            file: "clrs-algorithms/data-structures/trees/red-black-tree.md"
+            complexity: "O(log n) guaranteed"
+            trade_offs:
+              - "Self-balancing"
+              - "Guaranteed performance"
+            use_cases:
+              - "Database indexes"
+              - "Sets and maps"
+        - answer: "Range queries"
+          recommendation:
+            structure: "Segment Tree / Interval Tree"
+            file: "clrs-algorithms/data-structures/trees/segment-tree.md"
+            complexity: "O(log n) range queries"
+            trade_offs:
+              - "Specialized for ranges"
+              - "Higher space usage"
+            use_cases:
+              - "Range sum/min/max"
+              - "Interval overlaps"
+        - answer: "Spatial data"
+          recommendation:
+            structure: "K-D Tree / R-Tree"
+            file: "clrs-algorithms/data-structures/trees/kd-tree.md"
+            complexity: "O(log n) average spatial queries"
+            trade_offs:
+              - "Multi-dimensional"
+              - "Complex balancing"
+            use_cases:
+              - "Nearest neighbor"
+              - "Spatial indexing"
+
+    graph_representation:
+      question: "Is your graph dense or sparse?"
+      branches:
+        - answer: "Dense (many edges)"
+          recommendation:
+            structure: "Adjacency Matrix"
+            file: "clrs-algorithms/data-structures/graphs/adjacency-matrix.md"
+            complexity: "O(1) edge check, O(V²) space"
+            trade_offs:
+              - "Fast edge lookup"
+              - "High memory use"
+            use_cases:
+              - "Complete graphs"
+              - "Dense networks"
+        - answer: "Sparse (few edges)"
+          recommendation:
+            structure: "Adjacency List"
+            file: "clrs-algorithms/data-structures/graphs/adjacency-list.md"
+            complexity: "O(degree) edge traversal, O(V+E) space"
+            trade_offs:
+              - "Memory efficient"
+              - "Slower edge lookup"
+            use_cases:
+              - "Social networks"
+              - "Web graphs"
+              - "Most real graphs"
+
+    string_operations:
+      question: "What string operations do you need?"
+      branches:
+        - answer: "Prefix search / autocomplete"
+          recommendation:
+            structure: "Trie"
+            file: "clrs-algorithms/data-structures/strings/trie.md"
+            complexity: "O(m) operations, m=string length"
+            trade_offs:
+              - "Fast prefix matching"
+              - "High memory use"
+            use_cases:
+              - "Autocomplete"
+              - "Spell checking"
+              - "IP routing"
+        - answer: "Pattern matching in text"
+          recommendation:
+            structure: "Suffix Tree / Suffix Array"
+            file: "clrs-algorithms/data-structures/strings/suffix-tree.md"
+            complexity: "O(m) search after O(n) preprocessing"
+            trade_offs:
+              - "Powerful pattern matching"
+              - "Complex construction"
+            use_cases:
+              - "Text search"
+              - "Bioinformatics"
+              - "Data compression"
+        - answer: "String collections with sorting"
+          recommendation:
+            structure: "Radix Tree / Patricia Trie"
+            file: "clrs-algorithms/data-structures/strings/radix-tree.md"
+            complexity: "O(m) operations"
+            trade_offs:
+              - "Space-efficient trie"
+              - "Complex implementation"
+            use_cases:
+              - "String dictionaries"
+              - "IP routing tables"
+
+    range_query_type:
+      question: "What type of range query?"
+      branches:
+        - answer: "Sum/min/max in range"
+          recommendation:
+            structure: "Segment Tree"
+            file: "clrs-algorithms/data-structures/trees/segment-tree.md"
+            complexity: "O(log n) query and update"
+            trade_offs:
+              - "Efficient range operations"
+              - "O(n) space"
+            use_cases:
+              - "Range sum queries"
+              - "Range min/max"
+              - "Lazy propagation"
+        - answer: "Prefix sums"
+          recommendation:
+            structure: "Fenwick Tree / Binary Indexed Tree"
+            file: "clrs-algorithms/data-structures/trees/fenwick-tree.md"
+            complexity: "O(log n) query and update"
+            trade_offs:
+              - "More space-efficient than segment tree"
+              - "Limited to prefix operations"
+            use_cases:
+              - "Cumulative frequency"
+              - "Prefix sums"
+        - answer: "Interval overlaps"
+          recommendation:
+            structure: "Interval Tree"
+            file: "clrs-algorithms/data-structures/trees/interval-tree.md"
+            complexity: "O(log n + k) find overlaps"
+            trade_offs:
+              - "Specialized for intervals"
+              - "Augmented data structure"
+            use_cases:
+              - "Calendar conflicts"
+              - "Range scheduling"
+
+    membership_type:
+      question: "What are your membership testing requirements?"
+      branches:
+        - answer: "Exact membership, no false positives allowed"
+          recommendation:
+            structure: "Hash Set"
+            file: "clrs-algorithms/data-structures/hash-based/hash-set.md"
+            complexity: "O(1) average membership test"
+            trade_offs:
+              - "Accurate"
+              - "More memory"
+            use_cases:
+              - "Unique items"
+              - "Deduplication"
+        - answer: "Probabilistic OK, need space efficiency"
+          recommendation:
+            structure: "Bloom Filter"
+            file: "clrs-algorithms/data-structures/probabilistic/bloom-filter.md"
+            complexity: "O(k) test, k=hash functions"
+            trade_offs:
+              - "Very space-efficient"
+              - "False positives possible"
+              - "Cannot delete"
+            use_cases:
+              - "Large-scale duplicate detection"
+              - "Cache filtering"
+        - answer: "Need union/find operations"
+          recommendation:
+            structure: "Disjoint Set / Union-Find"
+            file: "clrs-algorithms/data-structures/union-find/disjoint-set.md"
+            complexity: "O(α(n)) effectively O(1)"
+            trade_offs:
+              - "Very efficient for set operations"
+              - "Specialized purpose"
+            use_cases:
+              - "Connected components"
+              - "Kruskal's MST"
+              - "Network connectivity"

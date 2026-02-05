@@ -1,0 +1,322 @@
+# Composite Solutions - Multi-Skill Solution Stacks
+#
+# Common complex problems that require combining patterns, algorithms, and principles
+# from multiple skills. Each solution shows which skills to apply and in what role.
+
+composite_solutions:
+  - id: caching-system
+    problem_indicators: ["cache", "LRU", "eviction", "access control", "memory optimization"]
+    description: "Build a cache with eviction policy and access control"
+    solution_stack:
+      - skill: gof-patterns
+        items: [Proxy, Flyweight]
+        role: "Proxy provides access control layer, Flyweight optimizes memory usage for shared data"
+      - skill: clrs-algorithms
+        items: [hash-table, linked-list]
+        role: "Hash table for O(1) lookups, doubly-linked list for LRU tracking and eviction"
+      - skill: ddia
+        items: [consistency-models]
+        role: "Choose appropriate consistency level (eventual vs strong) for distributed caching"
+    implementation_notes:
+      - "Use hash map pointing to linked list nodes for O(1) access and eviction"
+      - "Proxy pattern wraps cache to enforce permissions before data access"
+      - "Consider write-through vs write-back strategies based on consistency needs"
+      - "Flyweight pattern shares intrinsic state across cache entries"
+
+  - id: event-driven-architecture
+    problem_indicators: ["events", "pub-sub", "publish-subscribe", "event bus", "event sourcing", "message queue"]
+    description: "Design a decoupled event-driven system with reliable event delivery"
+    solution_stack:
+      - skill: gof-patterns
+        items: [Observer, Mediator]
+        role: "Observer for publisher-subscriber relationships, Mediator as central event bus"
+      - skill: ddd
+        items: [domain-events, event-storming, bounded-contexts]
+        role: "Identify domain events, model business workflows, define context boundaries"
+      - skill: ddia
+        items: [event-sourcing, stream-processing, replication]
+        role: "Store events as source of truth, process event streams, replicate across nodes"
+    implementation_notes:
+      - "Use event storming to discover domain events from business processes"
+      - "Mediator coordinates between bounded contexts to prevent tight coupling"
+      - "Event sourcing provides audit trail and enables temporal queries"
+      - "Consider at-least-once vs exactly-once delivery guarantees"
+      - "Use partitioning strategies to scale event stream processing"
+
+  - id: plugin-system
+    problem_indicators: ["plugin", "extensible", "third-party", "addon", "module loading", "hot reload"]
+    description: "Create an extensible application that supports runtime plugin loading"
+    solution_stack:
+      - skill: gof-patterns
+        items: [Strategy, Factory-Method, Template-Method, Abstract-Factory]
+        role: "Strategy for algorithm swapping, Factory for plugin instantiation, Template Method for plugin lifecycle"
+      - skill: clean-code
+        items: [open-closed-principle, dependency-inversion]
+        role: "Open for extension (plugins) but closed for modification, depend on abstractions not concrete plugins"
+      - skill: pragmatic-programmer
+        items: [decoupling, design-by-contract]
+        role: "Decouple core from plugins via interfaces, define clear plugin contracts"
+    implementation_notes:
+      - "Define stable plugin interface that core depends on (DIP)"
+      - "Use Abstract Factory to create plugin families with consistent interfaces"
+      - "Template Method defines plugin lifecycle hooks (init, execute, cleanup)"
+      - "Strategy pattern allows runtime selection of plugin implementations"
+      - "Consider plugin sandboxing for security and isolation"
+
+  - id: undo-redo-system
+    problem_indicators: ["undo", "redo", "command history", "revert", "rollback", "transaction log"]
+    description: "Implement undo/redo functionality with state restoration"
+    solution_stack:
+      - skill: gof-patterns
+        items: [Command, Memento]
+        role: "Command encapsulates operations as objects, Memento captures state snapshots"
+      - skill: clrs-algorithms
+        items: [stack]
+        role: "Two stacks (undo/redo) for managing command history"
+      - skill: sicp
+        items: [assignment-and-state, data-abstraction]
+        role: "Model state changes explicitly, abstract state capture from command execution"
+    implementation_notes:
+      - "Each Command stores enough data to undo itself (inverse operation or Memento)"
+      - "Undo stack grows on execute, redo stack clears on new command"
+      - "Memento pattern isolates state capture logic from application objects"
+      - "Consider command compression for long-running sessions"
+      - "Group related commands into macro commands for atomic undo/redo"
+
+  - id: domain-model
+    problem_indicators: ["domain model", "business logic", "entities", "aggregates", "rich model", "domain-driven"]
+    description: "Model complex business domain with rich behavior and invariants"
+    solution_stack:
+      - skill: ddd
+        items: [entities, value-objects, aggregates, repositories, ubiquitous-language, domain-services]
+        role: "Core building blocks for expressing business concepts and enforcing invariants"
+      - skill: gof-patterns
+        items: [Factory, Composite, Specification]
+        role: "Factory creates complex aggregates, Composite for hierarchies, Specification for business rules"
+      - skill: clean-code
+        items: [single-responsibility-principle, functions, meaningful-names]
+        role: "Keep domain objects focused, express intent clearly, use domain terminology"
+    implementation_notes:
+      - "Use ubiquitous language from domain experts in code"
+      - "Entities have identity and lifecycle, value objects are immutable"
+      - "Aggregates enforce invariants and define consistency boundaries"
+      - "Repositories abstract persistence, returning domain objects not database rows"
+      - "Domain services handle operations that don't naturally belong to entities"
+      - "Specification pattern encodes complex business rules as composable objects"
+
+  - id: search-engine
+    problem_indicators: ["search", "full-text search", "indexing", "text retrieval", "autocomplete", "prefix matching"]
+    description: "Build a search system with efficient indexing and querying"
+    solution_stack:
+      - skill: clrs-algorithms
+        items: [trie, hash-table, suffix-tree, inverted-index]
+        role: "Trie for prefix matching, hash table for term lookups, suffix tree for substring search"
+      - skill: ddia
+        items: [lsm-trees, b-trees, full-text-search]
+        role: "LSM trees for write-heavy indexing, B-trees for sorted range queries"
+      - skill: gof-patterns
+        items: [Iterator, Strategy]
+        role: "Iterator for result traversal, Strategy for different ranking algorithms"
+    implementation_notes:
+      - "Inverted index maps terms to document IDs for fast lookups"
+      - "Trie enables fast prefix search for autocomplete features"
+      - "Use LSM trees (e.g., Lucene) for high write throughput during indexing"
+      - "Strategy pattern allows pluggable ranking algorithms (TF-IDF, BM25)"
+      - "Consider stemming, stopwords, and synonyms for better recall"
+      - "Suffix trees enable arbitrary substring matching but consume more memory"
+
+  - id: rate-limiter
+    problem_indicators: ["rate limit", "throttle", "quota", "circuit breaker", "backpressure", "request limiting"]
+    description: "Implement request throttling to prevent resource exhaustion"
+    solution_stack:
+      - skill: clrs-algorithms
+        items: [hash-table, queue, sliding-window]
+        role: "Hash table tracks per-user counts, queue for token bucket, sliding window for accurate limits"
+      - skill: gof-patterns
+        items: [Proxy, Decorator]
+        role: "Proxy intercepts requests for rate checking, Decorator adds throttling to existing services"
+      - skill: ddia
+        items: [distributed-transactions, consensus, partitioning]
+        role: "Coordinate rate limits across distributed nodes, partition by user/IP for scalability"
+    implementation_notes:
+      - "Token bucket algorithm: refill tokens at fixed rate, consume on request"
+      - "Sliding window log: track exact timestamps, drop expired entries"
+      - "Fixed window: simpler but allows bursts at window boundaries"
+      - "Use hash table to map user/IP to their rate limit state"
+      - "In distributed systems, use Redis or consensus for shared counters"
+      - "Decorator pattern adds rate limiting without modifying existing code"
+
+  - id: state-machine
+    problem_indicators: ["state machine", "FSM", "state transitions", "workflow", "status lifecycle", "order processing"]
+    description: "Model complex state transitions with clear rules and invariants"
+    solution_stack:
+      - skill: gof-patterns
+        items: [State, Strategy]
+        role: "State pattern encapsulates state-specific behavior, Strategy for transition logic"
+      - skill: sicp
+        items: [assignment-and-state, data-directed-programming]
+        role: "Explicitly model state changes, use data-driven dispatch for transitions"
+      - skill: ddd
+        items: [domain-events, aggregates]
+        role: "State transitions trigger domain events, aggregate enforces valid transitions"
+    implementation_notes:
+      - "State pattern: each state is an object with its own behavior"
+      - "Centralize transition rules in aggregate to prevent invalid state changes"
+      - "Emit domain events on state transitions for audit and side effects"
+      - "Consider table-driven state machines for complex transition matrices"
+      - "Guard conditions prevent invalid transitions before state change"
+      - "Use Strategy pattern when behavior varies by state but states are similar"
+
+  - id: dependency-injection
+    problem_indicators: ["dependency injection", "IoC", "container", "DI", "inversion of control", "service locator"]
+    description: "Build an IoC container for managing object dependencies"
+    solution_stack:
+      - skill: gof-patterns
+        items: [Factory, Abstract-Factory, Singleton, Registry]
+        role: "Factory creates objects, Registry stores instances, Singleton for container itself"
+      - skill: clean-code
+        items: [dependency-inversion-principle, interface-segregation-principle]
+        role: "Depend on abstractions, inject minimal focused interfaces"
+      - skill: pragmatic-programmer
+        items: [decoupling, programming-by-coincidence]
+        role: "Decouple creation from use, avoid hidden dependencies"
+    implementation_notes:
+      - "Constructor injection for required dependencies (explicit)"
+      - "Property injection for optional dependencies"
+      - "Container resolves dependency graphs recursively"
+      - "Register interfaces to concrete implementations (DIP)"
+      - "Support lifecycle scopes: transient, scoped, singleton"
+      - "Avoid Service Locator anti-pattern (prefer explicit injection)"
+
+  - id: data-pipeline
+    problem_indicators: ["ETL", "data pipeline", "batch processing", "stream processing", "data transformation", "workflow"]
+    description: "Process and transform data through multiple stages"
+    solution_stack:
+      - skill: ddia
+        items: [batch-processing, stream-processing, event-sourcing, partitioning]
+        role: "Choose batch vs stream, partition data for parallelism, model as event flows"
+      - skill: gof-patterns
+        items: [Chain-of-Responsibility, Strategy, Template-Method]
+        role: "Chain for sequential stages, Strategy for pluggable transforms, Template Method for stage lifecycle"
+      - skill: clrs-algorithms
+        items: [queue, graph-algorithms, topological-sort]
+        role: "Queue for buffering between stages, DAG for dependencies, topological sort for execution order"
+    implementation_notes:
+      - "Model pipeline as directed acyclic graph (DAG) of stages"
+      - "Use topological sort to determine valid execution order"
+      - "Chain of Responsibility passes data through transformation stages"
+      - "Strategy pattern allows pluggable transformation logic per stage"
+      - "Partition data for parallel processing within stages"
+      - "Use event sourcing to replay failed stages without reprocessing entire pipeline"
+      - "Consider backpressure mechanisms when stages process at different rates"
+
+  - id: api-gateway
+    problem_indicators: ["API gateway", "routing", "aggregation", "composition", "transformation", "reverse proxy"]
+    description: "Route and transform requests across multiple backend services"
+    solution_stack:
+      - skill: gof-patterns
+        items: [Facade, Proxy, Adapter, Decorator]
+        role: "Facade simplifies complex backend APIs, Proxy adds routing/auth, Adapter transforms protocols"
+      - skill: ddia
+        items: [partitioning-strategies, replication, service-oriented-architecture]
+        role: "Partition by service/tenant, replicate gateway for availability, understand service boundaries"
+      - skill: ddd
+        items: [anti-corruption-layer, bounded-contexts]
+        role: "Translate between contexts, prevent external models from leaking into domain"
+    implementation_notes:
+      - "Facade pattern provides unified API over multiple microservices"
+      - "Adapter translates between REST, GraphQL, gRPC, etc."
+      - "Decorator adds cross-cutting concerns (auth, logging, rate limiting)"
+      - "Anti-corruption layer protects internal domain from external API changes"
+      - "Consider request coalescing to reduce backend calls"
+      - "Use circuit breaker pattern for resilience against backend failures"
+      - "Implement caching at gateway for frequently requested data"
+
+  - id: tree-traversal-system
+    problem_indicators: ["tree traversal", "hierarchical data", "directory tree", "DOM", "AST", "recursive structure"]
+    description: "Process hierarchical data structures with flexible operations"
+    solution_stack:
+      - skill: clrs-algorithms
+        items: [binary-tree, trie, tree-traversal, depth-first, breadth-first]
+        role: "Choose appropriate tree structure, select traversal strategy (DFS/BFS/in-order)"
+      - skill: gof-patterns
+        items: [Composite, Visitor, Iterator]
+        role: "Composite for tree structure, Visitor for operations, Iterator for traversal"
+      - skill: sicp
+        items: [hierarchical-data, recursion-patterns, symbolic-data]
+        role: "Model recursive structure, apply uniform operations to leaf and branch"
+    implementation_notes:
+      - "Composite pattern treats nodes and leaves uniformly"
+      - "Visitor separates traversal logic from tree structure"
+      - "Iterator provides sequential access without exposing implementation"
+      - "Choose DFS for stack-based operations, BFS for level-order processing"
+      - "Pre-order for prefix notation, in-order for sorted output, post-order for cleanup"
+      - "Use tail recursion or explicit stack for deep trees to avoid stack overflow"
+      - "Consider memoization when traversing same subtrees repeatedly"
+
+  - id: distributed-lock
+    problem_indicators: ["distributed lock", "coordination", "mutual exclusion", "leader election", "consensus", "critical section"]
+    description: "Coordinate access to shared resources across distributed nodes"
+    solution_stack:
+      - skill: ddia
+        items: [consensus-algorithms, linearizability, fencing-tokens, distributed-transactions]
+        role: "Use Paxos/Raft for consensus, fencing tokens to prevent split-brain, understand consistency guarantees"
+      - skill: clrs-algorithms
+        items: [hash-table]
+        role: "Hash resource names to lock servers for distribution"
+      - skill: pragmatic-programmer
+        items: [design-by-contract, fail-fast]
+        role: "Define clear lock contract (timeouts, renewals), fail fast on lock acquisition failure"
+    implementation_notes:
+      - "Use fencing tokens (monotonically increasing) to prevent stale lock holders"
+      - "Implement lease-based locks with automatic expiration"
+      - "Consider Redlock algorithm for Redis-based distributed locks"
+      - "Use consensus algorithms (Raft/Paxos) for strong correctness guarantees"
+      - "Watch out for timing assumptions (clock skew, network delays)"
+      - "Implement exponential backoff for lock acquisition retries"
+      - "Provide both blocking and non-blocking lock acquisition APIs"
+
+  - id: feature-flags
+    problem_indicators: ["feature flag", "feature toggle", "A/B test", "gradual rollout", "canary deployment", "runtime configuration"]
+    description: "Control feature availability at runtime without redeployment"
+    solution_stack:
+      - skill: gof-patterns
+        items: [Strategy, Decorator, Abstract-Factory]
+        role: "Strategy for flag-based behavior selection, Decorator to wrap features, Factory to create flagged variants"
+      - skill: clean-code
+        items: [open-closed-principle]
+        role: "Add new features without modifying existing code paths"
+      - skill: pragmatic-programmer
+        items: [reversibility, tracer-bullets]
+        role: "Make decisions reversible via flags, use flags for incremental delivery"
+    implementation_notes:
+      - "Strategy pattern selects implementation based on flag state"
+      - "Decorator wraps features to add flag checking transparently"
+      - "Abstract Factory creates flagged vs unflagged variants"
+      - "Support user/group/percentage-based targeting"
+      - "Implement flag cache with TTL to reduce config service load"
+      - "Remove flags after feature is fully rolled out (avoid flag debt)"
+      - "Use flags for operational control (kill switch) not long-term branching"
+
+  - id: query-builder
+    problem_indicators: ["query builder", "fluent API", "DSL", "SQL builder", "type-safe queries", "ORM"]
+    description: "Create a fluent API for building type-safe queries"
+    solution_stack:
+      - skill: gof-patterns
+        items: [Builder, Interpreter, Chain-of-Responsibility]
+        role: "Builder for fluent API, Interpreter to translate to SQL, Chain for query stages"
+      - skill: sicp
+        items: [symbolic-data, metalinguistic-abstraction, interpreters]
+        role: "Represent queries as data structures, build domain-specific language, interpret to target language"
+      - skill: ddd
+        items: [specifications, repositories]
+        role: "Specification pattern encodes query criteria as composable objects, repositories use builder internally"
+    implementation_notes:
+      - "Builder pattern provides chainable methods (select, where, join, orderBy)"
+      - "Return 'this' from each method to enable fluent chaining"
+      - "Interpreter pattern translates abstract query to concrete SQL/NoSQL"
+      - "Specification pattern allows combining criteria with AND/OR/NOT"
+      - "Use method overloading or generics for type safety"
+      - "Consider lazy evaluation - build query structure, execute only when needed"
+      - "Abstract syntax tree (AST) represents query before translation"
+      - "Validate query structure before execution to catch errors early"

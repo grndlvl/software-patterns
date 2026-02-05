@@ -1,0 +1,551 @@
+decision_tree:
+  name: "Design Pattern Selection"
+  description: "Navigate to find the right design pattern for your problem"
+  root: problem_category
+
+  nodes:
+    problem_category:
+      question: "What category of problem are you solving?"
+      branches:
+        - answer: "Object creation"
+          next: creation_problem
+        - answer: "Object structure and composition"
+          next: structure_problem
+        - answer: "Object behavior and interaction"
+          next: behavior_problem
+        - answer: "Not sure - describe my need"
+          next: needs_based
+
+    creation_problem:
+      question: "What's your object creation challenge?"
+      branches:
+        - answer: "Complex multi-step construction"
+          next: complex_construction
+        - answer: "Need only one instance globally"
+          recommendation:
+            pattern: "Singleton"
+            category: "Creational"
+            file: "gof-patterns/creational/singleton.md"
+            intent: "Ensure a class has only one instance and provide global access"
+            trade_offs:
+              - "Global state can hide dependencies"
+              - "Makes testing harder"
+              - "Often indicates design smell"
+            use_cases:
+              - "Database connection"
+              - "Configuration manager"
+              - "Logger"
+            alternatives:
+              - "Dependency injection"
+              - "Service locator"
+        - answer: "Create objects without specifying exact class"
+          next: factory_type
+        - answer: "Create families of related objects"
+          recommendation:
+            pattern: "Abstract Factory"
+            category: "Creational"
+            file: "gof-patterns/creational/abstract-factory.md"
+            intent: "Create families of related objects without specifying concrete classes"
+            trade_offs:
+              - "More complex than simple factory"
+              - "Ensures compatibility within families"
+            use_cases:
+              - "UI theme components"
+              - "Database drivers (MySQL/PostgreSQL)"
+              - "Cross-platform applications"
+            alternatives:
+              - "Factory Method for single products"
+              - "Builder for complex construction"
+        - answer: "Clone existing objects instead of creating new"
+          recommendation:
+            pattern: "Prototype"
+            category: "Creational"
+            file: "gof-patterns/creational/prototype.md"
+            intent: "Create new objects by copying existing ones"
+            trade_offs:
+              - "Avoids expensive initialization"
+              - "Deep vs shallow copy complexity"
+            use_cases:
+              - "Object with expensive creation"
+              - "Game object templates"
+              - "Document templates"
+            alternatives:
+              - "Factory Method"
+              - "Builder"
+
+    complex_construction:
+      question: "What makes construction complex?"
+      branches:
+        - answer: "Many optional parameters"
+          recommendation:
+            pattern: "Builder"
+            category: "Creational"
+            file: "gof-patterns/creational/builder.md"
+            intent: "Construct complex objects step by step"
+            trade_offs:
+              - "More verbose than constructors"
+              - "Fluent interface possible"
+              - "Separates construction logic"
+            use_cases:
+              - "HTTP request building"
+              - "SQL query building"
+              - "Configuration objects"
+              - "Test data creation"
+            alternatives:
+              - "Telescoping constructors"
+              - "Factory with config object"
+        - answer: "Different representations of same data"
+          recommendation:
+            pattern: "Builder"
+            category: "Creational"
+            file: "gof-patterns/creational/builder.md"
+            intent: "Construct different representations using same process"
+            trade_offs:
+              - "Separates construction algorithm from representation"
+              - "Can create different versions from same builder"
+            use_cases:
+              - "Document formats (PDF, HTML, Plain text)"
+              - "Export formats"
+              - "Serialization formats"
+
+    factory_type:
+      question: "How do you determine which class to create?"
+      branches:
+        - answer: "Subclasses decide"
+          recommendation:
+            pattern: "Factory Method"
+            category: "Creational"
+            file: "gof-patterns/creational/factory-method.md"
+            intent: "Define interface for creating objects, let subclasses decide which class"
+            trade_offs:
+              - "Avoids tight coupling"
+              - "May proliferate subclasses"
+            use_cases:
+              - "Framework hooks"
+              - "Plugin systems"
+              - "Document types"
+              - "Game characters"
+            alternatives:
+              - "Simple factory function"
+              - "Abstract Factory for families"
+        - answer: "Runtime conditions decide"
+          recommendation:
+            pattern: "Factory Method"
+            category: "Creational"
+            file: "gof-patterns/creational/factory-method.md"
+            intent: "Centralize creation logic based on runtime conditions"
+            trade_offs:
+              - "Single responsibility for creation"
+              - "Easy to extend with new types"
+            use_cases:
+              - "Config-based object creation"
+              - "File parser selection"
+              - "Payment method selection"
+
+    structure_problem:
+      question: "What structural challenge are you facing?"
+      branches:
+        - answer: "Add responsibilities without changing class"
+          recommendation:
+            pattern: "Decorator"
+            category: "Structural"
+            file: "gof-patterns/structural/decorator.md"
+            intent: "Attach additional responsibilities dynamically"
+            trade_offs:
+              - "More flexible than inheritance"
+              - "Many small objects"
+              - "Can complicate debugging"
+            use_cases:
+              - "UI component enhancements (tooltips, borders)"
+              - "Stream processing (compression, encryption)"
+              - "Middleware chains"
+            alternatives:
+              - "Inheritance (less flexible)"
+              - "Strategy (swaps instead of wraps)"
+        - answer: "Make incompatible interfaces work together"
+          recommendation:
+            pattern: "Adapter"
+            category: "Structural"
+            file: "gof-patterns/structural/adapter.md"
+            intent: "Convert one interface to another expected by client"
+            trade_offs:
+              - "Enables reuse of existing code"
+              - "Extra layer of indirection"
+            use_cases:
+              - "Legacy system integration"
+              - "Third-party library wrappers"
+              - "API versioning"
+            alternatives:
+              - "Facade (simplifies instead of converts)"
+              - "Bridge (separates abstraction/implementation)"
+        - answer: "Provide simplified interface to complex subsystem"
+          recommendation:
+            pattern: "Facade"
+            category: "Structural"
+            file: "gof-patterns/structural/facade.md"
+            intent: "Provide unified, simplified interface to subsystem"
+            trade_offs:
+              - "Reduces complexity for clients"
+              - "May become god object"
+            use_cases:
+              - "API wrappers"
+              - "Library simplification"
+              - "Service layer"
+            alternatives:
+              - "Adapter (converts interfaces)"
+              - "Mediator (coordinates interactions)"
+        - answer: "Share objects to reduce memory"
+          recommendation:
+            pattern: "Flyweight"
+            category: "Structural"
+            file: "gof-patterns/structural/flyweight.md"
+            intent: "Share common state to support large numbers of objects"
+            trade_offs:
+              - "Reduces memory usage"
+              - "Complexity in managing shared state"
+            use_cases:
+              - "Text rendering (character glyphs)"
+              - "Game objects (shared textures)"
+              - "String interning"
+            alternatives:
+              - "Object pooling"
+              - "Caching"
+        - answer: "Separate abstraction from implementation"
+          recommendation:
+            pattern: "Bridge"
+            category: "Structural"
+            file: "gof-patterns/structural/bridge.md"
+            intent: "Decouple abstraction from implementation so both vary independently"
+            trade_offs:
+              - "More flexible than inheritance"
+              - "More complex initial structure"
+            use_cases:
+              - "Cross-platform implementations"
+              - "Device drivers"
+              - "Database drivers"
+            alternatives:
+              - "Adapter (post-hoc compatibility)"
+              - "Strategy (algorithm variation)"
+        - answer: "Build tree structures from simple and composite objects"
+          recommendation:
+            pattern: "Composite"
+            category: "Structural"
+            file: "gof-patterns/structural/composite.md"
+            intent: "Treat individual objects and compositions uniformly"
+            trade_offs:
+              - "Simplifies client code"
+              - "Can make design overly general"
+            use_cases:
+              - "UI component hierarchies"
+              - "File system (files/folders)"
+              - "Organization chart"
+              - "Graphics scenes"
+            alternatives:
+              - "Decorator (adds responsibilities)"
+              - "Iterator (traverses structure)"
+        - answer: "Control access to an object"
+          next: proxy_purpose
+
+    proxy_purpose:
+      question: "Why do you need to control access?"
+      branches:
+        - answer: "Expensive object - delay creation"
+          recommendation:
+            pattern: "Proxy (Virtual)"
+            category: "Structural"
+            file: "gof-patterns/structural/proxy.md"
+            intent: "Lazy initialization of expensive objects"
+            trade_offs:
+              - "Delays cost until needed"
+              - "Transparent to client"
+            use_cases:
+              - "Large image loading"
+              - "Database connections"
+              - "Heavy computations"
+        - answer: "Add access control or logging"
+          recommendation:
+            pattern: "Proxy (Protection)"
+            category: "Structural"
+            file: "gof-patterns/structural/proxy.md"
+            intent: "Control access to object with permissions or logging"
+            trade_offs:
+              - "Centralizes access control"
+              - "Additional layer"
+            use_cases:
+              - "Permission checking"
+              - "Audit logging"
+              - "Method call tracking"
+        - answer: "Object is remote"
+          recommendation:
+            pattern: "Proxy (Remote)"
+            category: "Structural"
+            file: "gof-patterns/structural/proxy.md"
+            intent: "Represent object in different address space"
+            trade_offs:
+              - "Hides network communication"
+              - "Network overhead"
+            use_cases:
+              - "RPC/RMI"
+              - "Distributed objects"
+
+    behavior_problem:
+      question: "What behavioral challenge are you facing?"
+      branches:
+        - answer: "Multiple objects need notification of changes"
+          recommendation:
+            pattern: "Observer"
+            category: "Behavioral"
+            file: "gof-patterns/behavioral/observer.md"
+            intent: "Define one-to-many dependency so when one changes, dependents are notified"
+            trade_offs:
+              - "Loose coupling"
+              - "Can cause memory leaks if not unsubscribed"
+              - "Update order may matter"
+            use_cases:
+              - "Event systems"
+              - "MVC (Model notifies Views)"
+              - "Reactive programming"
+              - "Pub/sub systems"
+            alternatives:
+              - "Mediator (centralized coordination)"
+              - "Event bus"
+        - answer: "Need family of interchangeable algorithms"
+          recommendation:
+            pattern: "Strategy"
+            category: "Behavioral"
+            file: "gof-patterns/behavioral/strategy.md"
+            intent: "Define family of algorithms, make them interchangeable"
+            trade_offs:
+              - "Eliminates conditionals"
+              - "Easy to add new strategies"
+              - "More objects"
+            use_cases:
+              - "Sorting algorithms"
+              - "Validation rules"
+              - "Payment methods"
+              - "Compression algorithms"
+            alternatives:
+              - "Template Method (uses inheritance)"
+              - "State (changes behavior by state)"
+        - answer: "Encapsulate requests as objects"
+          next: command_purpose
+        - answer: "Traverse collection without exposing structure"
+          recommendation:
+            pattern: "Iterator"
+            category: "Behavioral"
+            file: "gof-patterns/behavioral/iterator.md"
+            intent: "Access elements sequentially without exposing representation"
+            trade_offs:
+              - "Simplifies collection interface"
+              - "Multiple traversals possible"
+            use_cases:
+              - "Collection traversal"
+              - "Result set pagination"
+              - "Tree/graph traversal"
+            alternatives:
+              - "Visitor (operations on structure)"
+              - "Direct access methods"
+        - answer: "Save and restore object state"
+          recommendation:
+            pattern: "Memento"
+            category: "Behavioral"
+            file: "gof-patterns/behavioral/memento.md"
+            intent: "Capture and restore object state without violating encapsulation"
+            trade_offs:
+              - "Preserves encapsulation"
+              - "Can be memory intensive"
+            use_cases:
+              - "Undo/redo"
+              - "Transaction rollback"
+              - "Snapshots"
+              - "Save game state"
+            alternatives:
+              - "Command (for undo via inverse operations)"
+              - "Serialization"
+        - answer: "Object behavior changes with internal state"
+          recommendation:
+            pattern: "State"
+            category: "Behavioral"
+            file: "gof-patterns/behavioral/state.md"
+            intent: "Allow object to change behavior when state changes"
+            trade_offs:
+              - "Organizes state-specific code"
+              - "More classes"
+              - "State transitions explicit"
+            use_cases:
+              - "Order processing (pending/paid/shipped)"
+              - "Connection states"
+              - "Document workflows"
+              - "Game character states"
+            alternatives:
+              - "Strategy (swaps algorithm, not state)"
+              - "State machine library"
+        - answer: "Reduce coupling between many objects"
+          recommendation:
+            pattern: "Mediator"
+            category: "Behavioral"
+            file: "gof-patterns/behavioral/mediator.md"
+            intent: "Define object that encapsulates how objects interact"
+            trade_offs:
+              - "Reduces coupling"
+              - "Mediator can become complex"
+            use_cases:
+              - "Dialog box coordination"
+              - "Chatroom coordination"
+              - "Air traffic control"
+            alternatives:
+              - "Observer (for notifications)"
+              - "Facade (simplifies interface)"
+        - answer: "Define algorithm skeleton, let subclasses fill steps"
+          recommendation:
+            pattern: "Template Method"
+            category: "Behavioral"
+            file: "gof-patterns/behavioral/template-method.md"
+            intent: "Define algorithm structure, defer some steps to subclasses"
+            trade_offs:
+              - "Code reuse via inheritance"
+              - "Less flexible than composition"
+            use_cases:
+              - "Framework hooks"
+              - "Data processing pipelines"
+              - "Test fixtures"
+            alternatives:
+              - "Strategy (uses composition)"
+              - "Callbacks"
+        - answer: "Pass request along chain until handled"
+          recommendation:
+            pattern: "Chain of Responsibility"
+            category: "Behavioral"
+            file: "gof-patterns/behavioral/chain-of-responsibility.md"
+            intent: "Pass request along chain of handlers until one handles it"
+            trade_offs:
+              - "Decouples sender from receiver"
+              - "No guarantee of handling"
+            use_cases:
+              - "Middleware chains"
+              - "Validation pipelines"
+              - "Event bubbling"
+              - "Approval workflows"
+            alternatives:
+              - "Decorator (all layers process)"
+              - "Strategy (single handler selected)"
+        - answer: "Perform operations on object structure elements"
+          recommendation:
+            pattern: "Visitor"
+            category: "Behavioral"
+            file: "gof-patterns/behavioral/visitor.md"
+            intent: "Define new operation without changing classes of elements"
+            trade_offs:
+              - "Easy to add operations"
+              - "Hard to add new element types"
+              - "Breaks encapsulation"
+            use_cases:
+              - "AST operations (compile, interpret)"
+              - "Document export formats"
+              - "Tax calculation on items"
+            alternatives:
+              - "Double dispatch"
+              - "Methods on elements"
+
+    command_purpose:
+      question: "Why encapsulate requests as objects?"
+      branches:
+        - answer: "Queue, log, or schedule operations"
+          recommendation:
+            pattern: "Command"
+            category: "Behavioral"
+            file: "gof-patterns/behavioral/command.md"
+            intent: "Encapsulate request as object for queuing, logging, scheduling"
+            trade_offs:
+              - "Decouples invoker from receiver"
+              - "Can queue and schedule"
+              - "More objects"
+            use_cases:
+              - "Job queues"
+              - "Transaction logs"
+              - "Macro recording"
+              - "Network requests"
+        - answer: "Implement undo/redo"
+          next: undo_strategy
+
+    undo_strategy:
+      question: "How do you want to implement undo?"
+      branches:
+        - answer: "Execute inverse operations"
+          recommendation:
+            pattern: "Command"
+            category: "Behavioral"
+            file: "gof-patterns/behavioral/command.md"
+            intent: "Encapsulate operations with undo() methods"
+            trade_offs:
+              - "Clean interface"
+              - "Must design inverse for each command"
+            use_cases:
+              - "Text editor"
+              - "Drawing application"
+              - "Database transactions"
+        - answer: "Restore previous state snapshots"
+          recommendation:
+            pattern: "Command + Memento"
+            category: "Behavioral"
+            file: "gof-patterns/behavioral/command.md"
+            intent: "Combine Command pattern with Memento for state snapshots"
+            trade_offs:
+              - "Works when inverse is hard to design"
+              - "More memory usage"
+            use_cases:
+              - "Game state undo"
+              - "Complex state changes"
+              - "Configuration changes"
+
+    needs_based:
+      question: "What do you need to accomplish?"
+      branches:
+        - answer: "Make old code work with new interface"
+          recommendation:
+            pattern: "Adapter"
+            category: "Structural"
+            file: "gof-patterns/structural/adapter.md"
+            intent: "Convert interface of existing class to expected interface"
+        - answer: "Switch behavior at runtime"
+          recommendation:
+            pattern: "Strategy"
+            category: "Behavioral"
+            file: "gof-patterns/behavioral/strategy.md"
+            intent: "Select algorithm at runtime"
+        - answer: "Add features without modifying code"
+          recommendation:
+            pattern: "Decorator"
+            category: "Structural"
+            file: "gof-patterns/structural/decorator.md"
+            intent: "Wrap objects to add responsibilities"
+        - answer: "Simplify complex API"
+          recommendation:
+            pattern: "Facade"
+            category: "Structural"
+            file: "gof-patterns/structural/facade.md"
+            intent: "Provide simple interface to complex subsystem"
+        - answer: "Propagate changes to multiple objects"
+          recommendation:
+            pattern: "Observer"
+            category: "Behavioral"
+            file: "gof-patterns/behavioral/observer.md"
+            intent: "Notify dependents of changes automatically"
+        - answer: "Build complex objects step-by-step"
+          recommendation:
+            pattern: "Builder"
+            category: "Creational"
+            file: "gof-patterns/creational/builder.md"
+            intent: "Construct complex objects with many options"
+        - answer: "Manage workflows or approval processes"
+          recommendation:
+            pattern: "Chain of Responsibility"
+            category: "Behavioral"
+            file: "gof-patterns/behavioral/chain-of-responsibility.md"
+            intent: "Pass requests through handler chain"
+        - answer: "Track changes for undo/redo"
+          recommendation:
+            pattern: "Command + Memento"
+            category: "Behavioral"
+            file: "gof-patterns/behavioral/command.md"
+            intent: "Encapsulate operations with undo capability"
